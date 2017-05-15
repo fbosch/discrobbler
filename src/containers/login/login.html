@@ -1,4 +1,6 @@
-<div class="login">
-    <input type="text" v-model="discogsUserName" @keyup="getUserOnEnter">
-    <button @click="getUser">Get User</button>
-</div>
+<form class="login" @submit.prevent="getUser">
+    <md-input-container>
+        <label>Discogs Username</label>
+        <md-input v-model="discogsUserName"></md-input>
+    </md-input-container>
+</form>

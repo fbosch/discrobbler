@@ -31,8 +31,6 @@ export default (state = {}, action) => {
                 ...state,
                 collection: [...state.collection, action.payload.releases]
             }
-        
-        
 
         default: return state
     }

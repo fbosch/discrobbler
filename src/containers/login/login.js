@@ -2,7 +2,6 @@ import Vue from 'vue'
 import store from '../../store'
 import { Component, Watch } from 'vue-property-decorator'
 import { fetchUser } from '../../store/actions/discogs.actions'
-import keycode from 'keycode'
 import router, { views } from '../../router'
 
 @Component
@@ -25,10 +24,6 @@ export default class Login extends Vue {
 
     getUser() {
         store.dispatch(fetchUser(this.discogsUserName))
-    }
-
-    getUserOnEnter(event) {
-        if (keycode(event) === 'enter') this.getUser()
     }
 
 }

@@ -9,9 +9,11 @@ export default class App extends Vue {
         super()
         const discogsUserSelect = state => state.discogs.user
         const state = store.getState()
-            console.log(router.currentRoute)
+        console.log(router.currentRoute)
 
-        if (!discogsUserSelect(state)) {
+        if (discogsUserSelect(state)) {
+            router.push(views.dashboard.path)
+        } else {
             router.push(views.login.path)
         }
     }

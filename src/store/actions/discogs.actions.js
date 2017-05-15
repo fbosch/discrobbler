@@ -54,9 +54,7 @@ export function fetchUserCollection(username) {
     return (dispatch, getState) => {
         dispatch({ type: DISCOGS_USER_COLLECTION_FETCH })
         return dispatch(fetchCollectionFolders(username))
-            .then(() => {
-                const folders = getState().discogs.folders
-                folders.forEach(folder => dispatch(fetchCollectionItems(username, folder.id)))
-            })
+            .then(() => getState().discogs.folders.map(folder => dispatch(fetchCollectionItems(username, folder.id))))
+            .then(() => dispatch({ type: DISCOGS_USER_COLLECTION_RECEIVED }))
     }
 }
