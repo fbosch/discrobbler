@@ -23,13 +23,15 @@ export default (state = {}, action) => {
         case DISCOGS_USER_COLLECTION_FETCH:
             return {
                 ...state,
-                collection: []
+                collection: [],
+                collectionIsLoading: true
             }
 
         case DISCOGS_COLLECTION_ITEMS_RECEIVED:
             return {
                 ...state,
-                collection: [action.payload.releases].concat(state.collection)[0]
+                collection: [action.payload.releases].concat(state.collection)[0],
+                collectionIsLoading: false
             }
 
         default: return state
