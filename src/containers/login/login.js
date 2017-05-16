@@ -8,16 +8,15 @@ import get from 'lodash.get'
 @Component
 export default class Login extends Vue {
     discogsUserName = null
-    
-    constructor() {
-        super()
+
+    mounted() {
         const select = state => get(state, 'discogs.user', undefined)
         let currentValue = select(store.getState())
         const handleChange = () => {
             let previousValue = currentValue
             currentValue = select(store.getState())
             if (previousValue !== currentValue && currentValue !== null) {
-                // router.push(views.dashboard)
+                router.push(views.dashboard)
             }
         }
         store.subscribe(handleChange)
