@@ -4,5 +4,5 @@ import { routerMiddleware } from 'vue-router-redux'
 
 export default [
     thunk,
-    logger
+    // logger
 ]

@@ -1,6 +1,11 @@
 <div id="app">
   <md-toolbar>
     <h2 class="md-title">Discogs Scrobbler</h2>
+    <span style="flex:1"></span>
+    <md-avatar :if="avatar">
+      <img :src="avatar">
+      <md-tooltip md-direction="bottom">{{ username }}</md-tooltip>
+    </md-avatar>
   </md-toolbar>
   <div class="main-content">
     <router-view></router-view>

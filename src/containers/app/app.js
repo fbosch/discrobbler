@@ -1,20 +1,32 @@
 import Vue from 'vue'
 import store from '../../store'
-import { Component } from 'vue-property-decorator'
 import router, { views } from '../../router'
+import Component from 'vue-class-component'
+import get from 'lodash.get'
 
 @Component
 export default class App extends Vue {
-    constructor() {
-        super()
-        const discogsUserSelect = state => state.discogs.user
-        const state = store.getState()
-        console.log(router.currentRoute)
+    avatar = null
+    username = null
 
-        if (discogsUserSelect(state)) {
-            router.push(views.dashboard.path)
+    mounted() {
+        const discogsUserSelect = state => get(state, 'discogs.user', undefined)
+        store.subscribe(() => {
+            let currentDiscogsUserState = discogsUserSelect(store.getState())
+            if (currentDiscogsUserState) {
+                if (this.avatar !== currentDiscogsUserState.avatar_url) {
+                    this.avatar = currentDiscogsUserState.avatar_url
+                    this.username = currentDiscogsUserState.name
+                }
+            }
+        })
+        const initialDiscogsUserState = discogsUserSelect(store.getState())
+        if (initialDiscogsUserState) {
+            this.avatar = initialDiscogsUserState.avatar_url
+            this.username = initialDiscogsUserState.name
+            router.push(views.dashboard)
         } else {
-            router.push(views.login.path)
+            router.push(views.login)
         }
     }
 }
