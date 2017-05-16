@@ -2,7 +2,7 @@ import keys from '../keys'
 
 class DiscogsApi {
 
-    apiUrl(method)  {
+    apiUrl(method) {
         return `https://api.discogs.com/${method}?key=${keys.discogs.key}&secret=${keys.discogs.secret}`
     }
 
@@ -15,7 +15,7 @@ class DiscogsApi {
     }
 
     getCollectionItemsByFolderId(username, folderId) {
-        return fetch(this.apiUrl(`users/${username}/collection/folders/${folderId}/releases`))
+        return fetch(this.apiUrl(`users/${username}/collection/folders/${folderId}/releases`) + '&sort=artist&per_page=250')
     }
 
     getRelease(id) {

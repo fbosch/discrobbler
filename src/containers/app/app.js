@@ -10,7 +10,6 @@ export default class App extends Vue {
     avatar = null
     username = null
 
-    @readonly
     selectDiscogsUser = state => get(state, 'discogs.user', undefined)
    
     constructor() {

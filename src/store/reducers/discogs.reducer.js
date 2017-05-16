@@ -29,7 +29,7 @@ export default (state = {}, action) => {
         case DISCOGS_COLLECTION_ITEMS_RECEIVED:
             return {
                 ...state,
-                collection: [...state.collection, action.payload.releases]
+                collection: [action.payload.releases].concat(state.collection)[0]
             }
 
         default: return state
