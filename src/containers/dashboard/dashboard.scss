@@ -1,11 +1,17 @@
-.md-list-text-container {
-    padding: 5px 0;
-    margin-top: 5px;
-}
-
-.md-spinner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform:translate(-50%, -50%);
+.dashboard {
+    .md-list-text-container {
+        padding: 5px 0;
+        margin-top: 5px;
+    }
+    .md-spinner {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .md-avatar {
+        height: 60px;
+        width: 60px;
+        min-width: 60px;
+    }
 }
