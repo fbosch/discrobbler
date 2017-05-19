@@ -13,6 +13,10 @@ export const views = {
     dashboard: {
         path: '/dashboard',
         component: containers.Dashboard
+    },
+    release: {
+        path: '/release/:id',
+        component: containers.Release
     }
 }
 

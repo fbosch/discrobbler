@@ -3,7 +3,6 @@ import store from '../../store'
 import router, { views } from '../../router'
 import Component from 'vue-class-component'
 import get from 'lodash.get'
-import { readonly } from 'core-decorators'
 
 @Component
 export default class App extends Vue {
@@ -11,14 +10,16 @@ export default class App extends Vue {
     username = null
 
     selectDiscogsUser = state => get(state, 'discogs.user', undefined)
-   
+
     constructor() {
         super()
         const initialDiscogsUserState = this.selectDiscogsUser(store.getState())
         if (initialDiscogsUserState) {
             this.avatar = initialDiscogsUserState.avatar_url
             this.username = initialDiscogsUserState.name
-            router.push(views.dashboard)
+            if (router.currentRoute.name === views.login.name) {
+                router.push(views.dashboard)
+            }
         } else {
             router.push(views.login)
         }

@@ -11,6 +11,7 @@ export default class Login extends Vue {
 
     mounted() {
         const select = state => get(state, 'discogs.user', undefined)
+
         let currentValue = select(store.getState())
         const handleChange = () => {
             let previousValue = currentValue
