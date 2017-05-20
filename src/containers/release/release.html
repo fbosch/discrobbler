@@ -2,11 +2,13 @@
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="releaseIsLoading"></md-spinner>
         <div class="release-item" v-else>
-            <div class="release-item__cover">
-                <div class="progressive">
+            <div class="release-item__cover" v-bind="release">
+                <div class="progressive" v-if="releaseCoverImage">
                     <img @load="imageLoaded" class="preview" v-progressive="releaseCoverImage[2]['#text']" :src="releaseCoverImage[0]['#text']"
-                        :data-srcset="releaseCoverImageSrcSet" v-if="releaseCoverImage">
-                    <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb" v-else>
+                        :data-srcset="releaseCoverImageSrcSet">
+                </div>
+                <div class="progressive" v-else>
+                    <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb preview">
                 </div>
             </div>
             <!--<md-card md-with-hover>

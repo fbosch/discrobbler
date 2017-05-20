@@ -5,7 +5,7 @@
             <md-list-item v-for="item in collection" :key="item.id" v-if="item" class="md-triple-line album-item">
                 <router-link :to="{name:'release', params: { id: item.id }}">
                     <md-avatar>
-                        <img :src="item.basic_information.thumb" v-if="item.basic_information.thumb">
+                        <img v-lazy="item.basic_information.thumb" v-if="item.basic_information.thumb">
                         <img src="../../assets/record.svg" v-else>
                     </md-avatar>
                     <div class="md-list-text-container">

@@ -1,5 +1,7 @@
-import * as discogsActions from './discogs.actions'
+import * as discogs from './discogs.actions'
+import * as theming from './theming.actions'
 
 export {
-    discogsActions
+    discogs,
+    theming
 }

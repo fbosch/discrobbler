@@ -4,6 +4,7 @@ import router from '../../router'
 import store from '../../store'
 import get from 'lodash.get'
 import { fetchRelease } from '../../store/actions/discogs.actions'
+import { changeToolbarBackground, resetToolbarBackground } from '../../store/actions/theming.actions'
 import lastFm from '../../api/lastfm'
 import Vibrant from 'node-vibrant'
 
@@ -13,16 +14,10 @@ export default class Release extends Vue {
     releaseIsLoading = true
     release = null
     releaseCoverImage = null
+    fallbackThumb = null
 
-    get fallbackThumb() {
-        const collection = get(store.getState(), 'discogs.collection', null)
-        if (collection) {
-            const item = collection.find(item => item.id === this.release.id)
-            if (item) {
-                return item.basic_information.cover_image
-            }
-        }
-    }
+    getToolbar = () => document.querySelector('.md-theme-default.md-toolbar')
+
 
     get releaseCoverImageSrcSet() {
         return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w,${this.releaseCoverImage[4]['#text']} 500w,`
@@ -42,7 +37,11 @@ export default class Release extends Vue {
                     lastFm.getAlbumInfo(this.release.artists[0].name, this.release.title)
                         .then(response => response.json())
                         .then(data => {
-                            this.releaseCoverImage = data.album.image
+                            if (data.error) {
+                                this.fallbackThumb = this.getFallbackThumb()
+                            } else {
+                                this.releaseCoverImage = data.album.image
+                            }
                         })
                 }
             }
@@ -50,19 +49,29 @@ export default class Release extends Vue {
     }
 
     imageLoaded(event) {
-        const toolbar = document.querySelector('.md-theme-default.md-toolbar')
+        const toolbar = this.getToolbar()
         this.initialToolbarColor = getComputedStyle(toolbar).backgroundColor
         Vibrant.from(event.target.src)
             .getPalette((error, palette) => {
                 if (!error) {
-                    if(palette.Muted) toolbar.style.backgroundColor = palette.Muted.getHex()
+                    if (palette.Muted) store.dispatch(changeToolbarBackground(palette.Muted.getHex()))
                 }
             })
     }
 
+    getFallbackThumb() {
+        const collection = get(store.getState(), 'discogs.collection', null)
+        if (collection) {
+            const item = collection.find(item => item.id === this.release.id)
+            if (item) {
+                return item.basic_information.thumb
+            }
+        }
+    }
+
     beforeDestroy() {
         if (this.unsubscribe) this.unsubscribe()
-        document.querySelector('.md-theme-default.md-toolbar').style.backgroundColor = this.initialToolbarColor
+        store.dispatch(resetToolbarBackground())
     }
 
 }

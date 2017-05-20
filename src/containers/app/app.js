@@ -8,7 +8,9 @@ import get from 'lodash.get'
 export default class App extends Vue {
     avatar = null
     username = null
+    toolbarColor = null
 
+    selectToolbarColor = state => get(state, 'theming.toolbarColor', undefined)
     selectDiscogsUser = state => get(state, 'discogs.user', undefined)
 
     constructor() {
@@ -27,12 +29,16 @@ export default class App extends Vue {
 
     mounted() {
         store.subscribe(() => {
-            let currentDiscogsUserState = this.selectDiscogsUser(store.getState())
+            const currentDiscogsUserState = this.selectDiscogsUser(store.getState())
             if (currentDiscogsUserState) {
                 if (this.avatar !== currentDiscogsUserState.avatar_url) {
                     this.avatar = currentDiscogsUserState.avatar_url
                     this.username = currentDiscogsUserState.name
                 }
+            }
+            const toolbarColor = this.selectToolbarColor(store.getState())
+            if (toolbarColor !== this.toolbarColor) {
+                this.toolbarColor = toolbarColor
             }
         })
     }
