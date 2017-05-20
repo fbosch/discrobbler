@@ -3,14 +3,18 @@ import Vue from 'vue'
 import App from './containers/app/app.vue'
 import router from './router'
 import store from './store'
-import VueMaterial from 'vue-material'
+import material from 'vue-material'
+import lazyload from 'vue-lazyload'
+import ProgressiveImage from 'progressive-image/dist/vue'
 
-
-Vue.use(VueMaterial)
+Vue.use(material)
+Vue.use(ProgressiveImage, {
+  scale: true
+});
 
 Vue.material.registerTheme('default', {
-  primary: 'blue',
-  accent: 'red',
+  primary: 'red',
+  accent: 'indigo',
   warn: 'red',
   background: 'white'
 })

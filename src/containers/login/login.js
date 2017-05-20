@@ -20,11 +20,15 @@ export default class Login extends Vue {
                 router.push(views.dashboard)
             }
         }
-        store.subscribe(handleChange)
+        this.unsubscribe = store.subscribe(handleChange)
     }
 
     getUser() {
         store.dispatch(fetchUser(this.discogsUserName))
+    }
+
+    beforeDestroy() {
+        this.unsubscribe()
     }
 
 }

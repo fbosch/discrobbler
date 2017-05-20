@@ -1,0 +1,16 @@
+.release-item {
+    &__cover {
+        height: 35vh;
+        margin: 0 -28px;
+        overflow: hidden;
+        .progressive {
+            transform: translateY(-20%);
+            img {
+                object-fit: cover;
+            }
+        }
+    }
+    &__thumb {
+        // filter: blur(20px);
+    }
+}

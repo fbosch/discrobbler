@@ -3,6 +3,8 @@ import {
     DISCOGS_COLLECTION_FOLDERS_RECEIVED,
     DISCOGS_COLLECTION_ITEMS_RECEIVED,
     DISCOGS_USER_COLLECTION_FETCH,
+    DISCOGS_RELEASE_FETCH,
+    DISCOGS_RELEASE_RECEIVED
 } from '../actions/discogs.actions'
 
 export default (state = {}, action) => {
@@ -12,6 +14,7 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 user: action.payload,
+                collection: []
             }
 
         case DISCOGS_COLLECTION_FOLDERS_RECEIVED:
@@ -31,7 +34,22 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 collection: [action.payload.releases].concat(state.collection)[0],
-                collectionIsLoading: false
+                collectionIsLoading: false,
+                lastCollectionFetch: new Date()
+            }
+
+        case DISCOGS_RELEASE_FETCH:
+            return {
+                ...state,
+                selectedRelease: null,
+                selectedReleaseLoading: true
+            }
+
+        case DISCOGS_RELEASE_RECEIVED:
+            return {
+                ...state,
+                selectedRelease: action.payload,
+                selectedReleaseLoading: false
             }
 
         default: return state

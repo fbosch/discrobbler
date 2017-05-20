@@ -17,7 +17,7 @@ export default class App extends Vue {
         if (initialDiscogsUserState) {
             this.avatar = initialDiscogsUserState.avatar_url
             this.username = initialDiscogsUserState.name
-            if (router.currentRoute.name === views.login.name) {
+            if (router.currentRoute.name === views.login.name || !router.currentRoute.name) {
                 router.push(views.dashboard)
             }
         } else {

@@ -5,7 +5,7 @@
   "author": "Frederik Bosch <frede.bosch@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --colors --https",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -15,7 +15,10 @@
     "lodash.get": "^4.4.2",
     "lodash.reduce": "^4.6.0",
     "lodash.throttle": "^4.1.1",
+    "moment": "^2.18.1",
+    "node-vibrant": "^3.0.0-alpha.2",
     "private-decorator": "^0.1.7",
+    "progressive-image": "^1.1.0",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.1",
@@ -23,6 +26,7 @@
     "revue": "^3.0.0",
     "vue": "^2.2.1",
     "vue-class-component": "^5.0.1",
+    "vue-lazyload": "^1.0.3",
     "vue-material": "^0.7.1",
     "vue-property-decorator": "^5.0.1",
     "vue-router": "^2.5.3",
