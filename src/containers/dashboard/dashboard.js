@@ -8,6 +8,7 @@ import Fuse from 'fuse.js'
 
 @Component
 export default class Dashboard extends Vue {
+    
     static searchOptions = {
         shouldSort: true,
         tokenize: true,

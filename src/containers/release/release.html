@@ -9,26 +9,47 @@
                         <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" v-if="releaseCoverImage">
                         <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb"> </md-card-media>
                     <md-card-area>
-                        <md-card-header>
-                            <div class="md-title">
-                                {{ release.title }}
-                            </div>
-                            <div class="md-subhead">
-                                {{ release.artists[0].name }}
-                            </div>
-                        </md-card-header>
+                        <div class="container">
+                            <md-card-header>
+                                <div class="md-title">
+                                    {{ release.title }}
+                                </div>
+                                <div class="md-subhead">
+                                    {{ release.artists[0].name }}
+                                </div>
+                            </md-card-header>
 
-                        <md-card-actions>
-                            <md-chip v-for="genre in release.genres" :track="genre" :style="{ backgroundColor: artworkColor }">
-                                {{ genre }}
-                            </md-chip>
-                        </md-card-actions>
+                            <md-card-actions>
+                                <md-chip v-for="genre in release.genres" :key="genre" :style="{ backgroundColor: artworkColor }">
+                                    {{ genre }}
+                                </md-chip>
+                                <md-chip v-for="style in release.styles" :key="style" :style="{ backgroundColor: artworkColor }">
+                                    {{ style }}
+                                </md-chip>
+                            </md-card-actions>
+                        </div>
                     </md-card-area>
                 </md-card-media-cover>
             </md-card>
-            <pre>
-                {{ release }}
-            </pre>
+            <div class="release-item__content container">
+                <md-card>
+                    <md-card-content>
+                        <md-list>
+                            <md-list-item v-for="track in release.tracklist" :key="track.title" >
+                                <span>{{ track.title }}</span>
+                                <md-button class="md-icon-button md-list-action">
+                                    <md-icon>play_arrow</md-icon>
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </md-card-content>
+                </md-card>
+                <!--<md-whiteframe>
+                    <pre>
+                    {{ release }}
+                    </pre>
+                </md-whiteframe>-->
+            </div>
         </div>
     </transition>
 </div>
