@@ -14,8 +14,8 @@ Vue.use(ProgressiveImage, {
 });
 
 Vue.material.registerTheme('default', {
-  primary: 'red',
-  accent: 'indigo',
+  primary: 'blue-grey',
+  accent: 'red',
   warn: 'red',
   background: 'white'
 })

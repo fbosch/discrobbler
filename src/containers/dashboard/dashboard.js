@@ -12,6 +12,7 @@ export default class Dashboard extends Vue {
         shouldSort: true,
         tokenize: true,
         threshold: 0.2,
+        minMatchCharLength: 3,
         matchAllTokens: true,
         keys: ['basic_information.title', 'basic_information.artists.name', 'basic_information.formats.name']
     }
@@ -35,21 +36,25 @@ export default class Dashboard extends Vue {
         } else {
             Dashboard.fetchCollection()
         }
-
+        this.evaluateSearchQuery()
         this.unsubcribe = store.subscribe(() => {
             const discogsCollection = Dashboard.getCollection()
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
                 this.collection = discogsCollection
             }
             this.collectionIsLoading = store.getState().discogs.collectionIsLoading
-            const searchState = store.getState().page.search
-            if (searchState && searchState.length) {
-                var fuse = new Fuse(this.collection, Dashboard.searchOptions)
-                this.filteredCollection = fuse.search(searchState)
-            } else {
-                this.filteredCollection = [...this.collection]
-            }
+            this.evaluateSearchQuery()
         })
+    }
+
+    evaluateSearchQuery() {
+        const searchState = store.getState().page.search
+        if (searchState && searchState.length) {
+            var fuse = new Fuse(this.collection, Dashboard.searchOptions)
+            this.filteredCollection = fuse.search(searchState)
+        } else {
+            this.filteredCollection = [...this.collection]
+        }
     }
 
     beforeDestroy() {

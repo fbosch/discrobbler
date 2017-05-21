@@ -22,4 +22,10 @@ export const views = {
 
 export const routes = reduce(views, (accum, val, key) => [...accum, { ...val, name: key }], [])
 
-export default new VueRouter({ routes })
+export default new VueRouter({
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        console.log(savedPosition)
+        return { x: 0, y: 100 }
+    }
+})

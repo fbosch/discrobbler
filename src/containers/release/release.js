@@ -21,6 +21,10 @@ export default class Release extends Vue {
         return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
     }
 
+    created() {
+        window.scrollTo(0, 0);
+    }
+
     mounted() {
         const getReleaseLoadingState = state => get(state, 'discogs.selectedReleaseLoading', this.releaseIsLoading)
         const getRelease = state => get(state, 'discogs.selectedRelease', null)

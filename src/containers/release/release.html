@@ -2,10 +2,33 @@
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="releaseIsLoading"></md-spinner>
         <div class="release-item" v-else>
-            <div class="release-item__cover" :style="{ backgroundColor: artworkColor }">
-                <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" v-if="releaseCoverImage">
-                <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb">
-            </div>
+
+            <md-card>
+                <md-card-media-cover md-solid :style="{ backgroundColor: artworkColor }">
+                    <md-card-media md-ratio="1:1" class="release-item__cover">
+                        <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" v-if="releaseCoverImage">
+                        <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb"> </md-card-media>
+                    <md-card-area>
+                        <md-card-header>
+                            <div class="md-title">
+                                {{ release.title }}
+                            </div>
+                            <div class="md-subhead">
+                                {{ release.artists[0].name }}
+                            </div>
+                        </md-card-header>
+
+                        <md-card-actions>
+                            <md-chip v-for="genre in release.genres" :track="genre" :style="{ backgroundColor: artworkColor }">
+                                {{ genre }}
+                            </md-chip>
+                        </md-card-actions>
+                    </md-card-area>
+                </md-card-media-cover>
+            </md-card>
+            <pre>
+                {{ release }}
+            </pre>
         </div>
     </transition>
 </div>
