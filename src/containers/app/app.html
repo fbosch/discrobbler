@@ -1,9 +1,17 @@
 <div id="app">
   <md-toolbar :style="{ backgroundColor: toolbarColor }">
-    <h2 class="md-title">Discogs Scrobbler</h2>
+    <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
+      <md-icon>menu</md-icon>
+    </md-button>
+    <transition name="fade">
+      <md-input-container class="search-box" v-if="isOnDashboard">
+        <label>Search</label>
+        <md-input v-model="search"></md-input>
+      </md-input-container>
+    </transition>
     <span style="flex:1"></span>
-    <md-menu md-direction="bottom left" md-size="4">
-      <md-avatar :if="avatar" md-menu-trigger>
+    <md-menu md-direction="bottom left" md-size="4" v-if="authenticated">
+      <md-avatar v-if="avatar" md-menu-trigger>
         <img :src="avatar">
       </md-avatar>
       <md-menu-content>
@@ -17,10 +25,26 @@
         </router-link>
       </md-menu-content>
     </md-menu>
+
   </md-toolbar>
+  <md-sidenav class="md-left" ref="leftSidenav">
+    <md-toolbar class="md-large" :style="{ backgroundColor: toolbarColor }">
+      <div class="md-toolbar-container">
+        <h2 class="md-title">Discogs Scrobbler</h2>
+      </div>
+    </md-toolbar>
+    <md-list>
+      <md-list-item>
+        <router-link :to="{ name:'dashboard' }" @click.native="toggleLeftSidenav">
+          <md-icon>dashboard</md-icon> <span>Dashboard</span>
+        </router-link>
+      </md-list-item>
+    </md-list>
+  </md-sidenav>
   <div class="main-content">
     <transition name="fade">
       <router-view></router-view>
     </transition>
   </div>
+
 </div>

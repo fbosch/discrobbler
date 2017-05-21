@@ -1,15 +1,17 @@
 @import '~vue-material/dist/vue-material.css';
-@import '~progressive-image/dist/index.css';
 .main-content {
-    padding-top: 64px;
     margin: 0 auto;
 }
 
 .md-toolbar {
-    position: fixed;
-    width: 100%;
-    z-index: 99;
-    transition: background-color .2s linear;
+    transition: background-color .3s ease;
+}
+
+.search-box {
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -25%);
 }
 
 .container {
@@ -25,7 +27,7 @@
 
 .fade-enter-active,
 {
-    transition-delay: .2s;
+    transition-delay: .3s;
 }
 
 .fade-enter,
@@ -40,12 +42,24 @@
     transform: translate(-50%, -50%);
 }
 
+.md-menu-content .md-list {
+    z-index: 99;
+}
+
+.md-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    z-index: 2
+}
+
 img[lazy] {
     transition: opacity .3s linear;
 }
+
 img[lazy=loading] {
     opacity: 0;
 }
+
 img[lazy="loaded"] {
     opacity: 1;
 }

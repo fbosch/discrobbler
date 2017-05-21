@@ -10,7 +10,6 @@ import ProgressiveImage from 'progressive-image/dist/vue'
 Vue.use(material)
 Vue.use(lazyload)
 Vue.use(ProgressiveImage, {
-  removePreview: true,
   scale: true
 });
 

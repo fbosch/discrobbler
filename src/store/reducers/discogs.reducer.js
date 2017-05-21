@@ -4,17 +4,26 @@ import {
     DISCOGS_COLLECTION_ITEMS_RECEIVED,
     DISCOGS_USER_COLLECTION_FETCH,
     DISCOGS_RELEASE_FETCH,
-    DISCOGS_RELEASE_RECEIVED
+    DISCOGS_RELEASE_RECEIVED,
+    DISCOGS_USER_FETCH,
+    DISCOGS_USER_ERROR
 } from '../actions/discogs.actions'
 
 export default (state = {}, action) => {
     switch (action.type) {
 
+        case DISCOGS_USER_FETCH:
+        case DISCOGS_USER_ERROR:
+            return {
+                ...state,
+                authenticated: false
+            }
+
         case DISCOGS_USER_RECEIVED:
             return {
                 ...state,
                 user: action.payload,
-                collection: []
+                authenticated: true
             }
 
         case DISCOGS_COLLECTION_FOLDERS_RECEIVED:

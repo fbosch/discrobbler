@@ -1,43 +1,58 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import store from '../../store'
-import { fetchUserCollection } from '../../store/actions/discogs.actions'
+import { fetchUserCollection, resetTool, clearSelectedRelease } from '../../store/actions/discogs.actions'
 import get from 'lodash.get'
 import moment from 'moment'
+import Fuse from 'fuse.js'
 
 @Component
 export default class Dashboard extends Vue {
-    getCollection(state) { return get(state, 'discogs.collection', []) }
-    getLastCollectionFetchDate(state) { return get(state, 'discogs.lastCollectionFetch', null) }
-    fetchCollection() { store.dispatch(fetchUserCollection(store.getState().discogs.user.username)) }
+    static searchOptions = {
+        shouldSort: true,
+        tokenize: true,
+        threshold: 0.2,
+        matchAllTokens: true,
+        keys: ['basic_information.title', 'basic_information.artists.name', 'basic_information.formats.name']
+    }
 
-    collection = this.getCollection(store.getState())
+    static getCollection() { return get(store.getState(), 'discogs.collection', []) }
+    static getLastCollectionFetchDate() { return get(store.getState(), 'discogs.lastCollectionFetch', null) }
+    static fetchCollection() { store.dispatch(fetchUserCollection(store.getState().discogs.user.username)) }
+
+    collection = Dashboard.getCollection(store.getState())
+    filteredCollection = [...this.collection]
     collectionIsLoading = !this.collection
 
     mounted() {
-        console.log(this)
         if (this.collection.length) {
-            const lastFetchDate = this.getLastCollectionFetchDate(store.getState())
+            const lastFetchDate = Dashboard.getLastCollectionFetchDate(store.getState())
             if (lastFetchDate) {
                 if (moment() > moment(lastFetchDate).add({ days: 1 })) {
-                    this.fetchCollection()
-                } 
+                    Dashboard.fetchCollection()
+                }
             }
         } else {
-            this.fetchCollection()
+            Dashboard.fetchCollection()
         }
+
         this.unsubcribe = store.subscribe(() => {
-            const state = store.getState(),
-                discogsCollection = this.getCollection(state)
+            const discogsCollection = Dashboard.getCollection()
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
                 this.collection = discogsCollection
             }
-            this.collectionIsLoading = state.discogs.collectionIsLoading
+            this.collectionIsLoading = store.getState().discogs.collectionIsLoading
+            const searchState = store.getState().page.search
+            if (searchState && searchState.length) {
+                var fuse = new Fuse(this.collection, Dashboard.searchOptions)
+                this.filteredCollection = fuse.search(searchState)
+            } else {
+                this.filteredCollection = [...this.collection]
+            }
         })
     }
 
     beforeDestroy() {
         if (this.unsubscribe) this.unsubscribe()
     }
-
 }

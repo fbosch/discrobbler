@@ -1,12 +1,20 @@
 .release-item {
     &__cover {
-        height: 35vh;
-        margin: 0 -28px;
+        height: 270px;
         overflow: hidden;
-        .progressive {
-            transform: translateY(-20%);
-            img {
-                object-fit: cover;
+        img {
+            width: 100%;
+            height: 100%;
+            filter: blur(10px);
+            transform: scale(1.05);
+            will-change: transform, filter;
+            transition: filter 1s ease, transform .5s ease;
+            position: relative;
+            object-fit: cover;
+            object-position: center;
+            &.loaded {
+                filter: blur(0px);
+                transform: scale(1);
             }
         }
     }

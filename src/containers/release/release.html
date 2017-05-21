@@ -2,39 +2,10 @@
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="releaseIsLoading"></md-spinner>
         <div class="release-item" v-else>
-            <div class="release-item__cover" v-bind="release">
-                <div class="progressive" v-if="releaseCoverImage">
-                    <img @load="imageLoaded" class="preview" v-progressive="releaseCoverImage[2]['#text']" :src="releaseCoverImage[0]['#text']"
-                        :data-srcset="releaseCoverImageSrcSet">
-                </div>
-                <div class="progressive" v-else>
-                    <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb preview">
-                </div>
+            <div class="release-item__cover" :style="{ backgroundColor: artworkColor }">
+                <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" v-if="releaseCoverImage">
+                <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb">
             </div>
-            <!--<md-card md-with-hover>
-                <md-card-header>
-                    <md-avatar>
-                        <img src="assets/avatar.png" alt="People">
-                    </md-avatar>
-
-                    <div class="md-title">Title goes here</div>
-                    <div class="md-subhead">Subtitle here</div>
-                </md-card-header>
-
-                <md-card-media>
-                    <img src="assets/card-image-1.jpg" alt="People">
-                </md-card-media>
-
-                <md-card-content>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea nostrum.
-                </md-card-content>
-
-                <md-card-actions>
-                    <md-button>Action</md-button>
-                    <md-button>Action</md-button>
-                </md-card-actions>
-            </md-card>-->
         </div>
-
     </transition>
 </div>

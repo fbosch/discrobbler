@@ -2,7 +2,7 @@
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="collectionIsLoading"></md-spinner>
         <md-list v-else class="album-list">
-            <md-list-item v-for="item in collection" :key="item.id" v-if="item" class="md-triple-line album-item">
+            <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item">
                 <router-link :to="{name:'release', params: { id: item.id }}">
                     <md-avatar>
                         <img v-lazy="item.basic_information.thumb" v-if="item.basic_information.thumb">
