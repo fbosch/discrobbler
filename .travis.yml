@@ -1,6 +1,7 @@
 language: node_js
 yarn: true
 node_js: "7"
+before_deploy: yarn run build
 deploy:
   provider: pages
   skip_cleanup: true
