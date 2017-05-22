@@ -1,12 +1,11 @@
 {
   "presets": [
-    "es2015",
-    "stage-2"
+    "es2015"
   ],
   "plugins": [
     "transform-decorators-legacy",
     "transform-object-rest-spread",
     "transform-class-properties"
   ],
-  "comments":false
+  "comments": false
 }

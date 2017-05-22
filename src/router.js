@@ -25,7 +25,10 @@ export const routes = reduce(views, (accum, val, key) => [...accum, { ...val, na
 export default new VueRouter({
     routes,
     scrollBehavior(to, from, savedPosition) {
-        console.log(savedPosition)
-        return { x: 0, y: 100 }
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
     }
 })

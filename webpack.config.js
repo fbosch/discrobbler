@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -25,16 +26,6 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
-        }, {
-          loader: "sass-loader" // compiles Sass to CSS
-        }]
-      },
-      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -55,15 +46,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-    },
-    proxy: {
-      'api*': 'localhost:8080'
-    }
+    noInfo: true
   },
   performance: {
     hints: false
@@ -80,10 +63,13 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
+    new ParallelUglifyPlugin({
+      cacheDir: '.tmp',
+      uglifyJS: {
+        sourceMap: true,
+        compress: {
+          warnings: false
+        }
       }
     }),
     new webpack.LoaderOptionsPlugin({

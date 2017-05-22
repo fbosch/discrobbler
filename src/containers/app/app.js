@@ -59,7 +59,7 @@ export default class App extends Vue {
         store.dispatch(search(newVal))
     }
 
-    @Watch('$route', { immediate: true, deep: true })
+    @Watch('$route', { deep: true })
     checkCurrentPage(newVal, oldVal) {
         this.isOnDashboard = newVal.name === 'dashboard'
     }
