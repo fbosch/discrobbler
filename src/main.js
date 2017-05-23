@@ -9,6 +9,8 @@ import ProgressiveImage from 'progressive-image/dist/vue'
 
 import 'firebase/auth'
 import 'firebase/database'
+import 'firebase/runtimeconfig'
+import 'firebase/functions'
 import firebase from 'firebase/app'
 
 var config = {
