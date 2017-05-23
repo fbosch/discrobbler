@@ -1,17 +1,16 @@
 language: node_js
 yarn: true
 node_js: "7"
-env:
-  global:
-    - GITHUB_REPO: "fbosch/vue-discogs-scrobbler"
 cache:
   directories:
   - node_modules
-script:
-- bash ./deploy.sh
+before_deploy: 
+  - chmod a+x deploy.sh
+  - bash ./deploy.sh
 deploy:
   provider: pages
   skip_cleanup: true
+  local_dir: 'public'
   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
   on:
     branch: master
