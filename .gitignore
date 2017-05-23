@@ -4,5 +4,5 @@ dist/
 npm-debug.log
 yarn-error.log
 .tmp
-keys
+keys.js
 public
