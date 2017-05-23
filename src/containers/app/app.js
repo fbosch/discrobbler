@@ -5,7 +5,7 @@ import Component from 'vue-class-component'
 import get from 'lodash.get'
 import { Watch } from 'vue-property-decorator'
 import { search } from '../../store/actions/page.actions'
-
+import debounce from 'lodash.debounce'
 
 @Component
 export default class App extends Vue {
@@ -56,9 +56,10 @@ export default class App extends Vue {
     }
 
     @Watch('search')
-    onSearchChanges(newVal, oldVal) {
+    onSearchChanges = debounce(newVal => {
         store.dispatch(search(newVal))
-    }
+    }, 350)
+
 
     @Watch('$route', { immediate: true, deep: true })
     checkCurrentPage() {

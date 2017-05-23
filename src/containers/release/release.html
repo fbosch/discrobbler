@@ -5,7 +5,7 @@
             <md-card>
                 <md-card-media-cover md-solid :style="{ backgroundColor: artworkColor }">
                     <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
-                        <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }" > 
+                        <img v-if="releaseCoverImage" :src="releaseCoverImage[2]['#text']"  @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }" > 
                     </md-card-media>
                     <md-card-area>
                         <div class="container">

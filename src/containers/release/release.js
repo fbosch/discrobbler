@@ -3,6 +3,8 @@ import Component from 'vue-class-component'
 import router from '../../router'
 import store from '../../store'
 import get from 'lodash.get'
+import trimEnd from 'lodash.trimend'
+import { removeBrackets } from '../../utils'
 import { fetchRelease, clearSelectedRelease } from '../../store/actions/discogs.actions'
 import { changeToolbarBackground, resetToolbarBackground, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
 import lastFm from '../../api/lastfm'
@@ -29,13 +31,14 @@ export default class Release extends Vue {
         }
     }
 
-    created() {
-        store.dispatch({ type: PAGE_SEARCH_CLEAR })
-    }
 
-    mounted() {
+
+    created() {
+        this.changeToolbarColorBasedOnCurrentCoverImage()
+        store.dispatch({ type: PAGE_SEARCH_CLEAR })
         const getReleaseLoadingState = state => get(state, 'discogs.selectedReleaseLoading', this.releaseIsLoading)
         const getRelease = state => get(state, 'discogs.selectedRelease', null)
+
         store.dispatch(fetchRelease(router.currentRoute.params.id))
         this.unsubscribe = store.subscribe(() => {
             const state = store.getState()
@@ -43,14 +46,15 @@ export default class Release extends Vue {
             if (!this.releaseIsLoading) {
                 if (getRelease(state) !== this.release) {
                     this.release = getRelease(state)
-                    lastFm.getAlbumInfo(this.release.artists[0].name, this.release.title)
+                    const artistName = trimEnd(removeBrackets(this.release.artists[0].name))
+                    lastFm.getAlbumInfo(artistName, this.release.title)
                         .then(response => response.json())
                         .then(data => {
                             if (data.error) {
                                 this.fallbackThumb = this.getFallbackThumb()
                             } else {
                                 this.releaseCoverImage = data.album.image
-                                this.changeToolbarColorBasedOnImage()
+                                this.changeToolbarColorBasedOnCurrentCoverImage()
                             }
                         })
                 }
@@ -59,8 +63,8 @@ export default class Release extends Vue {
 
     }
 
-    changeToolbarColorBasedOnImage() {
-        if (!this.artworkColor) {
+    changeToolbarColorBasedOnCurrentCoverImage() {
+        if (!this.artworkColor && this.releaseCoverImage) {
             const toolbar = document.querySelector('.md-theme-default.md-toolbar')
             this.initialToolbarColor = getComputedStyle(toolbar).backgroundColor
             Vibrant.from(this.releaseCoverImage[0]['#text'])
@@ -76,6 +80,7 @@ export default class Release extends Vue {
     }
 
     imageLoaded(event) {
+        this.changeToolbarColorBasedOnCurrentCoverImage()        
         if (!event.target.classList.contains('loaded')) event.target.classList.add('loaded')
     }
 
@@ -90,6 +95,9 @@ export default class Release extends Vue {
     }
 
     updated() {
+        if (!this.release) {
+            scroll(0, 0)
+        }
         const image = this.$el.querySelector('img[data-srcset]')
         if (image) {
             image.setAttribute('srcset', image.getAttribute('data-srcset'))

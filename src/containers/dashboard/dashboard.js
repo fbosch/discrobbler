@@ -33,7 +33,7 @@ export default class Dashboard extends Vue {
         if (this.collection.length) {
             const lastFetchDate = Dashboard.getLastCollectionFetchDate(),
                 lastFetchUserId = Dashboard.getLastCollectionFetchUserId()
-                
+
             if (lastFetchDate) {
                 if (lastFetchUserId !== Dashboard.getCurrentUserId()) {
                     Dashboard.fetchCollection()

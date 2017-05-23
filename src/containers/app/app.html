@@ -6,7 +6,7 @@
     <transition name="fade">
       <md-input-container class="search-box" v-if="isOnDashboard">
         <label>Search</label>
-        <md-input v-model="search" debounce="500"></md-input>
+        <md-input v-model="search"></md-input>
       </md-input-container>
     </transition>
     <span style="flex:1"></span>
@@ -26,7 +26,7 @@
       </md-menu-content>
     </md-menu>
   </md-toolbar>
-  <md-sidenav class="md-left" ref="leftSidenav">
+  <md-sidenav class="md-left" ref="leftSidenav" md-swipable>
     <md-toolbar class="md-large" :style="{ backgroundColor: toolbarColor }">
       <div class="md-toolbar-container">
         <h2 class="md-title">Discogs Scrobbler</h2>
