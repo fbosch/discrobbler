@@ -1,6 +1,15 @@
-<form class="login container" @submit.prevent="getUser">
-    <md-input-container>
-        <label>Discogs Username</label>
-        <md-input v-model="discogsUserName"></md-input>
-    </md-input-container>
-</form>
+<div class="container">
+    <md-layout md-column md-gutter>
+        <md-layout md-align="center">
+            <span class="md-headline">Authorize</span>
+        </md-layout>
+        <md-layout md-align="center">
+            <md-button class="md-raised md-primary" >
+                Connect to Last.fm
+            </md-button>
+            <md-button class="md-raised md-primary" @click.native="authorizeDiscogs">
+                Connect to Discogs
+            </md-button>
+        </md-layout>
+    </md-layout>
+</div>

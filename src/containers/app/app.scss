@@ -1,4 +1,10 @@
 @import '~vue-material/dist/vue-material.css';
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+}
+
+
 .main-content {
     margin: 0 auto;
 }
@@ -13,7 +19,7 @@
 .container {
     max-width: 1200px;
     padding: 0 10px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .fade-enter-active,

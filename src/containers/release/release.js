@@ -31,8 +31,6 @@ export default class Release extends Vue {
         }
     }
 
-
-
     created() {
         this.changeToolbarColorBasedOnCurrentCoverImage()
         store.dispatch({ type: PAGE_SEARCH_CLEAR })
@@ -54,8 +52,8 @@ export default class Release extends Vue {
                                 this.fallbackThumb = this.getFallbackThumb()
                             } else {
                                 this.releaseCoverImage = data.album.image
-                                this.changeToolbarColorBasedOnCurrentCoverImage()
                             }
+                            this.changeToolbarColorBasedOnCurrentCoverImage()
                         })
                 }
             }
@@ -64,10 +62,10 @@ export default class Release extends Vue {
     }
 
     changeToolbarColorBasedOnCurrentCoverImage() {
-        if (!this.artworkColor && this.releaseCoverImage) {
+        if (!this.artworkColor && this.release) {
             const toolbar = document.querySelector('.md-theme-default.md-toolbar')
             this.initialToolbarColor = getComputedStyle(toolbar).backgroundColor
-            Vibrant.from(this.releaseCoverImage[0]['#text'])
+            Vibrant.from(this.lowestQualityCover)
                 .getPalette((error, palette) => {
                     if (!error) {
                         if (palette.Muted) {
@@ -80,11 +78,12 @@ export default class Release extends Vue {
     }
 
     imageLoaded(event) {
-        this.changeToolbarColorBasedOnCurrentCoverImage()        
+        this.changeToolbarColorBasedOnCurrentCoverImage()
         if (!event.target.classList.contains('loaded')) event.target.classList.add('loaded')
     }
 
     getFallbackThumb() {
+        console.log('get fallback thumb')
         const collection = get(store.getState(), 'discogs.collection', null)
         if (collection) {
             const item = collection.find(item => item.id === this.release.id)

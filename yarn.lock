@@ -1423,6 +1423,12 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+disconnect@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/disconnect/-/disconnect-1.1.0.tgz#ced5a98a24654f4d4c9cbb2649dfae603e531b13"
+  dependencies:
+    oauth-1.0a "2.x.x"
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
@@ -2817,6 +2823,10 @@ num2fraction@^1.2.2:
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
+
+oauth-1.0a@2.x.x:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/oauth-1.0a/-/oauth-1.0a-2.1.1.tgz#bf85d1c8be4587123bedf8c07d31aeda95b9d017"
 
 oauth-sign@~0.8.1:
   version "0.8.2"

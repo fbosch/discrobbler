@@ -3,7 +3,7 @@ import keys from '../keys'
 class DiscogsApi {
 
     apiUrl(method) {
-        return `https://api.discogs.com/${method}?key=${keys.discogs.key}&secret=${keys.discogs.secret}`
+        return `https://api.discogs.com/${method}?key=${keys.discogs.key}`
     }
 
     getUserDetails(username) {
