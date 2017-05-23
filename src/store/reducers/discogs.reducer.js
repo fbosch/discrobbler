@@ -44,7 +44,8 @@ export default (state = {}, action) => {
                 ...state,
                 collection: [action.payload.releases].concat(state.collection)[0],
                 collectionIsLoading: false,
-                lastCollectionFetch: new Date()
+                lastCollectionFetchDate: new Date(),
+                lastCollectionFetchUserId: {...state}.user.id
             }
 
         case DISCOGS_RELEASE_FETCH:

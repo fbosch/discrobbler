@@ -8,7 +8,7 @@ import Fuse from 'fuse.js'
 
 @Component
 export default class Dashboard extends Vue {
-    
+
     static searchOptions = {
         shouldSort: true,
         tokenize: true,
@@ -19,7 +19,10 @@ export default class Dashboard extends Vue {
     }
 
     static getCollection() { return get(store.getState(), 'discogs.collection', []) }
-    static getLastCollectionFetchDate() { return get(store.getState(), 'discogs.lastCollectionFetch', null) }
+    static getLastCollectionFetchDate() { return get(store.getState(), 'discogs.lastCollectionFetchDate', null) }
+    static getLastCollectionFetchUserId() { return get(store.getState(), 'discogs.lastCollectionFetchUserId', null) }
+    static getCurrentUserId() { return get(store.getState(), 'discogs.user.id', null) }
+
     static fetchCollection() { store.dispatch(fetchUserCollection(store.getState().discogs.user.username)) }
 
     collection = Dashboard.getCollection(store.getState())
@@ -28,9 +31,13 @@ export default class Dashboard extends Vue {
 
     mounted() {
         if (this.collection.length) {
-            const lastFetchDate = Dashboard.getLastCollectionFetchDate(store.getState())
+            const lastFetchDate = Dashboard.getLastCollectionFetchDate(),
+                lastFetchUserId = Dashboard.getLastCollectionFetchUserId()
+                
             if (lastFetchDate) {
-                if (moment() > moment(lastFetchDate).add({ days: 1 })) {
+                if (lastFetchUserId !== Dashboard.getCurrentUserId()) {
+                    Dashboard.fetchCollection()
+                } else if (moment() > moment(lastFetchDate).add({ days: 1 })) {
                     Dashboard.fetchCollection()
                 }
             }
