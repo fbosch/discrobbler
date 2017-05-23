@@ -1,6 +1,6 @@
 # vue-discogs-scrobbler
-
-> A Vue.js project
+![build](https://travis-ci.org/fBosch/vue-discogs-scrobbler.svg?branch=master)
+> A Vue.js project for scrobbling your discogs collection to last.fm
 
 ## Build Setup
 
