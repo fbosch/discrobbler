@@ -1,15 +1,33 @@
 <div class="container">
     <md-layout md-column md-gutter>
         <md-layout md-align="center">
-            <span class="md-headline">Authorize</span>
+            <span class="md-headline">Authorization</span>
         </md-layout>
         <md-layout md-align="center">
-            <md-button class="md-raised md-primary" >
-                Connect to Last.fm
-            </md-button>
+            <md-layout md-hide-xsmall></md-layout>
+            <md-layout>
+                <md-input-container>
+                    <label>Username</label>
+                    <md-input v-model="lastfmUsername"></md-input>
+                </md-input-container>
+                <md-input-container md-has-password>
+                    <label>Password</label>
+                    <md-input type="password" v-model="lastfmPassword"></md-input>
+                </md-input-container>
+                <md-layout md-align="center">
+                    <md-button class="md-raised md-primary" @click.native="authorizeLastfm">
+                        Connect to Last.fm
+                    </md-button>
+                </md-layout>
+            </md-layout>
+            <md-layout md-hide-xsmall></md-layout>
+
+        </md-layout>
+        <!--<md-layout md-align="center">
+
             <md-button class="md-raised md-primary" @click.native="authorizeDiscogs">
                 Connect to Discogs
             </md-button>
-        </md-layout>
+        </md-layout>-->
     </md-layout>
 </div>

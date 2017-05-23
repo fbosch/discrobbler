@@ -1,4 +1,4 @@
-import keys from '../keys'
+import keys from '../../keys'
 
 class LastFmApi {
 
