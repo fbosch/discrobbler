@@ -1,7 +1,8 @@
 import {
     PAGE_CHANGE_TOOLBAR_BACKGROUND,
     PAGE_RESET_TOOLBAR_BACKGROUND,
-    PAGE_SEARCH
+    PAGE_SEARCH,
+    PAGE_SEARCH_CLEAR
 } from '../actions/page.actions'
 
 export default (state = {}, action) => {
@@ -23,6 +24,12 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 search: action.payload
+            }
+            
+        case PAGE_SEARCH_CLEAR:
+            return {
+                ...state,
+                search: null
             }
 
         default: return state

@@ -36,6 +36,7 @@ export default class App extends Vue {
     }
 
     mounted() {
+        this.checkCurrentPage()
         this.unsubscribe = store.subscribe(() => {
             const currentDiscogsUserState = this.selectDiscogsUser()
             if (currentDiscogsUserState) {
@@ -59,9 +60,9 @@ export default class App extends Vue {
         store.dispatch(search(newVal))
     }
 
-    @Watch('$route', { deep: true })
-    checkCurrentPage(newVal, oldVal) {
-        this.isOnDashboard = newVal.name === 'dashboard'
+    @Watch('$route', { immediate: true, deep: true })
+    checkCurrentPage() {
+        this.isOnDashboard = router.currentRoute.name === 'dashboard'
     }
 
     toggleLeftSidenav() {

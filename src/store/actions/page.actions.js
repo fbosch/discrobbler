@@ -13,6 +13,7 @@ export function resetToolbarBackground() {
 }
 
 export const PAGE_SEARCH = prefix + 'SEARCH'
+export const PAGE_SEARCH_CLEAR = prefix + 'SEARCH_CLEAR'
 
 export function search(query) {
     return dispatch => dispatch({ type: PAGE_SEARCH, payload: query })

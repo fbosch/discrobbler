@@ -2,12 +2,11 @@
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="releaseIsLoading"></md-spinner>
         <div class="release-item" v-else>
-
             <md-card>
                 <md-card-media-cover md-solid :style="{ backgroundColor: artworkColor }">
-                    <md-card-media md-ratio="1:1" class="release-item__cover">
-                        <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" v-if="releaseCoverImage">
-                        <img :src="fallbackThumb" @load="imageLoaded" class="release-item__thumb"> </md-card-media>
+                    <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
+                        <img :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }" > 
+                    </md-card-media>
                     <md-card-area>
                         <div class="container">
                             <md-card-header>

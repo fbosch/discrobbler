@@ -4,7 +4,7 @@ import router from '../../router'
 import store from '../../store'
 import get from 'lodash.get'
 import { fetchRelease, clearSelectedRelease } from '../../store/actions/discogs.actions'
-import { changeToolbarBackground, resetToolbarBackground } from '../../store/actions/page.actions'
+import { changeToolbarBackground, resetToolbarBackground, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
 import lastFm from '../../api/lastfm'
 import Vibrant from 'node-vibrant'
 
@@ -19,6 +19,18 @@ export default class Release extends Vue {
 
     get releaseCoverImageSrcSet() {
         return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
+    }
+
+    get lowestQualityCover() {
+        if (this.releaseCoverImage) {
+            return this.releaseCoverImage[0]['#text']
+        } else {
+            return this.getFallbackThumb()
+        }
+    }
+
+    created() {
+        store.dispatch({ type: PAGE_SEARCH_CLEAR })
     }
 
     mounted() {
@@ -38,27 +50,33 @@ export default class Release extends Vue {
                                 this.fallbackThumb = this.getFallbackThumb()
                             } else {
                                 this.releaseCoverImage = data.album.image
+                                this.changeToolbarColorBasedOnImage()
                             }
                         })
                 }
             }
         })
+
     }
 
-    imageLoaded(event) {
+    changeToolbarColorBasedOnImage() {
         if (!this.artworkColor) {
             const toolbar = document.querySelector('.md-theme-default.md-toolbar')
             this.initialToolbarColor = getComputedStyle(toolbar).backgroundColor
-            event.target.classList.add('loaded')
-            Vibrant.from(event.target.src).getPalette((error, palette) => {
-                if (!error) {
-                    if (palette.Muted) {
-                        store.dispatch(changeToolbarBackground(palette.Muted.getHex()))
-                        this.artworkColor = palette.Muted.getHex()
+            Vibrant.from(this.releaseCoverImage[0]['#text'])
+                .getPalette((error, palette) => {
+                    if (!error) {
+                        if (palette.Muted) {
+                            store.dispatch(changeToolbarBackground(palette.Muted.getHex()))
+                            this.artworkColor = palette.Muted.getHex()
+                        }
                     }
-                }
-            })
+                })
         }
+    }
+
+    imageLoaded(event) {
+        if (!event.target.classList.contains('loaded')) event.target.classList.add('loaded')
     }
 
     getFallbackThumb() {
@@ -73,7 +91,10 @@ export default class Release extends Vue {
 
     updated() {
         const image = this.$el.querySelector('img[data-srcset]')
-        if (image) image.setAttribute('srcset', image.getAttribute('data-srcset'))
+        if (image) {
+            image.setAttribute('srcset', image.getAttribute('data-srcset'))
+            image.removeAttribute('data-srcset')
+        }
     }
 
     beforeDestroy() {

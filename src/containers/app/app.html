@@ -6,7 +6,7 @@
     <transition name="fade">
       <md-input-container class="search-box" v-if="isOnDashboard">
         <label>Search</label>
-        <md-input v-model="search"></md-input>
+        <md-input v-model="search" debounce="500"></md-input>
       </md-input-container>
     </transition>
     <span style="flex:1"></span>
@@ -25,7 +25,6 @@
         </router-link>
       </md-menu-content>
     </md-menu>
-
   </md-toolbar>
   <md-sidenav class="md-left" ref="leftSidenav">
     <md-toolbar class="md-large" :style="{ backgroundColor: toolbarColor }">

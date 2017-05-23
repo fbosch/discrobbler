@@ -37,7 +37,6 @@ export default class Dashboard extends Vue {
         } else {
             Dashboard.fetchCollection()
         }
-        this.evaluateSearchQuery()
         this.unsubcribe = store.subscribe(() => {
             const discogsCollection = Dashboard.getCollection()
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
