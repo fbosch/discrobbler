@@ -6,23 +6,23 @@ import store from './store'
 import material from 'vue-material'
 import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
+import keys from './keys'
 
-import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/auth'
+import firebase from 'firebase/app'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../dist/service-worker.js');
 }
-
 var config = {
-  apiKey: "AIzaSyBFIvEfsNsjaHfMmbQCadB8nWWegfXIIVo",
-  authDomain: "discogs-scrobbler.firebaseapp.com",
-  databaseURL: "https://discogs-scrobbler.firebaseio.com",
-  projectId: "discogs-scrobbler",
-  storageBucket: "discogs-scrobbler.appspot.com",
-  messagingSenderId: "397731299445"
-};
+    apiKey: keys.firebase.key,
+    authDomain: "discogs-scrobbler-bc271.firebaseapp.com",
+    databaseURL: "https://discogs-scrobbler-bc271.firebaseio.com",
+    projectId: "discogs-scrobbler-bc271",
+    storageBucket: "discogs-scrobbler-bc271.appspot.com",
+    messagingSenderId: "346276903265"
+  }
 firebase.initializeApp(config);
 
 Vue.use(material)

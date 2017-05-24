@@ -61,7 +61,8 @@ module.exports.plugins = (module.exports.plugins || []).concat([
         DISCOGS_KEY: JSON.stringify(process.env.DISCOGS_KEY),
         DISCOGS_SECRET: JSON.stringify(process.env.DISCOGS_SECRET),        
         LASTFM_KEY: JSON.stringify(process.env.LASTFM_KEY),
-        LASTFM_SECRET: JSON.stringify(process.env.LASTFM_SECRET),                
+        LASTFM_SECRET: JSON.stringify(process.env.LASTFM_SECRET),      
+        FIREBASE_WEB_API_KEY: JSON.stringify(process.env.FIREBASE_WEB_API_KEY)
       }
     }),
 ])
