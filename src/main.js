@@ -6,6 +6,7 @@ import store from './store'
 import material from 'vue-material'
 import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
+
 import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/auth'

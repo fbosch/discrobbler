@@ -2,7 +2,6 @@ var path = require('path')
 var webpack = require('webpack')
 var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -55,15 +54,22 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 
+module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"'+  process.env.NODE_ENV + '"',
+        DISCOGS_KEY: JSON.stringify(process.env.DISCOGS_KEY),
+        DISCOGS_SECRET: JSON.stringify(process.env.DISCOGS_SECRET),        
+        LASTFM_KEY: JSON.stringify(process.env.LASTFM_KEY),
+        LASTFM_SECRET: JSON.stringify(process.env.LASTFM_SECRET),                
+      }
+    }),
+])
+
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
     new ParallelUglifyPlugin({
       cacheDir: '.tmp',
       uglifyJS: {
