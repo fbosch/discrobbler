@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -72,6 +73,18 @@ if (process.env.NODE_ENV === 'production') {
         }
       }
     }),
+    new SWPrecacheWebpackPlugin(
+      {
+        cacheId: 'discogs-scrobbler',
+        filename: 'service-worker.js',
+        maximumFileSizeToCacheInBytes: 4194304,
+        minify: true,
+        runtimeCaching: [{
+          handler: 'cacheFirst',
+          urlPattern: /[.]mp3$/,
+        }],
+      }
+    ),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

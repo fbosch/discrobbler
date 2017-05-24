@@ -6,12 +6,13 @@ import store from './store'
 import material from 'vue-material'
 import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
-
-
 import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/auth'
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../dist/service-worker.js');
+}
 
 var config = {
   apiKey: "AIzaSyBFIvEfsNsjaHfMmbQCadB8nWWegfXIIVo",
