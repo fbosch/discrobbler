@@ -17,11 +17,11 @@ if ('serviceWorker' in navigator) {
 }
 var config = {
     apiKey: keys.firebase.key,
-    authDomain: "discogs-scrobbler-bc271.firebaseapp.com",
-    databaseURL: "https://discogs-scrobbler-bc271.firebaseio.com",
-    projectId: "discogs-scrobbler-bc271",
-    storageBucket: "discogs-scrobbler-bc271.appspot.com",
-    messagingSenderId: "346276903265"
+    authDomain: "discrobbler.firebaseapp.com",
+    databaseURL: "https://discrobbler.firebaseio.com",
+    projectId: "discrobbler",
+    storageBucket: "discrobbler.appspot.com",
+    messagingSenderId: "659399864999"
   }
 firebase.initializeApp(config);
 
