@@ -7,11 +7,11 @@ import material from 'vue-material'
 import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
 
-import 'firebase/auth'
-import 'firebase/database'
-import 'firebase/runtimeconfig'
-import 'firebase/functions'
+
 import firebase from 'firebase/app'
+import 'firebase/database'
+import 'firebase/auth'
+
 
 var config = {
   apiKey: "AIzaSyBFIvEfsNsjaHfMmbQCadB8nWWegfXIIVo",
