@@ -5,10 +5,13 @@
         </md-layout>
         <md-layout md-align="center">
             <md-layout md-hide-xsmall></md-layout>
-            <md-layout md-align="center">
+            <md-layout md-align="center" v-if="!lastfmSession">
                 <md-button class="md-raised md-primary" @click.native="authorizeLastfm">
                     Connect to Last.fm
                 </md-button>
+            </md-layout>
+            <md-layout md-align="center">
+                LastFM: Authorized as {{ lastfmSession.name }}
             </md-layout>
             <md-layout md-hide-xsmall></md-layout>
         </md-layout>
