@@ -17,6 +17,10 @@ export const views = {
     release: {
         path: '/release/:id',
         component: containers.Release
+    },
+    authenticate: {
+        path: '/authenticate/:auth',
+        component: containers.Login
     }
 }
 

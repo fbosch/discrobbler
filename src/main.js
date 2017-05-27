@@ -12,24 +12,23 @@ import 'firebase/database'
 import 'firebase/auth'
 import firebase from 'firebase/app'
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   navigator.serviceWorker.register('../dist/service-worker.js');
 }
+
 var config = {
-    apiKey: keys.firebase.key,
-    authDomain: "discrobbler.firebaseapp.com",
-    databaseURL: "https://discrobbler.firebaseio.com",
-    projectId: "discrobbler",
-    storageBucket: "discrobbler.appspot.com",
-    messagingSenderId: "659399864999"
-  }
+  apiKey: keys.firebase.key,
+  authDomain: "discrobbler.firebaseapp.com",
+  databaseURL: "https://discrobbler.firebaseio.com",
+  projectId: "discrobbler",
+  storageBucket: "discrobbler.appspot.com",
+  messagingSenderId: "659399864999"
+}
 firebase.initializeApp(config);
 
 Vue.use(material)
 Vue.use(lazyload)
-Vue.use(ProgressiveImage, {
-  scale: true
-});
+Vue.use(ProgressiveImage, { scale: true });
 
 Vue.material.registerTheme('default', {
   primary: 'red',

@@ -5,6 +5,8 @@ import Component from 'vue-class-component'
 import get from 'lodash.get'
 import { Watch } from 'vue-property-decorator'
 import { search } from '../../store/actions/page.actions'
+import { setLastfmAuthenticationToken } from '../../store/actions/lastfm.actions'
+import queryString from 'query-string'
 import debounce from 'lodash.debounce'
 
 @Component
@@ -23,21 +25,21 @@ export default class App extends Vue {
     constructor() {
         super()
         const initialDiscogsUserState = this.selectDiscogsUser(store.getState())
-        if (initialDiscogsUserState) {
-            this.authenticated = this.selectAuthenticationState()
-            this.avatar = initialDiscogsUserState.avatar_url
-            this.username = initialDiscogsUserState.name
-            if (router.currentRoute.name === views.login.name || !router.currentRoute.name) {
-                router.push(views.dashboard)
-            }
-        } else {
-            router.push(views.login)
-        }
+        // if (initialDiscogsUserState) {
+        //     this.authenticated = this.selectAuthenticationState()
+        //     this.avatar = initialDiscogsUserState.avatar_url
+        //     this.username = initialDiscogsUserState.name
+        //     if (router.currentRoute.name === views.login.name || !router.currentRoute.name) {
+        //         router.push(views.dashboard)
+        //     }
+        // } else {
+        //     router.push(views.login)
+        // }
     }
 
     mounted() {
         this.checkCurrentPage()
-        this.unsubscribe = store.subscribe(() => {
+        this.beforeDestroy = store.subscribe(() => {
             const currentDiscogsUserState = this.selectDiscogsUser()
             if (currentDiscogsUserState) {
                 if (this.avatar !== currentDiscogsUserState.avatar_url) {
@@ -68,11 +70,5 @@ export default class App extends Vue {
 
     toggleLeftSidenav() {
         requestAnimationFrame(() => this.$refs.leftSidenav.toggle())
-    }
-
-
-
-    beforeDestroy() {
-        if (this.unsubscribe) this.unsubscribe()
     }
 }

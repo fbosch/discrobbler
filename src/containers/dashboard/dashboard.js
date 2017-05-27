@@ -44,7 +44,7 @@ export default class Dashboard extends Vue {
         } else {
             Dashboard.fetchCollection()
         }
-        this.unsubcribe = store.subscribe(() => {
+        this.beforeDestroy = store.subscribe(() => {
             const discogsCollection = Dashboard.getCollection()
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
                 this.collection = discogsCollection
@@ -64,7 +64,4 @@ export default class Dashboard extends Vue {
         }
     }
 
-    beforeDestroy() {
-        if (this.unsubscribe) this.unsubscribe()
-    }
 }

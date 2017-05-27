@@ -5,10 +5,9 @@ import { fetchUser } from '../../store/actions/discogs.actions'
 import router, { views } from '../../router'
 import get from 'lodash.get'
 import keys from '../../keys'
-import { Client as Discogs } from 'disconnect'
-import md5 from 'js-md5'
-import Lastfm from 'simple-lastfm'
-
+import lastfm from '../../api/lastfm'
+import { setLastfmAuthenticationToken, getWebSession } from '../../store/actions/lastfm.actions'
+import queryString from 'query-string'
 
 @Component
 export default class Login extends Vue {
@@ -17,56 +16,47 @@ export default class Login extends Vue {
     lastfmPassword = null
 
     mounted() {
-        const select = state => get(state, 'discogs.user', undefined)
+        const parsedQueryString = queryString.parse(location.search)
+        if (router.currentRoute.name === 'authenticate' && parsedQueryString.token !== null) {
+            switch (router.currentRoute.params.auth) {
+                case 'lastfm':
+                    store.dispatch(setLastfmAuthenticationToken(parsedQueryString.token))
+                    window.location = location.origin + '/#/login'
+                    break;
+            }
+        }
 
-        let currentValue = select(store.getState())
-        const handleChange = () => {
-            let previousValue = currentValue
-            currentValue = select(store.getState())
-            if (previousValue !== currentValue && currentValue !== null) {
+        const getUserFromState = () => get(store.getState(), 'discogs.user', undefined)
+
+        const lastfmToken = get(store.getState(), 'lastfm.authenticationToken', undefined)
+        const lastfmSession = get(store.getState(), 'lastfm.websession', undefined)
+        if (lastfmToken && !lastfmSession) store.dispatch(getWebSession(lastfmToken))
+
+        console.log(lastfmToken, lastfmSession)
+
+        let currentUserValue = getUserFromState()
+        const observer = () => {
+            let previousUserValue = currentUserValue
+            currentUserValue = getUserFromState()
+
+            if (previousUserValue !== currentUserValue && currentUserValue !== null) {
                 router.push(views.dashboard)
             }
         }
-        this.unsubscribe = store.subscribe(handleChange)
-        console.log(Discogs)
+
+        this.beforeDestroy = store.subscribe(observer)
     }
 
     authorizeLastfm() {
-        const lastfm = new Lastfm({
-            api_key: keys.lastfm.key,
-            api_secret: keys.lastfm.secret,
-            username: this.lastfmUsername,
-            password: this.lastfmPassword,
-            authToken: md5(this.lastfmUsername + md5(this.lastfmPassword))
-        })
-
-        lastfm.scrobbleTrack({
-            artist: 'Post Malone',
-            track: 'Congratulations',
-            callback: result => {
-                console.log(result)
-            }
-        })
+        lastfm.authenticateUser()
     }
 
     authorizeDiscogs() {
-        // const oAuth = new Discogs().oauth();
-        // oAuth.getRequestToken(
-        //     keys.discogs.key,
-        //     keys.discogs.secret,
-        //     'https://github.com/fBosch/vue-discogs-scrobbler/callback',
-        //     function(err, requestData) {
-        //         console.log(err, requestData)
-        //     }
-        // )
+
     }
 
     getUser() {
         store.dispatch(fetchUser(this.discogsUsername))
-    }
-
-    beforeDestroy() {
-        this.unsubscribe()
     }
 
 }

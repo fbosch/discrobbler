@@ -76,5 +76,5 @@ export function fetchRelease(releaseId) {
 export const DISCOGS_CLEAR_SELECTED_RELEASE = prefix + 'CLEAR_SELECTED_RELEASE'
 
 export function clearSelectedRelease() {
-    return dispatch => dispatch({ type: DISCOGS_CLEAR_SELECTED_RELEASE })
+   return { type: DISCOGS_CLEAR_SELECTED_RELEASE }
 }
