@@ -5,16 +5,12 @@ class LastFmApi {
 
     static methodUrl = `https://ws.audioscrobbler.com/2.0/?api_key=${keys.lastfm.key}&format=json&method=`
 
-    constructor() {
-      
-    }
-
     getAlbumInfo(artist, album) {
         return fetch(`${LastFmApi.methodUrl}album.getinfo&artist=${artist}&album=${album}&autocorrect=1`)
     }
 
     authenticateUser() {
-        window.location = `https://last.fm/api/auth/?api_key=${keys.lastfm.key}&cb=${window.location.origin}/#/authenticate/lastfm`
+        window.location = `https://last.fm/api/auth/?api_key=${keys.lastfm.key}&cb=${window.location.origin}/authenticate/lastfm`
     }
 
     getWebSession(token) {

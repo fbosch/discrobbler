@@ -18,13 +18,9 @@ export default class App extends Vue {
     authenticated = false
     isOnDashboard = false
 
-    selectToolbarColor = () => get(store.getState(), 'page.toolbarColor', undefined)
-    selectDiscogsUser = () => get(store.getState(), 'discogs.user', undefined)
-    selectAuthenticationState = () => get(store.getState(), 'discogs.authenticated', false)
-
     constructor() {
         super()
-        const initialDiscogsUserState = this.selectDiscogsUser(store.getState())
+        const initialDiscogsUserState = store.getState().discogs.user
         // if (initialDiscogsUserState) {
         //     this.authenticated = this.selectAuthenticationState()
         //     this.avatar = initialDiscogsUserState.avatar_url
@@ -38,9 +34,8 @@ export default class App extends Vue {
     }
 
     mounted() {
-        this.checkCurrentPage()
         this.beforeDestroy = store.subscribe(() => {
-            const currentDiscogsUserState = this.selectDiscogsUser()
+            const currentDiscogsUserState = store.getState().discogs.user
             if (currentDiscogsUserState) {
                 if (this.avatar !== currentDiscogsUserState.avatar_url) {
                     this.avatar = currentDiscogsUserState.avatar_url
@@ -48,9 +43,9 @@ export default class App extends Vue {
                 }
             }
             if (this.selectAuthenticationState() !== this.authenticated) {
-                this.authenticated = this.selectAuthenticationState()
+                this.authenticated = !!store.getState().discogs.authenticated
             }
-            const toolbarColor = this.selectToolbarColor()
+            const toolbarColor = store.getState().page.toolbarColor
             if (toolbarColor !== this.toolbarColor) {
                 this.toolbarColor = toolbarColor
             }
@@ -63,9 +58,8 @@ export default class App extends Vue {
     }, 350)
 
 
-    @Watch('$route', { immediate: true, deep: true })
-    checkCurrentPage() {
-        this.isOnDashboard = router.currentRoute.name === 'dashboard'
+    get currentRouteName() {
+        return router.currentRoute.name
     }
 
     toggleLeftSidenav() {

@@ -4,7 +4,7 @@
       <md-icon>menu</md-icon>
     </md-button>
     <transition name="fade">
-      <md-input-container class="search-box" v-if="isOnDashboard">
+      <md-input-container class="search-box" v-if="currentRouteName === 'dashboard'">
         <label>Search</label>
         <md-input v-model="search"></md-input>
       </md-input-container>

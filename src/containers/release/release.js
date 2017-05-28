@@ -34,16 +34,13 @@ export default class Release extends Vue {
     created() {
         this.changeToolbarColorBasedOnCurrentCoverImage()
         store.dispatch({ type: PAGE_SEARCH_CLEAR })
-        const getReleaseLoadingState = state => get(state, 'discogs.selectedReleaseLoading', this.releaseIsLoading)
-        const getRelease = state => get(state, 'discogs.selectedRelease', null)
-
         store.dispatch(fetchRelease(router.currentRoute.params.id))
         this.unsubscribe = store.subscribe(() => {
             const state = store.getState()
-            this.releaseIsLoading = getReleaseLoadingState(state)
+            this.releaseIsLoading = state.discogs.selectedReleaseLoading
             if (!this.releaseIsLoading) {
                 if (getRelease(state) !== this.release) {
-                    this.release = getRelease(state)
+                    this.release = state.discogs.selectedRelease
                     const artistName = trimEnd(removeBrackets(this.release.artists[0].name))
                     lastFm.getAlbumInfo(artistName, this.release.title)
                         .then(response => response.json())

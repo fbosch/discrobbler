@@ -2,7 +2,6 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import store from '../../store'
 import { fetchUserCollection, resetTool, clearSelectedRelease } from '../../store/actions/discogs.actions'
-import get from 'lodash.get'
 import moment from 'moment'
 import Fuse from 'fuse.js'
 
@@ -18,24 +17,20 @@ export default class Dashboard extends Vue {
         keys: ['basic_information.title', 'basic_information.artists.name', 'basic_information.formats.name']
     }
 
-    static getCollection() { return get(store.getState(), 'discogs.collection', []) }
-    static getLastCollectionFetchDate() { return get(store.getState(), 'discogs.lastCollectionFetchDate', null) }
-    static getLastCollectionFetchUserId() { return get(store.getState(), 'discogs.lastCollectionFetchUserId', null) }
-    static getCurrentUserId() { return get(store.getState(), 'discogs.user.id', null) }
-
     static fetchCollection() { store.dispatch(fetchUserCollection(store.getState().discogs.user.username)) }
 
-    collection = Dashboard.getCollection(store.getState())
+    collection = store.getState().discogs.collection
     filteredCollection = [...this.collection]
     collectionIsLoading = !this.collection
 
     mounted() {
+        const state = store.getState()
         if (this.collection.length) {
-            const lastFetchDate = Dashboard.getLastCollectionFetchDate(),
-                lastFetchUserId = Dashboard.getLastCollectionFetchUserId()
+            const lastFetchDate = state.discogs.lastCollectionFetchDate,
+                lastFetchUserId = state.discogs.lastCollectionFetchUserId
 
             if (lastFetchDate) {
-                if (lastFetchUserId !== Dashboard.getCurrentUserId()) {
+                if (lastFetchUserId !== state.discogs.user.id) {
                     Dashboard.fetchCollection()
                 } else if (moment() > moment(lastFetchDate).add({ days: 1 })) {
                     Dashboard.fetchCollection()

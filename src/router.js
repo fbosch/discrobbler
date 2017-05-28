@@ -27,6 +27,7 @@ export const views = {
 export const routes = reduce(views, (accum, val, key) => [...accum, { ...val, name: key }], [])
 
 export default new VueRouter({
+    mode: 'history',
     routes,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {

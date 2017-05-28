@@ -12,12 +12,7 @@ import queryString from 'query-string'
 @Component
 export default class Login extends Vue {
     discogsUsername = null
-    lastfmSession = this.getLastfmSessionFromState()
-
-
-    getLastfmSessionFromState() {
-        return get(store.getState(), 'lastfm.websession', undefined)
-    }
+    lastfmSession = store.getState().lastfm.websession
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
@@ -25,37 +20,30 @@ export default class Login extends Vue {
             switch (router.currentRoute.params.auth) {
                 case 'lastfm':
                     store.dispatch(setLastfmAuthenticationToken(parsedQueryString.token))
-                    window.location = location.origin + '/#/login'
+                    window.location = location.origin + '/login'
                     break;
             }
         }
 
-        const getUserFromState = () => get(store.getState(), 'discogs.user', undefined)
-
-        const lastfmToken = get(store.getState(), 'lastfm.authenticationToken', undefined)
-        const lastfmSession = this.getLastfmSessionFromState()
+        const lastfmToken = store.getState().lastfm.authenticationToken
+        const lastfmSession = store.getState().lastfm.websession
         if (lastfmToken && !lastfmSession) store.dispatch(getWebSession(lastfmToken))
 
-        let currentUserValue = getUserFromState()
+        let currentDiscogsUserValue = store.getState().discogs.user
         const observer = () => {
-            let previousUserValue = currentUserValue
-            currentUserValue = getUserFromState()
+            let previousUserValue = currentDiscogsUserValue
+            currentDiscogsUserValue = store.getState().discogs.user
 
-            if (previousUserValue !== currentUserValue && currentUserValue !== null) {
+            if (previousUserValue !== currentDiscogsUserValue && currentDiscogsUserValue !== null) {
                 router.push(views.dashboard)
             }
-            this.lastfmSession = this.getLastfmSessionFromState()
+            this.lastfmSession = store.getState().lastfm.websession
         }
-
         this.beforeDestroy = store.subscribe(observer)
     }
 
     authorizeLastfm() {
         lastfm.authenticateUser()
-    }
-
-    authorizeDiscogs() {
-
     }
 
     getUser() {
