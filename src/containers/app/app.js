@@ -21,20 +21,10 @@ export default class App extends Vue {
     constructor() {
         super()
         const initialDiscogsUserState = store.getState().discogs.user
-        // if (initialDiscogsUserState) {
-        //     this.authenticated = this.selectAuthenticationState()
-        //     this.avatar = initialDiscogsUserState.avatar_url
-        //     this.username = initialDiscogsUserState.name
-        //     if (router.currentRoute.name === views.login.name || !router.currentRoute.name) {
-        //         router.push(views.dashboard)
-        //     }
-        // } else {
-        //     router.push(views.login)
-        // }
     }
 
     mounted() {
-        this.beforeDestroy = store.subscribe(() => {
+            this.beforeDestroy = store.subscribe(() => {
             const currentDiscogsUserState = store.getState().discogs.user
             if (currentDiscogsUserState) {
                 if (this.avatar !== currentDiscogsUserState.avatar_url) {
@@ -42,7 +32,7 @@ export default class App extends Vue {
                     this.username = currentDiscogsUserState.name
                 }
             }
-            if (this.selectAuthenticationState() !== this.authenticated) {
+            if (store.getState().discogs.authenticated !== this.authenticated) {
                 this.authenticated = !!store.getState().discogs.authenticated
             }
             const toolbarColor = store.getState().page.toolbarColor

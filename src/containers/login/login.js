@@ -12,7 +12,7 @@ import queryString from 'query-string'
 @Component
 export default class Login extends Vue {
     discogsUsername = null
-    lastfmSession = store.getState().lastfm.websession
+    lastfmSession = store.getState().lastfm.websession || null
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)

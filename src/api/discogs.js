@@ -5,7 +5,7 @@ import { Client as Discogs } from 'disconnect'
 class DiscogsApi {
     userAgent = 'Discrobbler/1.0'
     constructor() {
-        this.getRequestToken()
+        // this.getRequestToken()
     }
 
     apiUrl(method) {
@@ -29,7 +29,6 @@ class DiscogsApi {
     }
 
     getRequestToken() {
-
         var oAuth = new Discogs(this.userAgent).oauth();
         oAuth.getRequestToken(
             keys.discogs.key,
@@ -39,7 +38,6 @@ class DiscogsApi {
                 console.log(err, requestData)
             }
         )
-
     }
 
 

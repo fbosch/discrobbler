@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf dist
 rm -rf public
 mkdir public
 
