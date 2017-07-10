@@ -39,7 +39,7 @@ export default class Release extends Vue {
             const state = store.getState()
             this.releaseIsLoading = state.discogs.selectedReleaseLoading
             if (!this.releaseIsLoading) {
-                if (getRelease(state) !== this.release) {
+                if (store.getState().discogs.selectedRelease !== this.release) {
                     this.release = state.discogs.selectedRelease
                     const artistName = trimEnd(removeBrackets(this.release.artists[0].name))
                     lastFm.getAlbumInfo(artistName, this.release.title)

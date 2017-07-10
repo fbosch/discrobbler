@@ -6,13 +6,15 @@ import router, { views } from '../../router'
 import get from 'lodash.get'
 import keys from '../../keys'
 import lastfm from '../../api/lastfm'
-import { setLastfmAuthenticationToken, getWebSession } from '../../store/actions/lastfm.actions'
+import { setLastfmAuthenticationToken, getWebSession, clearLastfmAuthenticationToken } from '../../store/actions/lastfm.actions'
 import queryString from 'query-string'
 
 @Component
 export default class Login extends Vue {
     discogsUsername = null
     lastfmSession = store.getState().lastfm.websession || null
+    discogsUser = null
+    test = false
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
@@ -24,7 +26,6 @@ export default class Login extends Vue {
                     break;
             }
         }
-
         const lastfmToken = store.getState().lastfm.authenticationToken
         const lastfmSession = store.getState().lastfm.websession
         if (lastfmToken && !lastfmSession) store.dispatch(getWebSession(lastfmToken))
@@ -33,6 +34,7 @@ export default class Login extends Vue {
         const observer = () => {
             let previousUserValue = currentDiscogsUserValue
             currentDiscogsUserValue = store.getState().discogs.user
+            this.discogsUser = currentDiscogsUserValue
 
             if (previousUserValue !== currentDiscogsUserValue && currentDiscogsUserValue !== null) {
                 router.push(views.dashboard)
@@ -46,7 +48,11 @@ export default class Login extends Vue {
         lastfm.authenticateUser()
     }
 
-    getUser() {
+    unauthorizeLastfm() {
+        store.dispatch(clearLastfmAuthenticationToken())
+    }
+
+    authorizeDiscogs() {
         store.dispatch(fetchUser(this.discogsUsername))
     }
 

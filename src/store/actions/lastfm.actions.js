@@ -1,7 +1,6 @@
 import api from '../../api/lastfm'
 const prefix = 'lastfm/'
 
-
 // TODO: move to utils
 function handleResponse(response, dispatch, errorActionType) {
     if (response.status >= 400) {
@@ -11,7 +10,6 @@ function handleResponse(response, dispatch, errorActionType) {
         return response.json()
     }
 }
-
 
 export const LASTFM_SET_AUTHENTICATION_TOKEN = prefix + 'SET_AUTHENTICATION_TOKEN'
 

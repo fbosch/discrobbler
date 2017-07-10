@@ -18,8 +18,7 @@ export default class App extends Vue {
     authenticated = false
     isOnDashboard = false
 
-    constructor() {
-        super()
+    created() {
         const initialDiscogsUserState = store.getState().discogs.user
     }
 

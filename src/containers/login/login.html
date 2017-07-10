@@ -1,25 +1,31 @@
 <div class="container">
-    <md-layout md-column md-gutter>
-        <md-layout md-align="center">
-            <span class="md-headline">Authorization</span>
-        </md-layout>
-        <md-layout md-align="center">
-            <md-layout md-hide-xsmall></md-layout>
-            <md-layout md-align="center" v-if="!lastfmSession">
-                <md-button class="md-raised md-primary" @click.native="authorizeLastfm">
+    <md-layout md-align="center">
+        <span class="md-headline">Authorization</span>
+    </md-layout>
+    <md-layout md-align="center" @completed="authorizeDiscogs">
+        <md-stepper md-vertical>
+            <md-step md-label="Last.fm" md-message="Authorize your Last.fm account for access to scrobbling through discrobbler" :md-continue="lastfmSession">
+                <md-button class="md-raised md-default" @click.native="authorizeLastfm" v-if="!lastfmSession">
                     Connect to Last.fm
                 </md-button>
-            </md-layout>
-            <md-layout md-align="center" v-else>
-                LastFM: Authorized as {{ lastfmSession.name }}
-            </md-layout>
-            <md-layout md-hide-xsmall></md-layout>
-        </md-layout>
-        <!--<md-layout md-align="center">
-
-            <md-button class="md-raised md-primary" @click.native="authorizeDiscogs">
-                Connect to Discogs
-            </md-button>
-        </md-layout>-->
+                <div v-if="lastfmSession">
+                    <md-icon>
+                        <img src="../../static/lastfm-logo.svg" alt="lastfm">
+                    </md-icon>
+                    Authorized as {{ lastfmSession.name }} <br>
+                    <md-button class="md-default md-dense" @click.native="unauthorizeLastfm">
+                        Unauthorize Last.fm
+                    </md-button>
+                </div>
+            </md-step>
+            <md-step md-label="Discogs" md-message="Enter your discogs username to browse your collection through discrobbler">
+                <md-layout>
+                    <md-input-container>
+                        <label>Discogs Username</label>
+                        <md-input v-model="discogsUsername"></md-input>
+                    </md-input-container>
+                </md-layout>
+            </md-step>
+        </md-stepper>
     </md-layout>
 </div>

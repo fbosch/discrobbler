@@ -40,7 +40,8 @@ export default class Dashboard extends Vue {
             Dashboard.fetchCollection()
         }
         this.beforeDestroy = store.subscribe(() => {
-            const discogsCollection = Dashboard.getCollection()
+            console.log(store.getState())
+            const discogsCollection = store.getState().discogs.collection
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
                 this.collection = discogsCollection
             }

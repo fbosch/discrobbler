@@ -4,12 +4,9 @@ import { Client as Discogs } from 'disconnect'
 
 class DiscogsApi {
     userAgent = 'Discrobbler/1.0'
-    constructor() {
-        // this.getRequestToken()
-    }
 
     apiUrl(method) {
-        return `https://api.discogs.com/${method}?key=${keys.discogs.key}`
+        return `https://api.discogs.com/${method}?key=${keys.discogs.key}&secret=${keys.discogs.secret}`
     }
 
     getUserDetails(username) {
