@@ -11,10 +11,8 @@ import queryString from 'query-string'
 
 @Component
 export default class Login extends Vue {
-    discogsUsername = null
+    discogsUsername = store.getState().discogs.user.username || null
     lastfmSession = store.getState().lastfm.websession || null
-    discogsUser = null
-    test = false
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
@@ -31,17 +29,14 @@ export default class Login extends Vue {
         if (lastfmToken && !lastfmSession) store.dispatch(getWebSession(lastfmToken))
 
         let currentDiscogsUserValue = store.getState().discogs.user
-        const observer = () => {
+        this.beforeDestroy = store.subscribe(() => {
             let previousUserValue = currentDiscogsUserValue
             currentDiscogsUserValue = store.getState().discogs.user
-            this.discogsUser = currentDiscogsUserValue
-
             if (previousUserValue !== currentDiscogsUserValue && currentDiscogsUserValue !== null) {
                 router.push(views.dashboard)
             }
             this.lastfmSession = store.getState().lastfm.websession
-        }
-        this.beforeDestroy = store.subscribe(observer)
+        })
     }
 
     authorizeLastfm() {

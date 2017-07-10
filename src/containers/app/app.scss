@@ -13,7 +13,15 @@ html, body {
     width: 50%;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -25%);
+    transform: translate(-50%, 0%);
+    label {
+        top: 9px;
+    }
+    &.md-has-value, &.md-input-focused {
+        label {
+            top: -12px;
+        }
+    
 }
 
 .container {
@@ -29,7 +37,7 @@ html, body {
 
 .fade-enter-active,
 {
-    transition-delay: .2s;
+    transition-delay: .25s;
 }
 
 .fade-enter,

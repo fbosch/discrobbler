@@ -23,8 +23,8 @@ export default class App extends Vue {
     }
 
     mounted() {
-            this.beforeDestroy = store.subscribe(() => {
-            const currentDiscogsUserState = store.getState().discogs.user
+        const observe = () => {
+        const currentDiscogsUserState = store.getState().discogs.user
             if (currentDiscogsUserState) {
                 if (this.avatar !== currentDiscogsUserState.avatar_url) {
                     this.avatar = currentDiscogsUserState.avatar_url
@@ -32,13 +32,18 @@ export default class App extends Vue {
                 }
             }
             if (store.getState().discogs.authenticated !== this.authenticated) {
-                this.authenticated = !!store.getState().discogs.authenticated
+                this.authenticated = store.getState().discogs.authenticated
+            }
+            if (!this.authenticated) {
+                router.push(views.login)
             }
             const toolbarColor = store.getState().page.toolbarColor
             if (toolbarColor !== this.toolbarColor) {
                 this.toolbarColor = toolbarColor
             }
-        })
+        }
+        observe()
+        this.beforeDestroy = store.subscribe(observe)
     }
 
     @Watch('search')
@@ -52,6 +57,6 @@ export default class App extends Vue {
     }
 
     toggleLeftSidenav() {
-        requestAnimationFrame(() => this.$refs.leftSidenav.toggle())
+        this.$refs.leftSidenav.toggle()
     }
 }

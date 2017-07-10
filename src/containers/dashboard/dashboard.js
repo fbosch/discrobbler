@@ -19,7 +19,7 @@ export default class Dashboard extends Vue {
 
     static fetchCollection() { store.dispatch(fetchUserCollection(store.getState().discogs.user.username)) }
 
-    collection = store.getState().discogs.collection
+    collection = store.getState().discogs.collection || []
     filteredCollection = [...this.collection]
     collectionIsLoading = !this.collection
 
@@ -39,15 +39,16 @@ export default class Dashboard extends Vue {
         } else {
             Dashboard.fetchCollection()
         }
-        this.beforeDestroy = store.subscribe(() => {
-            console.log(store.getState())
+       const observe = () => {
             const discogsCollection = store.getState().discogs.collection
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
                 this.collection = discogsCollection
             }
             this.collectionIsLoading = store.getState().discogs.collectionIsLoading
             this.evaluateSearchQuery()
-        })
+        }
+        observe()
+        this.beforeDestroy = store.subscribe(observe)
     }
 
     evaluateSearchQuery() {

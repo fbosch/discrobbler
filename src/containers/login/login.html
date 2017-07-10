@@ -2,9 +2,9 @@
     <md-layout md-align="center">
         <span class="md-headline">Authorization</span>
     </md-layout>
-    <md-layout md-align="center" @completed="authorizeDiscogs">
-        <md-stepper md-vertical>
-            <md-step md-label="Last.fm" md-message="Authorize your Last.fm account for access to scrobbling through discrobbler" :md-continue="lastfmSession">
+    <md-layout md-align="center">
+        <md-stepper md-vertical @completed="authorizeDiscogs">
+            <md-step md-label="Last.fm" :md-continue="lastfmSession">
                 <md-button class="md-raised md-default" @click.native="authorizeLastfm" v-if="!lastfmSession">
                     Connect to Last.fm
                 </md-button>
@@ -18,7 +18,7 @@
                     </md-button>
                 </div>
             </md-step>
-            <md-step md-label="Discogs" md-message="Enter your discogs username to browse your collection through discrobbler">
+            <md-step md-label="Discogs">
                 <md-layout>
                     <md-input-container>
                         <label>Discogs Username</label>

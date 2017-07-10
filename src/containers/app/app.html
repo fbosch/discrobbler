@@ -11,31 +11,39 @@
     </transition>
     <span style="flex:1"></span>
     <md-menu md-direction="bottom left" md-size="4" v-if="authenticated">
-      <md-avatar v-if="avatar" md-menu-trigger>
-        <img :src="avatar">
+      <md-avatar md-menu-trigger>
+        <img :src="avatar" v-if="avatar">
       </md-avatar>
       <md-menu-content>
         <router-link to="/login" tag="div">
           <md-menu-item>
-            <span>Change Discogs User</span>
+            <span>Manage Authorization</span>
             <md-icon>
-              <img src="../../static/record.svg" alt="record">
+              settings
             </md-icon>
           </md-menu-item>
         </router-link>
       </md-menu-content>
     </md-menu>
   </md-toolbar>
-  <md-sidenav class="md-left" ref="leftSidenav" md-swipable>
+  <md-sidenav class="md-left" ref="leftSidenav" :md-swipable="true" :md-swipe-distance="150">
     <md-toolbar class="md-large" :style="{ backgroundColor: toolbarColor }">
       <div class="md-toolbar-container">
         <h2 class="md-title">Discrobbler</h2>
       </div>
     </md-toolbar>
-    <md-list>
+    <md-list @click.native="toggleLeftSidenav">
       <md-list-item>
-        <router-link :to="{ name:'dashboard' }" @click.native="toggleLeftSidenav">
+        <router-link to="/dashboard">
           <md-icon>dashboard</md-icon> <span>Dashboard</span>
+        </router-link>
+      </md-list-item>
+      <md-list-item>
+        <router-link to="/login" tag="div">
+          <md-icon>
+            settings
+          </md-icon>
+          <span>Manage Authorization</span>
         </router-link>
       </md-list-item>
     </md-list>
