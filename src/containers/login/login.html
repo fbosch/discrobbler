@@ -4,7 +4,7 @@
     </md-layout>
     <md-layout md-align="center">
         <md-stepper md-vertical @completed="authorizeDiscogs">
-            <md-step md-label="Last.fm" :md-continue="lastfmSession">
+            <md-step md-label="Last.fm" :md-continue="!!lastfmSession">
                 <md-button class="md-raised md-default" @click.native="authorizeLastfm" v-if="!lastfmSession">
                     Connect to Last.fm
                 </md-button>

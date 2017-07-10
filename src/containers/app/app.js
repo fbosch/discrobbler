@@ -16,10 +16,12 @@ export default class App extends Vue {
     toolbarColor = null
     search = null
     authenticated = false
-    isOnDashboard = false
 
     created() {
         const initialDiscogsUserState = store.getState().discogs.user
+        if (initialDiscogsUserState && router.currentRoute.path === '/') {
+            router.push(views.dashboard)
+        }
     }
 
     mounted() {
@@ -48,6 +50,9 @@ export default class App extends Vue {
 
     @Watch('search')
     onSearchChanges = debounce(newVal => {
+        if (router.currentRoute.name !== 'dashboard') {
+            router.push(views.dashboard)
+        }
         store.dispatch(search(newVal))
     }, 350)
 

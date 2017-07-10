@@ -1,9 +1,8 @@
 @import '~vue-material/dist/vue-material.css';
-
-html, body {
+html,
+body {
     font-family: 'Roboto', sans-serif;
 }
-
 
 .main-content {
     margin: 0 auto;
@@ -17,11 +16,12 @@ html, body {
     label {
         top: 9px;
     }
-    &.md-has-value, &.md-input-focused {
+    &.md-has-value,
+    &.md-input-focused {
         label {
             top: -12px;
         }
-    
+    }
 }
 
 .container {
@@ -37,7 +37,7 @@ html, body {
 
 .fade-enter-active,
 {
-    transition-delay: .25s;
+    transition-delay: .3s;
 }
 
 .fade-enter,

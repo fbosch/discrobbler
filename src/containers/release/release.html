@@ -17,7 +17,7 @@
                                     {{ release.artists[0].name }}
                                 </div>
                             </md-card-header>
-                            <md-card-actions>
+                            <md-card-actions class="release-item__genres">
                                 <md-chip v-for="genre in release.genres" :key="genre" :style="{ backgroundColor: artworkColor }">
                                     {{ genre }}
                                 </md-chip>

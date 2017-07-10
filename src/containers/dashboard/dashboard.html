@@ -1,21 +1,33 @@
 <div class="dashboard container">
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="collectionIsLoading"></md-spinner>
-        <md-list v-else class="album-list">
-            <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item">
-                <router-link :to="{name:'release', params: { id: item.id }}">
-                    <md-avatar>
-                        <img v-lazy="item.basic_information.thumb" v-if="item.basic_information.thumb">
-                        <img src="../../static/record.svg" v-else>
-                    </md-avatar>
-                    <div class="md-list-text-container">
-                        <span>{{ item.basic_information.title }}</span>
-                        <span>{{ item.basic_information.artists[0].name }}</span>
-                        <p>{{ item.basic_information.formats[0].name }}</p>
-                    </div>
-                    <md-divider class="md-inset"></md-divider>
-                </router-link>
-            </md-list-item>
-        </md-list>
+        <div v-else>
+            <md-list class="album-list" v-if="filteredCollection.length > 0">
+                <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item">
+                    <router-link :to="{name:'release', params: { id: item.id }}">
+                        <md-avatar>
+                            <img v-lazy="item.basic_information.thumb" v-if="item.basic_information.thumb">
+                            <img src="../../static/record.svg" v-else>
+                        </md-avatar>
+                        <div class="md-list-text-container">
+                            <span>{{ item.basic_information.title }}</span>
+                            <span>{{ item.basic_information.artists[0].name }}</span>
+                            <p>{{ item.basic_information.formats[0].name }}</p>
+                        </div>
+                        <md-divider class="md-inset"></md-divider>
+                    </router-link>
+                </md-list-item>
+            </md-list>
+            <div class="dashboard__no-results" v-else>
+                <md-layout md-align="center">
+                    <img src="../../static/vinyls.svg" alt="vinyls" class="dashboard__no-results-image">
+                </md-layout>
+                <md-layout md-align="center">
+                    <span class="md-title">
+                    No items in your collection fit the search query '{{ searchState }}'
+                </span>
+                </md-layout>
+            </div>
+        </div>
     </transition>
 </div>

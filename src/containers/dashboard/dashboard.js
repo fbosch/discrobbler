@@ -10,10 +10,10 @@ export default class Dashboard extends Vue {
 
     static searchOptions = {
         shouldSort: true,
-        tokenize: true,
-        threshold: 0.2,
+        tokenize: false, 
+        threshold: 0.3,
         minMatchCharLength: 3,
-        matchAllTokens: true,
+        matchAllTokens: false,
         keys: ['basic_information.title', 'basic_information.artists.name', 'basic_information.formats.name']
     }
 
@@ -22,6 +22,7 @@ export default class Dashboard extends Vue {
     collection = store.getState().discogs.collection || []
     filteredCollection = [...this.collection]
     collectionIsLoading = !this.collection
+    searchState = store.getState().page.search || null
 
     mounted() {
         const state = store.getState()
@@ -53,6 +54,7 @@ export default class Dashboard extends Vue {
 
     evaluateSearchQuery() {
         const searchState = store.getState().page.search
+        this.searchState = searchState
         if (searchState && searchState.length) {
             var fuse = new Fuse(this.collection, Dashboard.searchOptions)
             this.filteredCollection = fuse.search(searchState)
