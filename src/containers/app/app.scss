@@ -6,42 +6,35 @@ body {
 
 .main-content {
     margin: 0 auto;
-}
-
-.search-box {
-    width: 50%;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    label {
-        top: 9px;
-    }
-    &.md-has-value,
-    &.md-input-focused {
-        label {
-            top: -12px;
-        }
-    }
+    padding-bottom: 70px;
 }
 
 .container {
     max-width: 1200px;
-    padding: 0 10px;
-    margin: 20px auto;
+    margin: 0 auto;
+}
+
+.search-box-container {
+    width: 50%;
+    max-width: 500px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .2s ease;
+    transition: opacity .1s ease;
 }
 
 .fade-enter-active,
 {
-    transition-delay: .3s;
+    transition-delay: .2s;
 }
 
 .fade-enter,
 .fade-leave-to {
+    will-change: opacity;
     opacity: 0;
 }
 
@@ -56,10 +49,17 @@ body {
     z-index: 99;
 }
 
+.md-theme-default,
+.md-fab {
+    transition: background-color .3s ease-in-out;
+    will-change: background-color;
+}
+
 .md-bottom-bar {
     position: fixed;
     bottom: 0;
-    z-index: 2
+    z-index: 2;
+    height: 70px;
 }
 
 img[lazy] {

@@ -11,7 +11,7 @@ import queryString from 'query-string'
 
 @Component
 export default class Login extends Vue {
-    discogsUsername = store.getState().discogs.user.username || null
+    discogsUsername = get(store.getState(),'discogs.user.username', null)
     lastfmSession = store.getState().lastfm.websession || null
 
     mounted() {
@@ -21,7 +21,7 @@ export default class Login extends Vue {
                 case 'lastfm':
                     store.dispatch(setLastfmAuthenticationToken(parsedQueryString.token))
                     window.location = location.origin + '/login'
-                    break;
+                    break
             }
         }
         const lastfmToken = store.getState().lastfm.authenticationToken

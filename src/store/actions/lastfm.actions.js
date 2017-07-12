@@ -27,7 +27,6 @@ export const LASTFM_WEB_SESSION_FETCH = prefix + 'WEB_SESSION_FETCH'
 export const LASTFM_WEB_SESSION_ERROR = prefix + 'WEB_SESSION_ERROR'
 export const LASTFM_WEB_SESSION_RECEIVED = prefix + 'WEB_SESSION_RECEIVED'
 
-
 export function getWebSession(token) {
     return (dispatch, getState) => {
         dispatch({ type: LASTFM_WEB_SESSION_FETCH })

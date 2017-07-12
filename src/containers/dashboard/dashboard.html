@@ -3,7 +3,7 @@
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="collectionIsLoading"></md-spinner>
         <div v-else>
             <md-list class="album-list" v-if="filteredCollection.length > 0">
-                <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item">
+                <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item" tabindex="0">
                     <router-link :to="{name:'release', params: { id: item.id }}">
                         <md-avatar>
                             <img v-lazy="item.basic_information.thumb" v-if="item.basic_information.thumb">
@@ -24,7 +24,7 @@
                 </md-layout>
                 <md-layout md-align="center">
                     <span class="md-title">
-                    No items in your collection fit the search query '{{ searchState }}'
+                    No items in your collection matches the query <strong>'{{ searchState }}'</strong>
                 </span>
                 </md-layout>
             </div>

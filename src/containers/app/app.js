@@ -4,18 +4,15 @@ import router, { views } from '../../router'
 import Component from 'vue-class-component'
 import get from 'lodash.get'
 import { Watch } from 'vue-property-decorator'
-import { search } from '../../store/actions/page.actions'
-import { setLastfmAuthenticationToken } from '../../store/actions/lastfm.actions'
-import queryString from 'query-string'
-import debounce from 'lodash.debounce'
 
 @Component
 export default class App extends Vue {
     avatar = null
-    username = null
+    discogsName = null
+    discogsUsername = null
+    lastfmUsername = null
     toolbarColor = null
-    search = null
-    authenticated = false
+    discogsAuthenticated = false
 
     created() {
         const initialDiscogsUserState = store.getState().discogs.user
@@ -26,19 +23,27 @@ export default class App extends Vue {
 
     mounted() {
         const observe = () => {
-        const currentDiscogsUserState = store.getState().discogs.user
+            const currentDiscogsUserState = store.getState().discogs.user
             if (currentDiscogsUserState) {
                 if (this.avatar !== currentDiscogsUserState.avatar_url) {
                     this.avatar = currentDiscogsUserState.avatar_url
-                    this.username = currentDiscogsUserState.name
+                    this.discogsName = currentDiscogsUserState.name
+                    this.discogsUsername = currentDiscogsUserState.username
                 }
             }
-            if (store.getState().discogs.authenticated !== this.authenticated) {
-                this.authenticated = store.getState().discogs.authenticated
+            if (store.getState().discogs.authenticated !== this.discogsAuthenticated) {
+                this.discogsAuthenticated = store.getState().discogs.authenticated
             }
-            if (!this.authenticated) {
+
+            const currentLastfmWebsession = store.getState().lastfm.websession 
+            if (currentLastfmWebsession) {
+                this.lastfmUsername = currentLastfmWebsession.name
+            }
+            
+            if (!this.discogsAuthenticated || !currentLastfmWebsession) {
                 router.push(views.login)
             }
+            
             const toolbarColor = store.getState().page.toolbarColor
             if (toolbarColor !== this.toolbarColor) {
                 this.toolbarColor = toolbarColor
@@ -48,15 +53,6 @@ export default class App extends Vue {
         this.beforeDestroy = store.subscribe(observe)
     }
 
-    @Watch('search')
-    onSearchChanges = debounce(newVal => {
-        if (router.currentRoute.name !== 'dashboard') {
-            router.push(views.dashboard)
-        }
-        store.dispatch(search(newVal))
-    }, 350)
-
-
     get currentRouteName() {
         return router.currentRoute.name
     }
@@ -64,4 +60,12 @@ export default class App extends Vue {
     toggleLeftSidenav() {
         this.$refs.leftSidenav.toggle()
     }
+
+    openDiscogsProfile() {
+        window.open(`https://www.discogs.com/user/${this.discogsUsername}`, '_blank').focus()
+   }
+
+   openLastfmProfile() {
+       window.open(`https://www.last.fm/user/${this.lastfmUsername}`, '_blank').focus()
+   }
 }

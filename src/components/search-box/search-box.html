@@ -1,0 +1,6 @@
+<div class="search-box">
+    <md-icon class="search-box__icon" @click.native="performQuery">
+        search
+    </md-icon>
+    <input type="search" class="search-box__input" v-model="searchQuery" @keyup.enter="performQuery" placeholder="Search">
+</div>

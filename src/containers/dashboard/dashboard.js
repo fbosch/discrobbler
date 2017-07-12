@@ -29,7 +29,7 @@ export default class Dashboard extends Vue {
         if (this.collection.length) {
             const lastFetchDate = state.discogs.lastCollectionFetchDate,
                 lastFetchUserId = state.discogs.lastCollectionFetchUserId
-
+                
             if (lastFetchDate) {
                 if (lastFetchUserId !== state.discogs.user.id) {
                     Dashboard.fetchCollection()

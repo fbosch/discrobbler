@@ -8,6 +8,8 @@ import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
 import keys from './keys'
 
+import SearchBox from './components/search-box/search-box.vue'
+
 import 'firebase/database'
 import 'firebase/auth'
 import firebase from 'firebase/app'
@@ -31,14 +33,17 @@ var config = {
 firebase.initializeApp(config)
 
 Vue.material.registerTheme('default', {
-  primary: 'red',
-  accent: 'orange',
+  primary: 'black',
+  accent: 'deep-orange',
   warn: 'red',
   background: 'white'
 })
 
+Vue.component('search-box', SearchBox)
+
 new Vue({
   el: '#app',
   router,
+  components: {},
   render: h => h(App)
 })

@@ -10,6 +10,10 @@ import { changeToolbarBackground, resetToolbarBackground, PAGE_SEARCH_CLEAR } fr
 import lastFm from '../../api/lastfm'
 import Vibrant from 'node-vibrant'
 
+import vinylIcon from '../../static/vinyl.svg'
+import cdIcon from '../../static/cd.svg'
+import cassetteIcon from '../../static/cassette.svg'
+
 @Component
 export default class Release extends Vue {
 
@@ -28,6 +32,19 @@ export default class Release extends Vue {
             return this.releaseCoverImage[0]['#text']
         } else {
             return this.getFallbackThumb()
+        }
+    }
+
+    get releaseFormatIcon() {
+        switch (this.release.formats[0].name.toLowerCase()) {
+            case 'vinyl':
+            return vinylIcon
+            case 'cd':
+            return cdIcon
+            case 'cassette':
+            return cassetteIcon
+            default: 
+            return null
         }
     }
 
@@ -85,7 +102,7 @@ export default class Release extends Vue {
         if (collection) {
             const item = collection.find(item => item.id === this.release.id)
             if (item) {
-                return item.basic_information.thumb
+                return item.basic_information.thumb 
             }
         }
     }
