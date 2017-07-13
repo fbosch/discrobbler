@@ -22,7 +22,7 @@ module.exports = {
             'scss': 'vue-style-loader!css-loader!sass-loader',
             'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
           }
-          // other vue-loader options go here
+        // other vue-loader options go here
         }
       },
       {
@@ -54,17 +54,17 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 
-module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"'+  process.env.NODE_ENV + '"',
-        DISCOGS_KEY: JSON.stringify(process.env.DISCOGS_KEY),
-        DISCOGS_SECRET: JSON.stringify(process.env.DISCOGS_SECRET),        
-        LASTFM_KEY: JSON.stringify(process.env.LASTFM_KEY),
-        LASTFM_SECRET: JSON.stringify(process.env.LASTFM_SECRET),      
-        FIREBASE_WEB_API_KEY: JSON.stringify(process.env.FIREBASE_WEB_API_KEY)
-      }
-    }),
+module.exports.plugins = (module.exports.plugins || []).concat([
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: '"' + process.env.NODE_ENV + '"',
+      DISCOGS_KEY: JSON.stringify(process.env.DISCOGS_KEY),
+      DISCOGS_SECRET: JSON.stringify(process.env.DISCOGS_SECRET),
+      LASTFM_KEY: JSON.stringify(process.env.LASTFM_KEY),
+      LASTFM_SECRET: JSON.stringify(process.env.LASTFM_SECRET),
+      FIREBASE_WEB_API_KEY: JSON.stringify(process.env.FIREBASE_WEB_API_KEY)
+    }
+  })
 ])
 
 if (process.env.NODE_ENV === 'production') {
@@ -86,10 +86,13 @@ if (process.env.NODE_ENV === 'production') {
         filename: 'service-worker.js',
         maximumFileSizeToCacheInBytes: 4194304,
         minify: true,
+        staticFileGlobs: [
+          'index.html'
+        ],
         runtimeCaching: [{
           handler: 'cacheFirst',
-          urlPattern: /[.]mp3$/,
-        }],
+          urlPattern: /[.]mp3$/
+        }]
       }
     ),
     new webpack.LoaderOptionsPlugin({
