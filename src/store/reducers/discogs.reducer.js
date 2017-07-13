@@ -6,7 +6,8 @@ import {
     DISCOGS_RELEASE_FETCH,
     DISCOGS_RELEASE_RECEIVED,
     DISCOGS_USER_FETCH,
-    DISCOGS_USER_ERROR
+    DISCOGS_USER_ERROR,
+    DISCOGS_CLEAR_ALL_DATA
 } from '../actions/discogs.actions'
 
 export default (state = {}, action) => {
@@ -61,6 +62,9 @@ export default (state = {}, action) => {
                 selectedRelease: action.payload,
                 selectedReleaseLoading: false
             }
+        
+        case DISCOGS_CLEAR_ALL_DATA: 
+            return { }
 
         default: return state
     }

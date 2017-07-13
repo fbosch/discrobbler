@@ -1,0 +1,7 @@
+{
+    "name":"Discrobbler",
+    "short_name":"Discrobbler",
+    "display":"standalone",
+    "background_color":"#000",
+    "description":"A simple app that allows you to scrobble your physical music collection"
+}

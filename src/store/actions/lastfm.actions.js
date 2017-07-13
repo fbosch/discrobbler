@@ -18,10 +18,7 @@ export function setLastfmAuthenticationToken(token) {
 }
 
 export const LASTFM_CLEAR_AUTHENTICATION_TOKEN = prefix + 'CLEAR_AUTHENTICATION_TOKEN'
-
-export function clearLastfmAuthenticationToken() {
-    return { type: LASTFM_CLEAR_AUTHENTICATION_TOKEN }
-}
+export const LASTFM_CLEAR_ALL_DATA = prefix + 'CLEAR_ALL_DATA'
 
 export const LASTFM_WEB_SESSION_FETCH = prefix + 'WEB_SESSION_FETCH'
 export const LASTFM_WEB_SESSION_ERROR = prefix + 'WEB_SESSION_ERROR'

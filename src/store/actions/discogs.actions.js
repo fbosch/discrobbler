@@ -78,3 +78,5 @@ export const DISCOGS_CLEAR_SELECTED_RELEASE = prefix + 'CLEAR_SELECTED_RELEASE'
 export function clearSelectedRelease() {
    return { type: DISCOGS_CLEAR_SELECTED_RELEASE }
 }
+
+export const DISCOGS_CLEAR_ALL_DATA = prefix + 'CLEAR_ALL_DATA'
