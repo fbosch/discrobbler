@@ -18,6 +18,10 @@ class LastFmApi {
         return fetch(`${LastFmApi.methodUrl}auth.getSession&api_sig=${sig}&token=${token}`)
     }
 
+    getRecentTracks(username) {
+        return fetch(`${LastFmApi.methodUrl}user.getrecenttracks&user=${username}&limit=3`)
+    }
+
 }
 
 export default new LastFmApi()

@@ -4,12 +4,12 @@ import router from '../../router'
 import store from '../../store'
 import get from 'lodash.get'
 import trimEnd from 'lodash.trimend'
-import { removeBrackets } from '../../utils'
-import { fetchRelease, clearSelectedRelease } from '../../store/actions/discogs.actions'
-import { changeToolbarBackground, resetToolbarBackground, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
 import lastFm from '../../api/lastfm'
 import Vibrant from 'node-vibrant'
 
+import { removeBrackets } from '../../utils'
+import { fetchRelease, DISCOGS_CLEAR_SELECTED_RELEASE } from '../../store/actions/discogs.actions'
+import { changeToolbarBackground, PAGE_RESET_TOOLBAR_BACKGROUND, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
 import vinylIcon from '../../static/vinyl.svg'
 import cdIcon from '../../static/cd.svg'
 import cassetteIcon from '../../static/cassette.svg'
@@ -120,8 +120,8 @@ export default class Release extends Vue {
 
     beforeDestroy() {
         if (this.unsubscribe) this.unsubscribe()
-        store.dispatch(resetToolbarBackground())
-        store.dispatch(clearSelectedRelease())
+        store.dispatch({ type: PAGE_RESET_TOOLBAR_BACKGROUND })
+        store.dispatch({ type: DISCOGS_CLEAR_SELECTED_RELEASE })
     }
 
 

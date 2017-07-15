@@ -8,10 +8,6 @@ export function changeToolbarBackground(color) {
 
 export const PAGE_RESET_TOOLBAR_BACKGROUND = prefix + 'RESET_TOOLBAR_BACKGROUND'
 
-export function resetToolbarBackground() {
-    return dispatch => dispatch({ type: PAGE_RESET_TOOLBAR_BACKGROUND })
-}
-
 export const PAGE_SEARCH = prefix + 'SEARCH'
 export const PAGE_SEARCH_CLEAR = prefix + 'SEARCH_CLEAR'
 

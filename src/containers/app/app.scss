@@ -24,7 +24,7 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .1s ease;
+    transition: opacity .2s linear;
 }
 
 .fade-enter-active,
@@ -66,7 +66,7 @@ img[lazy] {
     transition: opacity .3s linear;
 }
 
-img[lazy=loading] {
+img[lazy="loading"] {
     opacity: 0;
 }
 
