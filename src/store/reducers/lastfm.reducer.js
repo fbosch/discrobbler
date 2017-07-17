@@ -1,9 +1,9 @@
 import {
     LASTFM_SET_AUTHENTICATION_TOKEN,
-    LASTFM_WEB_SESSION_RECEIVED,
+    LASTFM_FETCH_WEBSESSION_SUCCESS,
     LASTFM_CLEAR_AUTHENTICATION_TOKEN,
-    LASTFM_CLEAR_ALL_DATA,
-    LASTFM_GET_RECENT_TRACKS_RECEIVED
+    LASTFM_CLEAR_STATE,
+    LASTFM_FETCH_RECENT_TRACKS_SUCCESS
 } from '../actions/lastfm.actions'
 
 
@@ -16,19 +16,19 @@ export default (state = {}, action) => {
                 authenticationToken: action.payload
             }
 
-        case LASTFM_WEB_SESSION_RECEIVED:
+        case LASTFM_FETCH_WEBSESSION_SUCCESS:
             return {
                 ...state,
                 websession: action.payload.session
             }
         
-        case LASTFM_GET_RECENT_TRACKS_RECEIVED: 
+        case LASTFM_FETCH_RECENT_TRACKS_SUCCESS: 
             return {
                 ...state,
-                recentTracks: action.payload
+                recentTracks: action.payload.recenttracks
             }
         
-        case LASTFM_CLEAR_ALL_DATA: 
+        case LASTFM_CLEAR_STATE: 
             return { }
 
         default: return state

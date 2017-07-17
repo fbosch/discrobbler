@@ -64,12 +64,28 @@
       <router-view></router-view>
     </transition>
   </div>
-  <md-bottom-bar md-shift>
-    <md-button class="md-fab" :style="{ backgroundColor: toolbarColor }">
-      <md-icon>
-        music_note
-        <!--<img src="../../static/last-fm-logo.svg" alt="last.fm">-->
-      </md-icon>
-    </md-button>
-  </md-bottom-bar>
+  <md-toolbar class="scrobbling-bottom-bar">
+    <div class="md-toolbar-container">
+      <div class="now-scrobbling" v-if="nowScrobbling">
+        <md-avatar class="now-scrobbling__icon">
+          <img :src="trackBeingScrobbled.image[1]['#text']" alt="People">
+        </md-avatar>
+        <md-card-header class="now-scrobbling__info">
+          <div class="md-title">{{ trackBeingScrobbled.name }}</div>
+          <div class="md-subhead">{{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}</div>
+        </md-card-header>
+      </div>
+      <md-button class="md-icon-button">
+        <md-icon>
+          queue_music
+        </md-icon>
+      </md-button>
+      <md-button class="md-icon-button">
+        <md-icon>
+          more_vert
+        </md-icon>
+      </md-button>
+    </div>
+    <md-progress class="md-accent" md-indeterminate v-if="nowScrobbling"></md-progress>
+  </md-toolbar>
 </div>

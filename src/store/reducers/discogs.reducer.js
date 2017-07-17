@@ -1,46 +1,46 @@
 import {
-    DISCOGS_USER_RECEIVED,
-    DISCOGS_COLLECTION_FOLDERS_RECEIVED,
-    DISCOGS_COLLECTION_ITEMS_RECEIVED,
-    DISCOGS_USER_COLLECTION_FETCH,
-    DISCOGS_RELEASE_FETCH,
-    DISCOGS_RELEASE_RECEIVED,
-    DISCOGS_USER_FETCH,
-    DISCOGS_USER_ERROR,
-    DISCOGS_CLEAR_ALL_DATA
+    DISCOGS_FETCH_USER_SUCCESS,
+    DISCOGS_FETCH_COLLECTION_FOLDERS_SUCCESS,
+    DISCOGS_FETCH_COLLECTION_ITEMS_SUCCESS,
+    DISCOGS_FETCH_USER_COLLECTION_REQUEST,
+    DISCOGS_FETCH_RELEASE_REQUEST,
+    DISCOGS_FETCH_RELEASE_SUCCESS,
+    DISCOGS_FETCH_USER_REQUEST,
+    DISCOGS_FETCH_USER_FAILURE,
+    DISCOGS_CLEAR_STATE
 } from '../actions/discogs.actions'
 
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case DISCOGS_USER_FETCH:
-        case DISCOGS_USER_ERROR:
+        case DISCOGS_FETCH_USER_REQUEST:
+        case DISCOGS_FETCH_USER_FAILURE:
             return {
                 ...state,
                 authenticated: false
             }
 
-        case DISCOGS_USER_RECEIVED:
+        case DISCOGS_FETCH_USER_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
                 authenticated: true
             }
 
-        case DISCOGS_COLLECTION_FOLDERS_RECEIVED:
+        case DISCOGS_FETCH_COLLECTION_FOLDERS_SUCCESS:
             return {
                 ...state,
                 folders: action.payload.folders
             }
 
-        case DISCOGS_USER_COLLECTION_FETCH:
+        case DISCOGS_FETCH_USER_COLLECTION_REQUEST:
             return {
                 ...state,
                 collection: [],
                 collectionIsLoading: true
             }
 
-        case DISCOGS_COLLECTION_ITEMS_RECEIVED:
+        case DISCOGS_FETCH_COLLECTION_ITEMS_SUCCESS:
             return {
                 ...state,
                 collection: [action.payload.releases].concat(state.collection)[0],
@@ -49,21 +49,21 @@ export default (state = {}, action) => {
                 lastCollectionFetchUserId: {...state}.user.id
             }
 
-        case DISCOGS_RELEASE_FETCH:
+        case DISCOGS_FETCH_RELEASE_REQUEST:
             return {
                 ...state,
                 selectedRelease: null,
                 selectedReleaseLoading: true
             }
 
-        case DISCOGS_RELEASE_RECEIVED:
+        case DISCOGS_FETCH_RELEASE_SUCCESS:
             return {
                 ...state,
                 selectedRelease: action.payload,
                 selectedReleaseLoading: false
             }
         
-        case DISCOGS_CLEAR_ALL_DATA: 
+        case DISCOGS_CLEAR_STATE: 
             return { }
 
         default: return state

@@ -1,46 +1,50 @@
 import api from '../../api/lastfm'
+import { handleResponse } from '../../utils'
 const prefix = 'lastfm/'
 
 export const LASTFM_CLEAR_AUTHENTICATION_TOKEN = prefix + 'CLEAR_AUTHENTICATION_TOKEN'
-export const LASTFM_CLEAR_ALL_DATA = prefix + 'CLEAR_ALL_DATA'
+export const LASTFM_CLEAR_STATE = prefix + 'CLEAR_ALL_DATA'
 export const LASTFM_SET_AUTHENTICATION_TOKEN = prefix + 'SET_AUTHENTICATION_TOKEN'
 
-// TODO: move to utils
-function handleResponse (response, dispatch, errorActionType) {
-  if (response.status >= 400) {
-    dispatch({ type: errorActionType, payload: response.message })
-    return Promise.reject(new Error(response.message))
-  } else {
-    return response.json()
-  }
-}
-
 export function setLastfmAuthenticationToken (payload) {
-  return { type: LASTFM_SET_AUTHENTICATION_TOKEN, payload }
+  return { type: LASTFM_SET_AUTHENTICATION_TOKEN, payload}
 }
 
-export const LASTFM_WEB_SESSION_FETCH = prefix + 'WEB_SESSION_FETCH'
-export const LASTFM_WEB_SESSION_ERROR = prefix + 'WEB_SESSION_ERROR'
-export const LASTFM_WEB_SESSION_RECEIVED = prefix + 'WEB_SESSION_RECEIVED'
+export const LASTFM_FETCH_WEBSESSION_REQUEST = prefix + 'FETCH_WEBSESSION_REQUEST'
+export const LASTFM_FETCH_WEBSESSION_FAILURE = prefix + 'FETCH_WEBSESSION_FAILURE'
+export const LASTFM_FETCH_WEBSESSION_SUCCESS = prefix + 'FETCH_WEBSESSION_SUCCESS'
 
 export function getWebSession (token) {
-  return (dispatch, getState) => {
-    dispatch({ type: LASTFM_WEB_SESSION_FETCH })
-    return api.getWebSession(getState().lastfm.authenticationToken)
-      .then(response => handleResponse(response, dispatch, LASTFM_WEB_SESSION_ERROR))
-      .then(payload => dispatch({ type: LASTFM_WEB_SESSION_RECEIVED, payload }))
+  return dispatch => {
+    dispatch({ type: LASTFM_FETCH_WEBSESSION_REQUEST })
+    return api.getWebSession(token)
+      .then(response => handleResponse(response, LASTFM_FETCH_WEBSESSION_FAILURE))
+      .then(payload => dispatch({ type: LASTFM_FETCH_WEBSESSION_SUCCESS, payload}))
   }
 }
 
-export const LASTFM_GET_RECENT_TRACKS_FETCH = prefix + 'GET_RECENT_TRACKS_FETCH'
-export const LASTFM_GET_RECENT_TRACKS_ERROR = prefix + 'GET_RECENT_TRACKS_ERROR'
-export const LASTFM_GET_RECENT_TRACKS_RECEIVED = prefix + 'GET_RECENT_TRACKS_RECEIVED'
+export const LASTFM_FETCH_RECENT_TRACKS_REQUEST = prefix + 'FETCH_RECENT_TRACKS_REQUEST'
+export const LASTFM_FETCH_RECENT_TRACKS_FAILURE = prefix + 'FETCH_RECENT_TRACKS_FAILURE'
+export const LASTFM_FETCH_RECENT_TRACKS_SUCCESS = prefix + 'FETCH_RECENT_TRACKS_SUCCESS'
 
-export function getRecentTracks() {
-  return (dispatch, getState) => {
-    dispatch({ type: LASTFM_GET_RECENT_TRACKS_FETCH })
-    return api.getRecentTracks(getState().lastfm.websession.name)
-      .then(response => handleResponse(response, dispatch, LASTFM_GET_RECENT_TRACKS_ERROR))
-      .then(payload => dispatch({ type: LASTFM_GET_RECENT_TRACKS_RECEIVED, payload }))
+export function getRecentTracks (username) {
+  return dispatch => {
+    dispatch({ type: LASTFM_FETCH_RECENT_TRACKS_REQUEST })
+    return api.getRecentTracks(username)
+      .then(response => handleResponse(response, LASTFM_FETCH_RECENT_TRACKS_FAILURE))
+      .then(payload => dispatch({ type: LASTFM_FETCH_RECENT_TRACKS_SUCCESS, payload}))
+  }
+}
+
+export const LASTFM_SCROBBLE_TRACK_REQUEST = prefix + 'SCROBBLE_TRACK_REQUEST'
+export const LASTFM_SCROBBLE_TRACK_FAILURE = prefix + 'SCROBBLE_TRACK_FAILURE'
+export const LASTFM_SCROBBLE_TRACK_SUCCESS = prefix + 'SCROBBLE_TRACK_SUCCESS'
+
+export function scrobbleTrack (artist, album, track, sessionKey, token) {
+  return dispatch => {
+    dispatch({ type: LASTFM_FETCH_RECENT_TRACKS_REQUEST })
+    return api.scrobbleTrack(artist, album, track, sessionKey, token)
+      .then(response => handleResponse(response, LASTFM_SCROBBLE_TRACK_FAILURE))
+      .then(payload => dispatch({ type: LASTFM_SCROBBLE_TRACK_SUCCESS, payload}))
   }
 }

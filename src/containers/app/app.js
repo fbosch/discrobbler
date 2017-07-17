@@ -15,20 +15,21 @@ export default class App extends Vue {
     lastfmUsername = null
     toolbarColor = null
     discogsAuthenticated = false
+    nowScrobbling = false
+    trackBeingScrobbled = null
 
     created() {
         const initialDiscogsUserState = store.getState().discogs.user
         if (initialDiscogsUserState && router.currentRoute.path === '/') {
             router.push(views.dashboard)
         }
+        setInterval(App.getRecentTracks, 12000)         
     }
 
     mounted() {
-        store.dispatch(getRecentTracks())       
-        setInterval(() => store.dispatch(getRecentTracks()), 12000) 
-
-        this.updateStateFromStore()
-        this.beforeDestroy = store.subscribe(this.updateStateFromStore)
+        App.getRecentTracks()
+        this.updateViewStateFromStore()
+        this.beforeDestroy = store.subscribe(this.updateViewStateFromStore)
         if (router.currentRoute.name !== 'release') {
             App.resetToolbarColor()
         }
@@ -37,8 +38,18 @@ export default class App extends Vue {
     get currentRouteName() {
         return router.currentRoute.name
     }
+
+    static resetToolbarColor() {
+        store.dispatch({ type: PAGE_RESET_TOOLBAR_BACKGROUND })
+    }
+
+    static getRecentTracks() {
+        if (store.getState().lastfm.websession.name) {
+            store.dispatch(getRecentTracks(store.getState().lastfm.websession.name))       
+        }
+    }
     
-    updateStateFromStore() {
+    updateViewStateFromStore() {
         const currentDiscogsUserState = store.getState().discogs.user
         if (currentDiscogsUserState) {
             if (this.avatar !== currentDiscogsUserState.avatar_url) {
@@ -68,11 +79,9 @@ export default class App extends Vue {
         const recentTracks = store.getState().lastfm.recentTracks
         if (recentTracks) {
             this.recentTracks = recentTracks
+            this.nowScrobbling = get(recentTracks.track[0], '@attr.nowplaying', false)
+            this.trackBeingScrobbled = this.nowScrobbling ? recentTracks.track[0] : null
         }
-    }
-
-    static resetToolbarColor() {
-        store.dispatch({ type: PAGE_RESET_TOOLBAR_BACKGROUND })
     }
 
     toggleLeftSidenav() {

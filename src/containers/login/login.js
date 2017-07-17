@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import store from '../../store'
 import { Component, Watch } from 'vue-property-decorator'
-import { fetchUser, DISCOGS_CLEAR_ALL_DATA } from '../../store/actions/discogs.actions'
+import { fetchUser, DISCOGS_CLEAR_STATE } from '../../store/actions/discogs.actions'
 import router, { views } from '../../router'
 import get from 'lodash.get'
 import keys from '../../keys'
 import lastfm from '../../api/lastfm'
-import { setLastfmAuthenticationToken, getWebSession, LASTFM_CLEAR_ALL_DATA } from '../../store/actions/lastfm.actions'
+import { setLastfmAuthenticationToken, getWebSession, LASTFM_CLEAR_STATE } from '../../store/actions/lastfm.actions'
 import queryString from 'query-string'
 
 @Component
@@ -44,8 +44,8 @@ export default class Login extends Vue {
     }
 
     unauthorize() {
-        store.dispatch({ type: LASTFM_CLEAR_ALL_DATA })
-        store.dispatch({ type: DISCOGS_CLEAR_ALL_DATA })
+        store.dispatch({ type: LASTFM_CLEAR_STATE })
+        store.dispatch({ type: DISCOGS_CLEAR_STATE })
     }
 
     authorizeDiscogs() {

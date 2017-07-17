@@ -10,13 +10,14 @@ import Vibrant from 'node-vibrant'
 import { removeBrackets } from '../../utils'
 import { fetchRelease, DISCOGS_CLEAR_SELECTED_RELEASE } from '../../store/actions/discogs.actions'
 import { changeToolbarBackground, PAGE_RESET_TOOLBAR_BACKGROUND, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
+import { scrobbleTrack } from '../../store/actions/lastfm.actions'
+
 import vinylIcon from '../../static/vinyl.svg'
 import cdIcon from '../../static/cd.svg'
 import cassetteIcon from '../../static/cassette.svg'
 
 @Component
 export default class Release extends Vue {
-
     releaseIsLoading = true
     release = null
     releaseCoverImage = null
@@ -89,6 +90,11 @@ export default class Release extends Vue {
                     }
                 })
         }
+    }
+
+    scrobbleTrack(trackName) {
+        console.log(this.release)
+        store.dispatch(scrobbleTrack(this.release.artists[0].name, this.release.title, trackName, store.getState().lastfm.websession.key, store.getState().lastfm.authenticationToken))
     }
 
     imageLoaded(event) {

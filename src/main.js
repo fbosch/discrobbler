@@ -34,7 +34,7 @@ firebase.initializeApp(config)
 
 Vue.material.registerTheme('default', {
   primary: 'black',
-  accent: 'grey',
+  accent: 'blue-grey',
   warn: 'red',
   background: 'white'
 })
