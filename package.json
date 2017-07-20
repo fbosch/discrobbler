@@ -21,6 +21,7 @@
     "keycode": "^2.1.9",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
+    "lodash.map": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "lodash.throttle": "^4.1.1",
     "lodash.trimend": "^4.5.1",

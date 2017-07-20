@@ -10,7 +10,7 @@ import Vibrant from 'node-vibrant'
 import { removeBrackets } from '../../utils'
 import { fetchRelease, DISCOGS_CLEAR_SELECTED_RELEASE } from '../../store/actions/discogs.actions'
 import { changeToolbarBackground, PAGE_RESET_TOOLBAR_BACKGROUND, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
-import { scrobbleTrack } from '../../store/actions/lastfm.actions'
+import { updateNowPlaying } from '../../store/actions/lastfm.actions'
 
 import vinylIcon from '../../static/vinyl.svg'
 import cdIcon from '../../static/cd.svg'
@@ -39,11 +39,11 @@ export default class Release extends Vue {
     get releaseFormatIcon() {
         switch (this.release.formats[0].name.toLowerCase()) {
             case 'vinyl':
-            return vinylIcon
+                return vinylIcon
             case 'cd':
-            return cdIcon
+                return cdIcon
             case 'cassette':
-            return cassetteIcon
+                return cassetteIcon
             default: 
             return null
         }
@@ -92,9 +92,9 @@ export default class Release extends Vue {
         }
     }
 
-    scrobbleTrack(trackName) {
+    updateNowPlaying(trackName) {
         console.log(this.release)
-        store.dispatch(scrobbleTrack(this.release.artists[0].name, this.release.title, trackName, store.getState().lastfm.websession.key, store.getState().lastfm.authenticationToken))
+        store.dispatch(updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, store.getState().lastfm.websession))
     }
 
     imageLoaded(event) {

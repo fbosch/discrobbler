@@ -67,7 +67,7 @@ export function fetchRelease (releaseId) {
   return dispatch => {
     dispatch({ type: DISCOGS_FETCH_RELEASE_REQUEST })
     return api.getRelease(releaseId)
-      .then(handleResponse)
+      .then(response => handleResponse(response, DISCOGS_FETCH_RELEASE_FAILURE))
       .then(payload => dispatch({ type: DISCOGS_FETCH_RELEASE_SUCCESS, payload}))
   }
 }

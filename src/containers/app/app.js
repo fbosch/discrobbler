@@ -44,7 +44,7 @@ export default class App extends Vue {
     }
 
     static getRecentTracks() {
-        if (store.getState().lastfm.websession.name) {
+        if (get(store.getState(), 'lastfm.websession.name', false)) {
             store.dispatch(getRecentTracks(store.getState().lastfm.websession.name))       
         }
     }

@@ -43,7 +43,7 @@
                         <md-list>
                             <md-list-item v-for="track in release.tracklist" :key="track.title">
                                 <span>{{ track.title }}</span>
-                                <md-button class="md-icon-button md-list-action" @click.native="scrobbleTrack(track.title)"> 
+                                <md-button class="md-icon-button md-list-action" @click.native="updateNowPlaying(track.title)"> 
                                     <md-icon>play_arrow</md-icon>
                                 </md-button>
                             </md-list-item>
