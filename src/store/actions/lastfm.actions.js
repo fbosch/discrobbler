@@ -2,12 +2,12 @@ import api from '../../api/lastfm'
 import { handleResponse } from '../../utils'
 
 export const LASTFM_CLEAR_AUTHENTICATION_TOKEN = 'lastfm/CLEAR_AUTHENTICATION_TOKEN'
-export function clearAuthenticationToken() {
+export function clearAuthenticationToken () {
   return { type: LASTFM_CLEAR_AUTHENTICATION_TOKEN }
 }
 
 export const LASTFM_CLEAR_STATE = 'lastfm/CLEAR_STATEa'
-export function clearState() {
+export function clearState () {
   return { type: LASTFM_CLEAR_STATE }
 }
 
@@ -44,10 +44,10 @@ export const LASTFM_SCROBBLE_TRACK_REQUEST = 'lastfm/SCROBBLE_TRACK_REQUEST'
 export const LASTFM_SCROBBLE_TRACK_FAILURE = 'lastfm/SCROBBLE_TRACK_FAILURE'
 export const LASTFM_SCROBBLE_TRACK_SUCCESS = 'lastfm/SCROBBLE_TRACK_SUCCESS'
 
-export function scrobbleTrack (artist, album, track, session) {
+export function scrobbleTrack (artist, album, track, duration, session) {
   return dispatch => {
     dispatch({ type: LASTFM_FETCH_RECENT_TRACKS_REQUEST })
-    return api.scrobbleTrack(artist, album, track, session)
+    return api.scrobbleTrack(artist, album, track, duration, session)
       .then(response => handleResponse(response, LASTFM_SCROBBLE_TRACK_SUCCESS, LASTFM_SCROBBLE_TRACK_FAILURE))
   }
 }
@@ -56,10 +56,10 @@ export const LASTFM_UPDATE_NOW_PLAYING_REQUEST = 'lastfm/UPDATE_NOW_PLAYING_REQU
 export const LASTFM_UPDATE_NOW_PLAYING_FAILURE = 'lastfm/UPDATE_NOW_PLAYING_FAILURE'
 export const LASTFM_UPDATE_NOW_PLAYING_SUCCESS = 'lastfm/UPDATE_NOW_PLAYING_SUCCESS'
 
-export function updateNowPlaying (artist, album, track, session) {
+export function updateNowPlaying (artist, album, track, duration, session) {
   return dispatch => {
     dispatch({ type: LASTFM_UPDATE_NOW_PLAYING_REQUEST })
-    return api.updateNowPlaying(artist, album, track, session)
+    return api.updateNowPlaying(artist, album, track, duration, session)
       .then(response => handleResponse(response, LASTFM_UPDATE_NOW_PLAYING_SUCCESS, LASTFM_UPDATE_NOW_PLAYING_FAILURE))
   }
 }

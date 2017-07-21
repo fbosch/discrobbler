@@ -16,3 +16,13 @@ export function handleResponse (response, success, error) {
     return response.json().then(payload => store.dispatch({ type: success, payload}))
   }
 }
+
+export function hmsToSeconds (string) {
+  const split = string.split(':')
+  let seconds = 0, minutes = 1
+  while (split.length > 0) {
+     seconds += minutes * parseInt(split.pop(), 10);
+     minutes *= 60;
+  }
+  return seconds
+}

@@ -83,22 +83,22 @@ export class LastFmApi {
     })
   }
 
-  scrobbleTrack(artist, album, track, session) {
+  scrobbleTrack(artist, album, track, duration, session) {
     return this.signedCall('track.scrobble', {
       artist,
       album,
       track,
-      autocorrect: 1,
+      duration,
       timestamp: moment().valueOf()
     }, session, 'POST')
   }
 
-  updateNowPlaying(artist, album, track, session) {
+  updateNowPlaying(artist, album, track, duration, session) {
     return this.signedCall('track.updateNowPlaying', {
       artist,
       album,
       track,
-      autocorrect: 1,
+      duration,
       timestamp: moment().valueOf()
     }, session, 'POST')
   }

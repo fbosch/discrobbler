@@ -7,7 +7,7 @@ import trimEnd from 'lodash.trimend'
 import lastFm from '../../api/lastfm'
 import Vibrant from 'node-vibrant'
 
-import { removeBrackets } from '../../utils'
+import { removeBrackets, hmsToSeconds } from '../../utils'
 import * as discogsActions from '../../store/actions/discogs.actions'
 import * as pageActions from '../../store/actions/page.actions'
 import * as lastFmActions from '../../store/actions/lastfm.actions'
@@ -23,6 +23,7 @@ export default class Release extends Vue {
     releaseCoverImage = null
     fallbackThumb = null
     artworkColor = null
+    vibrantArtworkColor = null
 
     get releaseCoverImageSrcSet() {
         return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
@@ -79,17 +80,18 @@ export default class Release extends Vue {
                 .getPalette((error, palette) => {
                     if (!error) {
                         if (palette.Muted) {
-                            store.dispatch(pageActions.changeToolbarBackground(palette.Muted.getHex()))
-                            this.artworkColor = palette.Muted.getHex()
+                            console.log(palette)
+                            store.dispatch(pageActions.changeToolbarBackground(palette.DarkVibrant.getHex()))
+                            this.artworkColor = palette.DarkMuted.getHex()
+                            this.vibrantArtworkColor = palette.DarkVibrant.getHex()
                         }
                     }
                 })
         }
     }
 
-    updateNowPlaying(trackName) {
-        console.log(this.release)
-        store.dispatch(lastFmActions.updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, store.getState().lastfm.session))
+    updateNowPlaying(trackName, duration) {
+        store.dispatch(lastFmActions.updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, hmsToSeconds(duration), store.getState().lastfm.session))
         .then(() => store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name)))
     }
 

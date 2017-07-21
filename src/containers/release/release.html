@@ -29,7 +29,7 @@
                                 </div>
                             </md-card-header>
                             <md-card-actions class="release-item__genres">
-                                <md-chip v-for="style in release.styles" :key="style" :style="{ backgroundColor: artworkColor }">
+                                <md-chip v-for="style in release.styles" :key="style" :style="{ backgroundColor: vibrantArtworkColor }">
                                     {{ style }}
                                 </md-chip>
                             </md-card-actions>
@@ -43,7 +43,7 @@
                         <md-list>
                             <md-list-item v-for="track in release.tracklist" :key="track.title">
                                 <span>{{ track.title }}</span>
-                                <md-button class="md-icon-button md-list-action" @click.native="updateNowPlaying(track.title)"> 
+                                <md-button class="md-icon-button md-list-action" @click.native="updateNowPlaying(track.title, track.duration)"> 
                                     <md-icon>play_arrow</md-icon>
                                 </md-button>
                             </md-list-item>
