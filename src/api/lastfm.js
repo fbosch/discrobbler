@@ -1,52 +1,25 @@
-import API from '../keys'
+import apiKeys from '../keys'
 import md5 from './lastfm.api.md5'
 import moment from 'moment'
 
-class LastFmApi {
+export class LastFmApi {
 
-  static apiUrl = 'https://ws.audioscrobbler.com/2.0/?format=json'
+  static url = 'https://ws.audioscrobbler.com/2.0/?format=json'
 
-  static internalCall (params, requestMethod) {
+  static internalCall(params, requestMethod) {
     const array = []
     for (let param in params) {
-        array.push(encodeURI(param) + '=' + encodeURIComponent(params[param]))
+      array.push(encodeURI(param) + '=' + encodeURIComponent(params[param]))
     }
-    const url = LastFmApi.apiUrl + '&' + array.join('&').replace(/%20/g, '+')
-    return fetch(url, 
-    {
-        method: requestMethod, 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-     })
+    const url = LastFmApi.url + '&' + array.join('&').replace(/%20/g, '+')
+    return fetch(url, {
+      method: requestMethod,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    })
   }
 
-  static call (method, params, requestMethod) {
-    params = params || {}
-    requestMethod = requestMethod || 'GET'
-
-    params.method = method
-    params.api_key = API.lastfm.key
-
-    return LastFmApi.internalCall(params, requestMethod)
-  }
-
-  static signedCall (method, params, session, requestMethod) {
-    params = params || {}
-    requestMethod = requestMethod || 'GET'
-
-    params.method = method
-    params.api_key = API.lastfm.key
-    
-    if (session && typeof (session.key) != 'undefined') {
-      params.sk = session.key
-    }
-    params.api_sig = LastFmApi.getApiSignature(params)
-
-
-    return LastFmApi.internalCall(params, requestMethod)
-  }
-
-  static getApiSignature (params) {
+  static getApiSignature(params) {
     const keys = Object.keys(params)
     let string = ''
 
@@ -54,50 +27,86 @@ class LastFmApi {
     keys.forEach(key => string += key + params[key])
     string = unescape(encodeURI(string))
 
-    return md5(string + API.lastfm.secret)
+    return md5(string + apiKeys.lastfm.secret)
   }
 
-  getAlbumInfo (artist, album) {
-    return LastFmApi.call('album.getinfo', 
-        {
-            artist,
-            album,
-            autocorrect: 1
-        })
+  constructor(key, secret) {
+    this.key = key
+    this.secret = secret
   }
 
-  authenticateUser () {
-    window.location = `https://last.fm/api/auth/?api_key=${API.lastfm.key}&cb=${window.location.origin}/authenticate/lastfm`
+  call(method, params, requestMethod) {
+    params = params || {}
+    requestMethod = requestMethod || 'GET'
+
+    params.method = method
+    params.api_key = this.key
+
+    return LastFmApi.internalCall(params, requestMethod)
   }
 
-  getWebSession (token) {
-    return LastFmApi.signedCall('auth.getSession', { token })
+  signedCall(method, params, session, requestMethod) {
+    params = params || {}
+    requestMethod = requestMethod || 'GET'
+
+    params.method = method
+    params.api_key = this.key
+
+    if (session && typeof (session.key) != 'undefined') {
+      params.sk = session.key
+    }
+    params.api_sig = LastFmApi.getApiSignature(params)
+
+    return LastFmApi.internalCall(params, requestMethod)
   }
 
-  getRecentTracks (user) {
-    return LastFmApi.call('user.getrecenttracks', { user, limit: 3 })
+  authenticateUser() {
+    window.location = `https://last.fm/api/auth/?api_key=${this.key}&cb=${window.location.origin}/authenticate/lastfm`
   }
 
-  scrobbleTrack (artist, album, track, session) {
-    return LastFmApi.signedCall('track.scrobble', {
-        artist,
-        albumArtist: artist,
-        album,        
-        track,
-        timestamp: moment().valueOf()
+  getAlbumInfo(artist, album) {
+    return this.call('album.getinfo', {
+      artist,
+      album,
+      autocorrect: 1
+    })
+  }
+
+  getWebSession(token) {
+    return this.signedCall('auth.getSession', {
+      token
+    })
+  }
+
+  getRecentTracks(user) {
+    return this.call('user.getrecenttracks', {
+      user,
+      limit: 3
+    })
+  }
+
+  scrobbleTrack(artist, album, track, session) {
+    return this.signedCall('track.scrobble', {
+      artist,
+      albumArtist: artist,
+      album,
+      track,
+      autocorrect: 1,
+      timestamp: moment().valueOf()
     }, session, 'POST')
   }
 
-  updateNowPlaying (artist, album, track, session) {
-      return LastFmApi.signedCall('track.updateNowPlaying', {
-          artist,
-          ablumArtist: artist,
-          album,
-          track,
-          timestamp: moment().valueOf()
-      }, session, 'POST')
+  updateNowPlaying(artist, album, track, session) {
+    return this.signedCall('track.updateNowPlaying', {
+      artist,
+      ablumArtist: artist,
+      album,
+      track,
+      autocorrect: 1,
+      timestamp: moment().valueOf()
+    }, session, 'POST')
   }
 
 }
 
-export default new LastFmApi()
+export default new LastFmApi(apiKeys.lastfm.key, apiKeys.lastfm.secret)
