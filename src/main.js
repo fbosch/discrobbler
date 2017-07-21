@@ -9,6 +9,7 @@ import ProgressiveImage from 'progressive-image/dist/vue'
 import keys from './keys'
 
 import SearchBox from './components/search-box/search-box.vue'
+import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
 
 import 'firebase/database'
 import 'firebase/auth'
@@ -34,12 +35,13 @@ firebase.initializeApp(config)
 
 Vue.material.registerTheme('default', {
   primary: 'black',
-  accent: 'blue-grey',
+  accent: 'red',
   warn: 'red',
   background: 'white'
 })
 
 Vue.component('search-box', SearchBox)
+Vue.component('scrobbler-bar', ScrobblerBar)
 
 new Vue({
   el: '#app',

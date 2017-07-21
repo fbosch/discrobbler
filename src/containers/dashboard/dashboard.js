@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import store from '../../store'
-import { fetchUserCollection, resetTool, clearSelectedRelease } from '../../store/actions/discogs.actions'
+import * as discogsActions from '../../store/actions/discogs.actions'
+import * as pageActions from '../../store/actions/page.actions'
 import moment from 'moment'
 import Fuse from 'fuse.js'
 
@@ -17,12 +18,16 @@ export default class Dashboard extends Vue {
         keys: ['basic_information.title', 'basic_information.artists.name', 'basic_information.formats.name']
     }
 
-    static fetchCollection() { store.dispatch(fetchUserCollection(store.getState().discogs.user.username)) }
+    static fetchCollection() { store.dispatch(discogsActions.fetchUserCollection(store.getState().discogs.user.username)) }
 
     collection = store.getState().discogs.collection || []
     filteredCollection = [...this.collection]
     collectionIsLoading = !this.collection
     searchState = store.getState().page.search || null
+
+    created() {
+        store.dispatch(pageActions.resetToolbarBackground())
+    }
 
     mounted() {
         const state = store.getState()

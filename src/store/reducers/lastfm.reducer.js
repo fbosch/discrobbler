@@ -1,6 +1,6 @@
 import {
     LASTFM_SET_AUTHENTICATION_TOKEN,
-    LASTFM_FETCH_WEBSESSION_SUCCESS,
+    LASTFM_FETCH_SESSION_SUCCESS,
     LASTFM_CLEAR_AUTHENTICATION_TOKEN,
     LASTFM_CLEAR_STATE,
     LASTFM_FETCH_RECENT_TRACKS_SUCCESS
@@ -16,10 +16,10 @@ export default (state = {}, action) => {
                 authenticationToken: action.payload
             }
 
-        case LASTFM_FETCH_WEBSESSION_SUCCESS:
+        case LASTFM_FETCH_SESSION_SUCCESS:
             return {
                 ...state,
-                websession: action.payload.session
+                session: action.payload.session
             }
         
         case LASTFM_FETCH_RECENT_TRACKS_SUCCESS: 

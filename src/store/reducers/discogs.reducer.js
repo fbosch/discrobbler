@@ -48,20 +48,6 @@ export default (state = {}, action) => {
                 lastCollectionFetchDate: new Date(),
                 lastCollectionFetchUserId: {...state}.user.id
             }
-
-        case DISCOGS_FETCH_RELEASE_REQUEST:
-            return {
-                ...state,
-                selectedRelease: null,
-                selectedReleaseLoading: true
-            }
-
-        case DISCOGS_FETCH_RELEASE_SUCCESS:
-            return {
-                ...state,
-                selectedRelease: action.payload,
-                selectedReleaseLoading: false
-            }
         
         case DISCOGS_CLEAR_STATE: 
             return { }

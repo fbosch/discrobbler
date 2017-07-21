@@ -61,7 +61,7 @@ export class LastFmApi {
   }
 
   authenticateUser() {
-    window.location = `https://last.fm/api/auth/?api_key=${this.key}&cb=${window.location.origin}/authenticate/lastfm`
+    window.location = `https://last.fm/api/auth/?api_key=${this.key}&timestamp=${moment().valueOf()}&cb=${window.location.origin}/authenticate/lastfm`
   }
 
   getAlbumInfo(artist, album) {
@@ -72,10 +72,8 @@ export class LastFmApi {
     })
   }
 
-  getWebSession(token) {
-    return this.signedCall('auth.getSession', {
-      token
-    })
+  getSession(token) {
+    return this.signedCall('auth.getSession', { token, timestamp: moment().valueOf() })
   }
 
   getRecentTracks(user) {
@@ -88,7 +86,6 @@ export class LastFmApi {
   scrobbleTrack(artist, album, track, session) {
     return this.signedCall('track.scrobble', {
       artist,
-      albumArtist: artist,
       album,
       track,
       autocorrect: 1,
@@ -99,7 +96,6 @@ export class LastFmApi {
   updateNowPlaying(artist, album, track, session) {
     return this.signedCall('track.updateNowPlaying', {
       artist,
-      ablumArtist: artist,
       album,
       track,
       autocorrect: 1,

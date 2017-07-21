@@ -8,9 +8,9 @@ import lastFm from '../../api/lastfm'
 import Vibrant from 'node-vibrant'
 
 import { removeBrackets } from '../../utils'
-import { fetchRelease, DISCOGS_CLEAR_SELECTED_RELEASE } from '../../store/actions/discogs.actions'
-import { changeToolbarBackground, PAGE_RESET_TOOLBAR_BACKGROUND, PAGE_SEARCH_CLEAR } from '../../store/actions/page.actions'
-import { updateNowPlaying } from '../../store/actions/lastfm.actions'
+import * as discogsActions from '../../store/actions/discogs.actions'
+import * as pageActions from '../../store/actions/page.actions'
+import * as lastFmActions from '../../store/actions/lastfm.actions'
 
 import vinylIcon from '../../static/vinyl.svg'
 import cdIcon from '../../static/cd.svg'
@@ -44,36 +44,31 @@ export default class Release extends Vue {
                 return cdIcon
             case 'cassette':
                 return cassetteIcon
-            default: 
-            return null
+            default:
+                return null
         }
     }
 
     created() {
         this.changeToolbarColorBasedOnCurrentCoverImage()
-        store.dispatch({ type: PAGE_SEARCH_CLEAR })
-        store.dispatch(fetchRelease(router.currentRoute.params.id))
-        this.unsubscribe = store.subscribe(() => {
-            const state = store.getState()
-            this.releaseIsLoading = state.discogs.selectedReleaseLoading
-            if (!this.releaseIsLoading) {
-                if (store.getState().discogs.selectedRelease !== this.release) {
-                    this.release = state.discogs.selectedRelease
-                    const artistName = trimEnd(removeBrackets(this.release.artists[0].name))
-                    lastFm.getAlbumInfo(artistName, this.release.title)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.error) {
-                                this.fallbackThumb = this.getFallbackThumb()
-                            } else {
-                                this.releaseCoverImage = data.album.image
-                            }
-                            this.changeToolbarColorBasedOnCurrentCoverImage()
-                        })
-                }
-            }
-        })
-
+        store.dispatch(pageActions.searchClear())
+        store.dispatch(discogsActions.fetchRelease(router.currentRoute.params.id))
+            .then(response => {
+                this.release = response.payload
+                this.releaseIsLoading = false                
+                const artistName = trimEnd(removeBrackets(this.release.artists[0].name))
+                // TODO: Refactor to use redux actions
+                lastFm.getAlbumInfo(artistName, this.release.title)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            this.fallbackThumb = this.getFallbackThumb()
+                        } else {
+                            this.releaseCoverImage = data.album.image
+                        }
+                        this.changeToolbarColorBasedOnCurrentCoverImage()
+                    })
+            })
     }
 
     changeToolbarColorBasedOnCurrentCoverImage() {
@@ -84,7 +79,7 @@ export default class Release extends Vue {
                 .getPalette((error, palette) => {
                     if (!error) {
                         if (palette.Muted) {
-                            store.dispatch(changeToolbarBackground(palette.Muted.getHex()))
+                            store.dispatch(pageActions.changeToolbarBackground(palette.Muted.getHex()))
                             this.artworkColor = palette.Muted.getHex()
                         }
                     }
@@ -94,7 +89,8 @@ export default class Release extends Vue {
 
     updateNowPlaying(trackName) {
         console.log(this.release)
-        store.dispatch(updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, store.getState().lastfm.websession))
+        store.dispatch(lastFmActions.updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, store.getState().lastfm.session))
+        .then(() => store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name)))
     }
 
     imageLoaded(event) {
@@ -103,12 +99,11 @@ export default class Release extends Vue {
     }
 
     getFallbackThumb() {
-        console.log('get fallback thumb')
         const collection = get(store.getState(), 'discogs.collection', null)
         if (collection) {
             const item = collection.find(item => item.id === this.release.id)
             if (item) {
-                return item.basic_information.thumb 
+                return item.basic_information.thumb
             }
         }
     }
@@ -123,13 +118,5 @@ export default class Release extends Vue {
             image.removeAttribute('data-srcset')
         }
     }
-
-    beforeDestroy() {
-        if (this.unsubscribe) this.unsubscribe()
-        store.dispatch({ type: PAGE_RESET_TOOLBAR_BACKGROUND })
-        store.dispatch({ type: DISCOGS_CLEAR_SELECTED_RELEASE })
-    }
-
-
 
 }

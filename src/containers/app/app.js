@@ -4,8 +4,7 @@ import router, { views } from '../../router'
 import Component from 'vue-class-component'
 import get from 'lodash.get'
 import { Watch } from 'vue-property-decorator'
-import { PAGE_RESET_TOOLBAR_BACKGROUND } from '../../store/actions/page.actions'
-import { getRecentTracks } from '../../store/actions/lastfm.actions'
+import * as pageActions from '../../store/actions/page.actions'
 
 @Component
 export default class App extends Vue {
@@ -15,19 +14,15 @@ export default class App extends Vue {
     lastfmUsername = null
     toolbarColor = null
     discogsAuthenticated = false
-    nowScrobbling = false
-    trackBeingScrobbled = null
 
     created() {
         const initialDiscogsUserState = store.getState().discogs.user
         if (initialDiscogsUserState && router.currentRoute.path === '/') {
             router.push(views.dashboard)
         }
-        setInterval(App.getRecentTracks, 12000)         
     }
 
     mounted() {
-        App.getRecentTracks()
         this.updateViewStateFromStore()
         this.beforeDestroy = store.subscribe(this.updateViewStateFromStore)
         if (router.currentRoute.name !== 'release') {
@@ -40,13 +35,7 @@ export default class App extends Vue {
     }
 
     static resetToolbarColor() {
-        store.dispatch({ type: PAGE_RESET_TOOLBAR_BACKGROUND })
-    }
-
-    static getRecentTracks() {
-        if (get(store.getState(), 'lastfm.websession.name', false)) {
-            store.dispatch(getRecentTracks(store.getState().lastfm.websession.name))       
-        }
+        store.dispatch(pageActions.resetToolbarBackground())
     }
     
     updateViewStateFromStore() {
@@ -62,7 +51,7 @@ export default class App extends Vue {
             this.discogsAuthenticated = store.getState().discogs.authenticated
         }
 
-        const currentLastfmWebsession = store.getState().lastfm.websession 
+        const currentLastfmWebsession = store.getState().lastfm.session 
         if (currentLastfmWebsession) {
             this.lastfmUsername = currentLastfmWebsession.name
         }
@@ -74,13 +63,6 @@ export default class App extends Vue {
         const toolbarColor = store.getState().page.toolbarColor
         if (toolbarColor !== this.toolbarColor) {
             this.toolbarColor = toolbarColor
-        }
-
-        const recentTracks = store.getState().lastfm.recentTracks
-        if (recentTracks) {
-            this.recentTracks = recentTracks
-            this.nowScrobbling = get(recentTracks.track[0], '@attr.nowplaying', false)
-            this.trackBeingScrobbled = this.nowScrobbling ? recentTracks.track[0] : null
         }
     }
 

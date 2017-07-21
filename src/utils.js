@@ -8,11 +8,11 @@ export function removeBrackets (input) {
     .replace(/\(.*?\)/g, '')
 }
 
-export function handleResponse (response, type) {
+export function handleResponse (response, success, error) {
   if (response.status >= 400) {
-    store.dispatch({ type, payload: response.message })
-    return Promise.reject(new Error(response.message))
+    store.dispatch({ type: error, payload: response })
+    return Promise.reject(new Error(response))
   } else {
-    return response.json()
+    return response.json().then(payload => store.dispatch({ type: success, payload}))
   }
 }

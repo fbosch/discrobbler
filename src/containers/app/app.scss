@@ -23,25 +23,6 @@ body {
     left: 50%;
 }
 
-.scrobbling-bottom-bar {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-    padding: 0;
-    z-index: 99;
-}
-
-.now-scrobbling {
-    width: 100%;
-    &__icon {
-        float: left;
-        margin: 0 20px 0 25px;
-    }
-    &__info {
-        text-overflow: ellipsis;
-    }
-}
-
 .search-box-container {
     width: 50%;
     max-width: 500px;

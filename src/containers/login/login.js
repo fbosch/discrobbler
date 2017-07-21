@@ -1,32 +1,32 @@
 import Vue from 'vue'
 import store from '../../store'
 import { Component, Watch } from 'vue-property-decorator'
-import { fetchUser, DISCOGS_CLEAR_STATE } from '../../store/actions/discogs.actions'
 import router, { views } from '../../router'
 import get from 'lodash.get'
 import keys from '../../keys'
 import lastfm from '../../api/lastfm'
-import { setLastfmAuthenticationToken, getWebSession, LASTFM_CLEAR_STATE } from '../../store/actions/lastfm.actions'
+import * as discogsActions from '../../store/actions/discogs.actions'
+import * as lastFmActions from '../../store/actions/lastfm.actions'
 import queryString from 'query-string'
 
 @Component
 export default class Login extends Vue {
     discogsUsername = get(store.getState(),'discogs.user.username', null)
-    lastfmSession = store.getState().lastfm.websession || null
+    lastfmSession = store.getState().lastfm.session || null
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
         if (router.currentRoute.name === 'authenticate' && parsedQueryString.token !== null) {
             switch (router.currentRoute.params.auth) {
                 case 'lastfm':
-                    store.dispatch(setLastfmAuthenticationToken(parsedQueryString.token))
+                    store.dispatch(lastFmActions.setAuthenticationToken(parsedQueryString.token))
                     window.location = location.origin + '/login'
                     break
             }
         }
         const lastfmToken = store.getState().lastfm.authenticationToken
-        const lastfmSession = store.getState().lastfm.websession
-        if (lastfmToken && !lastfmSession) store.dispatch(getWebSession(lastfmToken))
+        const lastfmSession = store.getState().lastfm.session
+        if (lastfmToken && !lastfmSession) store.dispatch(lastFmActions.getSession(lastfmToken))
 
         let currentDiscogsUserValue = store.getState().discogs.user
         this.beforeDestroy = store.subscribe(() => {
@@ -35,7 +35,7 @@ export default class Login extends Vue {
             if (previousUserValue !== currentDiscogsUserValue && currentDiscogsUserValue !== null) {
                 router.push(views.dashboard)
             }
-            this.lastfmSession = store.getState().lastfm.websession
+            this.lastfmSession = store.getState().lastfm.session
         })
     }
 
@@ -44,12 +44,13 @@ export default class Login extends Vue {
     }
 
     unauthorize() {
-        store.dispatch({ type: LASTFM_CLEAR_STATE })
-        store.dispatch({ type: DISCOGS_CLEAR_STATE })
+        store.dispatch(discogsActions.clearState())
+        store.dispatch(lastFmActions.clearState())
+        localStorage.setItem('state', {})
     }
 
     authorizeDiscogs() {
-        store.dispatch(fetchUser(this.discogsUsername))
+        store.dispatch(discogsActions.fetchUser(this.discogsUsername))
     }
 
 }

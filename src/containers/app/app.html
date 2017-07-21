@@ -12,6 +12,9 @@
     <md-menu md-direction="bottom left" md-size="4" v-if="discogsAuthenticated">
       <md-avatar md-menu-trigger>
         <img :src="avatar" v-if="avatar">
+        <md-icon v-else>
+          account_circle
+        </md-icon>
       </md-avatar>
       <md-menu-content>
         <md-menu-item @click.native="openLastfmProfile">
@@ -37,8 +40,8 @@
       </md-menu-content>
     </md-menu>
   </md-toolbar>
-  <md-sidenav class="md-left" ref="leftSidenav" md-swipable @click.native="toggleLeftSidenav">
-    <md-toolbar :style="{ backgroundColor: toolbarColor }">
+  <md-sidenav class="md-left" ref="leftSidenav"  @click.native="toggleLeftSidenav">
+    <md-toolbar>
       <div class="md-toolbar-container">
         <h2 class="md-title">Discrobbler</h2>
       </div>
@@ -64,29 +67,5 @@
       <router-view></router-view>
     </transition>
   </div>
-  <md-toolbar class="scrobbling-bottom-bar">
-    <div class="md-toolbar-container">
-      <div class="now-scrobbling" v-if="nowScrobbling">
-        <md-avatar class="now-scrobbling__icon">
-          <img :src="trackBeingScrobbled.image[1]['#text']" alt="People">
-        </md-avatar>
-        <md-card-header class="now-scrobbling__info">
-          <div class="md-title">{{ trackBeingScrobbled.name }}</div>
-          <div class="md-subhead">{{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}</div>
-        </md-card-header>
-      </div>
-      <div style="flex: 1"></div>
-      <md-button class="md-icon-button">
-        <md-icon>
-          queue_music
-        </md-icon>
-      </md-button>
-      <md-button class="md-icon-button">
-        <md-icon>
-          more_vert
-        </md-icon>
-      </md-button>
-    </div>
-    <md-progress class="md-accent" md-indeterminate v-if="nowScrobbling"></md-progress>
-  </md-toolbar>
+  <scrobbler-bar></scrobbler-bar>
 </div>

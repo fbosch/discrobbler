@@ -17,6 +17,7 @@
     "firebase-auth": "^0.1.2",
     "firebase-functions": "^0.5.7",
     "fuse.js": "^3.0.3",
+    "ifvisible.js": "^1.0.6",
     "js-md5": "^0.4.2",
     "keycode": "^2.1.9",
     "lodash.debounce": "^4.0.8",

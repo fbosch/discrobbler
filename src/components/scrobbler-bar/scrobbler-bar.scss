@@ -1,0 +1,26 @@
+.scrobbler-bar {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding: 0;
+    z-index: 99;
+
+    &__song-name, &__album-artist {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: 0;
+    }
+
+    &__now-scrobbling {
+        
+        &__icon {
+            float: left;
+            margin: 0 20px 0 25px;
+            background-image: url('../../static/record.svg')
+        }
+        &__info {
+            width: 70vw;
+        }
+    }
+}
