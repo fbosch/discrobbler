@@ -37,7 +37,11 @@ export default class App extends Vue {
     static resetToolbarColor() {
         store.dispatch(pageActions.resetToolbarBackground())
     }
-    
+
+    static proccessScrobbleQueue() {
+
+    }
+
     updateViewStateFromStore() {
         const currentDiscogsUserState = store.getState().discogs.user
         if (currentDiscogsUserState) {
@@ -54,9 +58,11 @@ export default class App extends Vue {
         const currentLastfmWebsession = store.getState().lastfm.session 
         if (currentLastfmWebsession) {
             this.lastfmUsername = currentLastfmWebsession.name
+        } else {
+            this.lastfmUsername = null
         }
         
-        if (!this.discogsAuthenticated || !currentLastfmWebsession) {
+        if ((!this.discogsAuthenticated || !currentLastfmWebsession) && router.currentRoute.name !== 'authenticate') {
             router.push(views.login)
         }
 

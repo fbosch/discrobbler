@@ -91,10 +91,9 @@ export default class Release extends Vue {
         }
     }
 
-    // updateNowPlaying(trackName, duration) {
-    //     store.dispatch(lastFmActions.updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, hmsToSeconds(duration), store.getState().lastfm.session))
-    //     .then(() => store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name)))
-    // }
+    search(query) {
+        store.dispatch(pageActions.search(query))
+    }
 
     addTrackToQueue(track) {
         store.dispatch(lastFmActions.addTracksToQueue([track]))

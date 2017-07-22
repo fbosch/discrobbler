@@ -40,7 +40,7 @@
       </md-menu-content>
     </md-menu>
   </md-toolbar>
-  <md-sidenav class="md-left" ref="leftSidenav"  @click.native="toggleLeftSidenav">
+  <md-sidenav class="md-left" ref="leftSidenav" @click.native="toggleLeftSidenav">
     <md-toolbar>
       <div class="md-toolbar-container">
         <h2 class="md-title">Discrobbler</h2>
@@ -67,5 +67,5 @@
       <router-view></router-view>
     </transition>
   </div>
-  <scrobbler-bar></scrobbler-bar>
+  <scrobbler-bar v-if="lastfmUsername"></scrobbler-bar>
 </div>

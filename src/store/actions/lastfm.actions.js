@@ -69,8 +69,7 @@ export function updateNowPlaying (artist, album, track, duration, session) {
 
 export const LASTFM_ADD_TRACKS_TO_QUEUE = 'lastfm/ADD_TRACKS_TO_QUEUE'
 export function addTracksToQueue (tracks) {
-  const payload = [...tracks]
-    .map(track => assign({ uniqueId: moment().valueOf() }, track))
+  const payload = [...tracks].map(track => assign({ uniqueId: moment().valueOf() }, track))
   return { type: LASTFM_ADD_TRACKS_TO_QUEUE, payload }
 }
 

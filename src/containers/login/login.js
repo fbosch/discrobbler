@@ -20,7 +20,6 @@ export default class Login extends Vue {
             switch (router.currentRoute.params.auth) {
                 case 'lastfm':
                     store.dispatch(lastFmActions.setAuthenticationToken(parsedQueryString.token))
-                    window.location = location.origin + '/login'
                     break
             }
         }

@@ -16,13 +16,13 @@
       </md-card-header>
     </div>
     <div style="flex: 1"></div>
-    <md-menu md-direction="top left" md-size="7" ref="queueTable">
+    <md-menu md-direction="top left" md-size="7" ref="queueTable" :md-align-trigger="true">
       <md-button md-menu-trigger class="md-icon-button">
-        <md-icon>
+        <md-icon v-if="queue">
           queue_music
+          <span v-if="queue.length >= 1" class="scrobbler-bar__queue-count">{{ queue.length+1 }}</span>
         </md-icon>
       </md-button>
-
       <md-menu-content>
         <md-layout>
           <md-subheader>

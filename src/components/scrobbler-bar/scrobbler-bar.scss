@@ -12,6 +12,24 @@
         margin: 0;
     }
 
+    &__queue-count {
+        z-index: 99;
+        display: block;
+        background: #f44336;
+        color: white;
+        font-weight: 700;
+        height: 12px;
+        width: 12px;        
+        position: absolute;
+        top: 0px;
+        left: -5px;
+        text-align: center;
+        font-size: 10px;
+        padding-top: 2px;
+        border-radius: 100%;
+        font-family: 'Roboto';
+    }
+
     &__now-scrobbling {
         
         &__icon {

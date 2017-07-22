@@ -11,12 +11,13 @@
                     <md-card-area>
                         <div class="container">
                             <md-card-header>
-
                                 <div class="md-title">
                                     {{ release.title }}
                                 </div>
                                 <div class="md-subheading">
-                                    {{ release.artists[0].name }}
+                                    <md-button @click.native="search(release.artists[0].name)">
+                                        {{ release.artists[0].name }}
+                                    </md-button>
                                     <div class="md-subheading">
                                         <md-icon class="release-item__format-icon">
                                             <img :src="releaseFormatIcon" :alt="release.formats[0].name" v-if="releaseFormatIcon">
@@ -44,7 +45,7 @@
                             <md-list-item v-for="track in release.tracklist" :key="track.title">
                                 <span>{{ track.title }}</span>
                                 <md-button class="md-icon-button md-list-action" @click.native="addTrackToQueue(track)"> 
-                                    <md-icon>play_arrow</md-icon>
+                                    <md-icon>playlist_add</md-icon>
                                 </md-button>
                             </md-list-item>
                         </md-list>

@@ -5,7 +5,7 @@ import { search } from '../../store/actions/page.actions'
 import router, { views } from '../../router'
 import store from '../../store'
 import debounce from 'lodash.debounce'
-
+import isNil from 'lodash.isnil'
 
 @Component
 export default class SearchBox extends Vue {
@@ -23,6 +23,18 @@ export default class SearchBox extends Vue {
             router.push(views.dashboard)
         }
         store.dispatch(search(this.searchQuery))
+    }
+
+    mounted() {
+        this.beforeDestroy = store.subscribe(() => {
+            if(this.searchQuery !== store.getState().page.search) {
+                this.searchQuery = store.getState().page.search
+                console.log('searchQuery', this.searchQuery) 
+                if (!isNil(this.searchQuery)) {
+                    this.performQuery()
+                }
+            }
+        })
     }
 
 }

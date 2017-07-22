@@ -26,7 +26,9 @@ export default class ScrobblerBar extends Vue {
     removeTrackFromQueue(track) {
         store.dispatch(lastFmActions.removeTracksFromQueue([track]))
         this.$refs.queueTable.open()
-        
+        if (this.queue.length === 0) {
+            this.$refs.queueTable.close()
+        }
     }
 
     created() {
