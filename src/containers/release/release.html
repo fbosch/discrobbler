@@ -3,8 +3,8 @@
         <md-spinner :md-size="70" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="releaseIsLoading"></md-spinner>
         <div class="release-item" v-else>
             <md-card>
-                <md-card-media-cover md-solid :style="{ backgroundColor: artworkColor }">
-                    <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
+                <md-card-media-cover md-solid>
+                    <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')', backgroundColor: artworkColor }">
                         <img v-if="releaseCoverImage" :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet"
                             :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
                     </md-card-media>
@@ -43,7 +43,7 @@
                         <md-list>
                             <md-list-item v-for="track in release.tracklist" :key="track.title">
                                 <span>{{ track.title }}</span>
-                                <md-button class="md-icon-button md-list-action" @click.native="updateNowPlaying(track.title, track.duration)"> 
+                                <md-button class="md-icon-button md-list-action" @click.native="addTrackToQueue(track)"> 
                                     <md-icon>play_arrow</md-icon>
                                 </md-button>
                             </md-list-item>

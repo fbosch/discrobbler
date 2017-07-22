@@ -1,31 +1,79 @@
-  <md-toolbar class="scrobbler-bar">
-    <div class="md-toolbar-container">
-      <div class="scrobbler-bar__now-scrobbling" v-if="trackBeingScrobbled">
-        <md-avatar class="scrobbler-bar__now-scrobbling__icon">
-          <img :src="trackBeingScrobbled.image[0]['#text']" alt="People">
-        </md-avatar>
-        <md-card-header class="scrobbler-bar__now-scrobbling__info">
-          <div class="md-title scrobbler-bar__song-name">
-            {{ trackBeingScrobbled.name }}
-            <md-tooltip md-direction="top">{{ trackBeingScrobbled.name }}</md-tooltip>
-          </div>
-          <div class="md-subhead scrobbler-bar__album-artist">
-            {{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}
-            <md-tooltip md-direction="top">{{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}</md-tooltip>
-          </div>
-        </md-card-header>
-      </div>
-      <div style="flex: 1"></div>
-      <md-button class="md-icon-button">
+<md-toolbar class="scrobbler-bar">
+  <div class="md-toolbar-container">
+    <div class="scrobbler-bar__now-scrobbling" v-if="trackBeingScrobbled">
+      <md-avatar class="scrobbler-bar__now-scrobbling__icon">
+        <img :src="trackBeingScrobbled.image[0]['#text']" alt="People">
+      </md-avatar>
+      <md-card-header class="scrobbler-bar__now-scrobbling__info">
+        <div class="md-title scrobbler-bar__song-name">
+          {{ trackBeingScrobbled.name }}
+          <md-tooltip md-direction="top">{{ trackBeingScrobbled.name }}</md-tooltip>
+        </div>
+        <div class="md-subhead scrobbler-bar__album-artist">
+          {{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}
+          <md-tooltip md-direction="top">{{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}</md-tooltip>
+        </div>
+      </md-card-header>
+    </div>
+    <div style="flex: 1"></div>
+    <md-menu md-direction="top left" md-size="7" ref="queueTable">
+      <md-button md-menu-trigger class="md-icon-button">
         <md-icon>
           queue_music
         </md-icon>
       </md-button>
-      <md-button class="md-icon-button">
-        <md-icon>
-          more_vert
-        </md-icon>
-      </md-button>
-    </div>
-    <md-progress class="md-accent" md-indeterminate v-if="nowScrobbling"></md-progress>
-  </md-toolbar>
+
+      <md-menu-content>
+        <md-layout>
+          <md-subheader>
+            Scrobble Queue
+          </md-subheader>
+          <span style="flex: 1"></span>
+          <md-button class="md-raised md-warn" @click.native="clearQueue">
+            clear
+          </md-button>
+        </md-layout>
+        <md-table v-if="queue">
+          <md-table-header>
+            <md-table-row>
+              <md-table-cell>
+                Track
+              </md-table-cell>
+              <md-table-cell>
+                Duration
+              </md-table-cell>
+            </md-table-row>
+          </md-table-header>
+          <md-table-body>
+            <md-table-row v-for="track in queue" :key="track.uniqueId">
+              <md-table-cell>
+                {{ track.title }}
+              </md-table-cell>
+              <md-table-cell>
+                <span v-if="track.duration">
+                  {{ track.duration }}
+                </span>
+                <span v-else>
+                  --:--
+                </span>
+              </md-table-cell>
+              <md-table-cell>
+                <md-button class="md-icon-button" @click.native="removeTrackFromQueue(track)">
+                  <md-icon>
+                    remove_circle
+                  </md-icon>
+                </md-button>
+              </md-table-cell>
+            </md-table-row>
+          </md-table-body>
+        </md-table>
+      </md-menu-content>
+    </md-menu>
+    <md-button class="md-icon-button">
+      <md-icon>
+        more_vert
+      </md-icon>
+    </md-button>
+  </div>
+  <md-progress class="md-accent" md-indeterminate v-if="nowScrobbling"></md-progress>
+</md-toolbar>

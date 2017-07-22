@@ -10,6 +10,7 @@ import ifVisible from 'ifvisible.js'
 export default class ScrobblerBar extends Vue {
     nowScrobbling = false
     trackBeingScrobbled = null
+    queue = store.getState().lastfm.queue || []
 
     static getRecentTracks() {
         if (get(store.getState(), 'lastfm.session.name', false)) {
@@ -17,16 +18,28 @@ export default class ScrobblerBar extends Vue {
         }
     }
 
+    clearQueue() {
+        this.$refs.queueTable.close()
+        store.dispatch(lastFmActions.clearQueue())
+    }
+
+    removeTrackFromQueue(track) {
+        store.dispatch(lastFmActions.removeTracksFromQueue([track]))
+        this.$refs.queueTable.open()
+        
+    }
+
     created() {
         setInterval(() => {
             if (ifVisible.now())
                 ScrobblerBar.getRecentTracks()
-        }, 12000)
+        }, 24000)
     }
 
     mounted() {
         ScrobblerBar.getRecentTracks()
         this.beforeDestroy = store.subscribe(() => {
+            this.queue = store.getState().lastfm.queue
             const recentTracks = store.getState().lastfm.recentTracks
             if (recentTracks) {
                 this.recentTracks = recentTracks
@@ -39,6 +52,8 @@ export default class ScrobblerBar extends Vue {
                     const timeOfScrobble = moment(mostRecentTrack.date.uts, 'X')
                     if (moment() < timeOfScrobble.add({ minutes: 5 })) {
                         this.trackBeingScrobbled = mostRecentTrack
+                    } else {
+                        this.trackBeingScrobbled = null
                     }
                 }
             } else {

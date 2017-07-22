@@ -79,20 +79,25 @@ export default class Release extends Vue {
             Vibrant.from(this.lowestQualityCover)
                 .getPalette((error, palette) => {
                     if (!error) {
-                        if (palette.Muted) {
-                            console.log(palette)
-                            store.dispatch(pageActions.changeToolbarBackground(palette.DarkVibrant.getHex()))
+                        if(palette.DarkMuted) {
                             this.artworkColor = palette.DarkMuted.getHex()
+                        }
+                        if(palette.DarkVibrant) {
                             this.vibrantArtworkColor = palette.DarkVibrant.getHex()
+                            store.dispatch(pageActions.changeToolbarBackground(palette.DarkVibrant.getHex()))                            
                         }
                     }
                 })
         }
     }
 
-    updateNowPlaying(trackName, duration) {
-        store.dispatch(lastFmActions.updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, hmsToSeconds(duration), store.getState().lastfm.session))
-        .then(() => store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name)))
+    // updateNowPlaying(trackName, duration) {
+    //     store.dispatch(lastFmActions.updateNowPlaying(this.release.artists[0].name, this.release.title, trackName, hmsToSeconds(duration), store.getState().lastfm.session))
+    //     .then(() => store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name)))
+    // }
+
+    addTrackToQueue(track) {
+        store.dispatch(lastFmActions.addTracksToQueue([track]))
     }
 
     imageLoaded(event) {

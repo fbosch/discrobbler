@@ -1,5 +1,8 @@
 import api from '../../api/lastfm'
 import { handleResponse } from '../../utils'
+import isArray from 'lodash.isarray'
+import assign from 'lodash.assign'
+import moment from 'moment'
 
 export const LASTFM_CLEAR_AUTHENTICATION_TOKEN = 'lastfm/CLEAR_AUTHENTICATION_TOKEN'
 export function clearAuthenticationToken () {
@@ -62,4 +65,21 @@ export function updateNowPlaying (artist, album, track, duration, session) {
     return api.updateNowPlaying(artist, album, track, duration, session)
       .then(response => handleResponse(response, LASTFM_UPDATE_NOW_PLAYING_SUCCESS, LASTFM_UPDATE_NOW_PLAYING_FAILURE))
   }
+}
+
+export const LASTFM_ADD_TRACKS_TO_QUEUE = 'lastfm/ADD_TRACKS_TO_QUEUE'
+export function addTracksToQueue (tracks) {
+  const payload = [...tracks]
+    .map(track => assign({ uniqueId: moment().valueOf() }, track))
+  return { type: LASTFM_ADD_TRACKS_TO_QUEUE, payload }
+}
+
+export const LASTFM_REMOVE_TRACKS_FROM_QUEUE = 'lastfm/REMOVE_TRACKS_FROM_QUEUE'
+export function removeTracksFromQueue (payload) {
+  return { type: LASTFM_REMOVE_TRACKS_FROM_QUEUE, payload}
+}
+
+export const LASTFM_CLEAR_QUEUE = 'lastfm/CLEAR_QUEUE'
+export function clearQueue () {
+  return { type: LASTFM_CLEAR_QUEUE }
 }
