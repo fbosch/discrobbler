@@ -48,6 +48,7 @@ export default class Release extends Vue {
     }
 
     created() {
+        console.log(pageActions.searchClear())
         store.dispatch(pageActions.searchClear())
         store.dispatch(discogsActions.fetchRelease(router.currentRoute.params.id))
             .then(response => {

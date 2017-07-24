@@ -5,13 +5,13 @@ import assign from 'lodash.assign'
 import moment from 'moment'
 
 export const LASTFM_CLEAR_AUTHENTICATION_TOKEN = 'LASTFM/CLEAR_AUTHENTICATION_TOKEN'
-export const clearAuthenticationToken = () => { type: LASTFM_CLEAR_AUTHENTICATION_TOKEN }
+export const clearAuthenticationToken = () => new Object({ type: LASTFM_CLEAR_AUTHENTICATION_TOKEN })
 
 export const LASTFM_CLEAR_STATE = 'LASTFM/CLEAR_STATE'
-export const clearState = () => { type: LASTFM_CLEAR_STATE }
+export const clearState = () => new Object({ type: LASTFM_CLEAR_STATE })
 
 export const LASTFM_SET_AUTHENTICATION_TOKEN = 'LASTFM/SET_AUTHENTICATION_TOKEN'
-export const setAuthenticationToken = payload => { type: LASTFM_SET_AUTHENTICATION_TOKEN, payload}
+export const setAuthenticationToken = payload => new Object({ type: LASTFM_SET_AUTHENTICATION_TOKEN, payload})
 
 export const LASTFM_FETCH_SESSION_REQUEST = 'LASTFM/FETCH_SESSION_REQUEST'
 export const LASTFM_FETCH_SESSION_FAILURE = 'LASTFM/FETCH_SESSION_FAILURE'
@@ -64,8 +64,8 @@ export const addTracksToQueue = tracks => {
 }
 
 export const LASTFM_REMOVE_TRACKS_FROM_QUEUE = 'LASTFM/REMOVE_TRACKS_FROM_QUEUE'
-export const removeTracksFromQueue = payload => { type: LASTFM_REMOVE_TRACKS_FROM_QUEUE, payload}
+export const removeTracksFromQueue = payload => new Object({ type: LASTFM_REMOVE_TRACKS_FROM_QUEUE, payload})
 
 
 export const LASTFM_CLEAR_QUEUE = 'LASTFM/CLEAR_QUEUE'
-export const clearQueue = () => { type: LASTFM_CLEAR_QUEUE }
+export const clearQueue = () => new Object({ type: LASTFM_CLEAR_QUEUE })

@@ -1,9 +1,13 @@
 import './polyfills'
+
+import 'firebase/database'
+import 'firebase/auth'
+import firebase from 'firebase/app'
+
 import Vue from 'vue'
 import App from './containers/app/app.vue'
 import router from './router'
 import store from './store'
-import runtime from 'serviceworker-webpack-plugin/lib/runtime'
 import VueMaterial from 'vue-material'
 import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
@@ -12,13 +16,9 @@ import apiKeys from './keys'
 import SearchBox from './components/search-box/search-box.vue'
 import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
 
-import 'firebase/database'
-import 'firebase/auth'
-import firebase from 'firebase/app'
-
-if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-  runtime.register()
-}
+// if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+//   runtime.register()
+// }
 
 Vue.use(VueMaterial)
 Vue.use(lazyload)
@@ -41,12 +41,11 @@ Vue.material.registerTheme('default', {
   background: 'white'
 })
 
+Vue.component('search-box', SearchBox)
+Vue.component('scrobbler-bar', ScrobblerBar)
+
 new Vue({
   el: '#app',
   router,
-  components: {
-    'search-box': SearchBox,
-    'scrobbler-bar': ScrobblerBar
-  },
   render: h => h(App)
 })

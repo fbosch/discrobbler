@@ -4,7 +4,6 @@ import uniqueId from 'lodash.uniqueid'
 import some from 'lodash.some'
 import without from 'lodash.without'
 import filter from 'lodash.filter'
-import moment from 'moment'
 
 export default (state = { queue: [] }, action) => {
     switch (action.type) {

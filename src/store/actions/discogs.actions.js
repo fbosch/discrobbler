@@ -2,9 +2,7 @@ import api from '../../api/discogs'
 import { handleResponse } from '../../utils'
 
 export const DISCOGS_CLEAR_STATE = 'DISCOGS/CLEAR_STATE'
-export function clearState () {
-  return { type: DISCOGS_CLEAR_STATE }
-}
+export const clearState = () => new Object({ type: DISCOGS_CLEAR_STATE })
 
 export const DISCOGS_FETCH_USER_REQUEST = 'DISCOGS/FETCH_USER_REQUEST'
 export const DISCOGS_FETCH_USER_FAILURE = 'DISCOGS/FETCH_USER_FAILURE'

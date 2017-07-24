@@ -25,17 +25,10 @@ export default class App extends Vue {
     mounted() {
         this.updateViewStateFromStore()
         this.beforeDestroy = store.subscribe(this.updateViewStateFromStore)
-        if (router.currentRoute.name !== 'release') {
-            App.resetToolbarColor()
-        }
     }
 
     get currentRouteName() {
         return router.currentRoute.name
-    }
-
-    static resetToolbarColor() {
-        store.dispatch(pageActions.resetToolbarBackground())
     }
 
     static proccessScrobbleQueue() {
