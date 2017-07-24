@@ -81,9 +81,6 @@ if (process.env.NODE_ENV === 'production') {
         }
       }
     }),
-    new ServiceWorkerWebpackPlugin({
-      entry: './src/service-worker.js'
-    }),
     // new SWPrecacheWebpackPlugin(
     //   {
     //     cacheId: 'discogs-scrobbler',
