@@ -7,11 +7,9 @@
       <md-card-header class="scrobbler-bar__now-scrobbling__info">
         <div class="md-title scrobbler-bar__song-name">
           {{ trackBeingScrobbled.name }}
-          <md-tooltip md-direction="top">{{ trackBeingScrobbled.name }}</md-tooltip>
         </div>
         <div class="md-subhead scrobbler-bar__album-artist">
           {{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}
-          <md-tooltip md-direction="top">{{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}</md-tooltip>
         </div>
       </md-card-header>
     </div>
@@ -20,7 +18,7 @@
       <md-button md-menu-trigger class="md-icon-button">
         <md-icon v-if="queue">
           queue_music
-          <span v-if="queue.length >= 1" class="scrobbler-bar__queue-count">{{ queue.length+1 }}</span>
+          <span v-if="queue.length >= 1" class="scrobbler-bar__queue-count">{{ queue.length }}</span>
         </md-icon>
       </md-button>
       <md-menu-content>

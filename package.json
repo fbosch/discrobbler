@@ -1,7 +1,7 @@
 {
   "name": "vue-discogs-scrobbler",
   "description": "A Vue.js project",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Frederik Bosch <frede.bosch@gmail.com>",
   "private": true,
   "scripts": {
@@ -42,6 +42,7 @@
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
     "revue": "^3.0.0",
+    "serviceworker-webpack-plugin": "^0.2.3",
     "vue": "^2.2.1",
     "vue-class-component": "^5.0.1",
     "vue-lazyload": "^1.0.3",
