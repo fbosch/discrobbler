@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 // var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
+
 module.exports = {
   entry: './src/main.js',
   output: {
