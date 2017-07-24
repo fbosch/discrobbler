@@ -5,7 +5,6 @@ import store from '../../store'
 import get from 'lodash.get'
 import trimEnd from 'lodash.trimend'
 import lastFm from '../../api/lastfm'
-import Vibrant from 'node-vibrant'
 
 import { removeBrackets, hmsToSeconds } from '../../utils'
 import * as discogsActions from '../../store/actions/discogs.actions'
@@ -22,8 +21,6 @@ export default class Release extends Vue {
     release = null
     releaseCoverImage = null
     fallbackThumb = null
-    artworkColor = null
-    vibrantArtworkColor = null
 
     get releaseCoverImageSrcSet() {
         return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
@@ -51,7 +48,6 @@ export default class Release extends Vue {
     }
 
     created() {
-        this.changeToolbarColorBasedOnCurrentCoverImage()
         store.dispatch(pageActions.searchClear())
         store.dispatch(discogsActions.fetchRelease(router.currentRoute.params.id))
             .then(response => {
@@ -67,28 +63,8 @@ export default class Release extends Vue {
                         } else {
                             this.releaseCoverImage = data.album.image
                         }
-                        this.changeToolbarColorBasedOnCurrentCoverImage()
                     })
             })
-    }
-
-    changeToolbarColorBasedOnCurrentCoverImage() {
-        if (!this.artworkColor && this.release) {
-            const toolbar = document.querySelector('.md-theme-default.md-toolbar')
-            this.initialToolbarColor = getComputedStyle(toolbar).backgroundColor
-            Vibrant.from(this.lowestQualityCover)
-                .getPalette((error, palette) => {
-                    if (!error) {
-                        if(palette.DarkMuted) {
-                            this.artworkColor = palette.DarkMuted.getHex()
-                        }
-                        if(palette.DarkVibrant) {
-                            this.vibrantArtworkColor = palette.DarkVibrant.getHex()
-                            store.dispatch(pageActions.changeToolbarBackground(palette.DarkVibrant.getHex()))                            
-                        }
-                    }
-                })
-        }
     }
 
     search(query) {
@@ -100,7 +76,6 @@ export default class Release extends Vue {
     }
 
     imageLoaded(event) {
-        this.changeToolbarColorBasedOnCurrentCoverImage()
         if (!event.target.classList.contains('loaded')) event.target.classList.add('loaded')
     }
 

@@ -25,10 +25,6 @@ export default class Dashboard extends Vue {
     collectionIsLoading = !this.collection
     searchState = store.getState().page.search || null
 
-    created() {
-        store.dispatch(pageActions.resetToolbarBackground())
-    }
-
     mounted() {
         const state = store.getState()
         if (this.collection.length) {

@@ -36,7 +36,7 @@ export default (state = { queue: [] }, action) => {
         case actions.LASTFM_ADD_TRACKS_TO_QUEUE: 
             return {
                 ...state,
-                queue: [...state.queue].concat([...action.payload])
+                queue: [...state.queue || []].concat(action.payload)
             }
     
         case actions.LASTFM_REMOVE_TRACKS_FROM_QUEUE: 

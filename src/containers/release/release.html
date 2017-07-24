@@ -4,7 +4,7 @@
         <div class="release-item" v-else>
             <md-card>
                 <md-card-media-cover md-solid>
-                    <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')', backgroundColor: artworkColor }">
+                    <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
                         <img v-if="releaseCoverImage" :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet"
                             :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
                     </md-card-media>
@@ -15,9 +15,9 @@
                                     {{ release.title }}
                                 </div>
                                 <div class="md-subheading">
-                                    <md-button @click.native="search(release.artists[0].name)">
+                                    <span @click.native="search(release.artists[0].name)">
                                         {{ release.artists[0].name }}
-                                    </md-button>
+                                    </span>
                                     <div class="md-subheading">
                                         <md-icon class="release-item__format-icon">
                                             <img :src="releaseFormatIcon" :alt="release.formats[0].name" v-if="releaseFormatIcon">
@@ -30,7 +30,7 @@
                                 </div>
                             </md-card-header>
                             <md-card-actions class="release-item__genres">
-                                <md-chip v-for="style in release.styles" :key="style" :style="{ backgroundColor: vibrantArtworkColor }">
+                                <md-chip v-for="style in release.styles" :key="style">
                                     {{ style }}
                                 </md-chip>
                             </md-card-actions>
