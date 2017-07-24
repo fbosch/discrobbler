@@ -67,5 +67,5 @@
       <router-view></router-view>
     </transition>
   </div>
-  <scrobbler-bar v-if="lastfmUsername"></scrobbler-bar>
+  <scrobbler-bar v-if="lastfmUsername" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar>
 </div>

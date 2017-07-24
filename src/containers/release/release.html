@@ -15,7 +15,7 @@
                                     {{ release.title }}
                                 </div>
                                 <div class="md-subheading">
-                                    <span @click.native="search(release.artists[0].name)">
+                                    <span v-on:click="search(release.artists[0].name)" class="clickable">
                                         {{ release.artists[0].name }}
                                     </span>
                                     <div class="md-subheading">

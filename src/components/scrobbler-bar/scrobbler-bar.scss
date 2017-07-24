@@ -4,34 +4,32 @@
     width: 100%;
     padding: 0;
     z-index: 99;
-
-    &__song-name, &__album-artist {
+    &__song-name,
+    &__album-artist {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         margin: 0;
     }
-
     &__queue-count {
         z-index: 99;
         display: block;
         background: #f44336;
         color: white;
         font-weight: 900;
-        height: 15px;
-        width: 15px;        
+        height: 17px;
+        width: 17px;
         position: absolute;
         bottom: -2px;
         left: -6px;
         text-align: center;
-        font-size: 10px;
+        font-size: 12px;
         padding-top: 3px;
         border-radius: 100%;
         font-family: 'Roboto';
+        text-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
     }
-
     &__now-scrobbling {
-        
         &__icon {
             float: left;
             margin: 0 20px 0 25px;

@@ -14,6 +14,17 @@ export default class App extends Vue {
     lastfmUsername = null
     toolbarColor = null
     discogsAuthenticated = false
+    queue = []
+    recentTracks = null
+
+
+    static getRecentTracks() {
+        App.getRecentTracks()
+        if (get(store.getState(), 'lastfm.session.name', false)) {
+            store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name))
+        }
+        setInterval(() => ifVisible.now() && App.getRecentTracks(), 24000)
+    }
 
     created() {
         const initialDiscogsUserState = store.getState().discogs.user
@@ -36,6 +47,15 @@ export default class App extends Vue {
     }
 
     updateViewStateFromStore() {
+
+        const queueFromState = store.getState().lastfm.queue
+        if (queueFromState !== this.queue)
+            this.queue = queueFromState       
+        const recentTracksFromState = store.getState().lastfm.recentTracks
+        if(recentTracksFromState) {
+            if (recentTracksFromState !== this.recentTracks) 
+                this.recentTracks = recentTracksFromState
+        } 
         const currentDiscogsUserState = store.getState().discogs.user
         if (currentDiscogsUserState) {
             if (this.avatar !== currentDiscogsUserState.avatar_url) {

@@ -4090,6 +4090,12 @@ redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
+redux-vue-connect@^0.7.8:
+  version "0.7.8"
+  resolved "https://registry.yarnpkg.com/redux-vue-connect/-/redux-vue-connect-0.7.8.tgz#b384452c758da61775d7257868acbe8c271bb695"
+  dependencies:
+    lodash "^4.17.4"
+
 redux@^3.6.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.1.tgz#bfc535c757d3849562ead0af18ac52122cd7268e"

@@ -1,12 +1,12 @@
 import api from '../../api/discogs'
 import { handleResponse } from '../../utils'
 
-export const DISCOGS_CLEAR_STATE = 'DISCOGS/CLEAR_STATE'
-export const clearState = () => new Object({ type: DISCOGS_CLEAR_STATE })
+export const DISCOGS_CLEAR_STATE = 'discogs/CLEAR_STATE'
+export const clearState = () => ({ type: DISCOGS_CLEAR_STATE })
 
-export const DISCOGS_FETCH_USER_REQUEST = 'DISCOGS/FETCH_USER_REQUEST'
-export const DISCOGS_FETCH_USER_FAILURE = 'DISCOGS/FETCH_USER_FAILURE'
-export const DISCOGS_FETCH_USER_SUCCESS = 'DISCOGS/FETCH_USER_SUCCESS'
+export const DISCOGS_FETCH_USER_REQUEST = 'discogs/FETCH_USER_REQUEST'
+export const DISCOGS_FETCH_USER_FAILURE = 'discogs/FETCH_USER_FAILURE'
+export const DISCOGS_FETCH_USER_SUCCESS = 'discogs/FETCH_USER_SUCCESS'
 
 export const fetchUser = username => dispatch => {
   dispatch({ type: DISCOGS_FETCH_USER_REQUEST })
@@ -14,9 +14,9 @@ export const fetchUser = username => dispatch => {
     .then(response => handleResponse(response, DISCOGS_FETCH_USER_SUCCESS, DISCOGS_FETCH_COLLECTION_FOLDERS_FAILURE))
 }
 
-export const DISCOGS_FETCH_COLLECTION_FOLDERS_REQUEST = 'DISCOGS/FETCH_COLLECTION_FOLDERS_REQUEST'
-export const DISCOGS_FETCH_COLLECTION_FOLDERS_FAILURE = 'DISCOGS/FETCH_COLLECTION_FOLDERS_FAILURE'
-export const DISCOGS_FETCH_COLLECTION_FOLDERS_SUCCESS = 'DISCOGS/FETCH_COLLECTION_FOLDERS_SUCCESS'
+export const DISCOGS_FETCH_COLLECTION_FOLDERS_REQUEST = 'discogs/FETCH_COLLECTION_FOLDERS_REQUEST'
+export const DISCOGS_FETCH_COLLECTION_FOLDERS_FAILURE = 'discogs/FETCH_COLLECTION_FOLDERS_FAILURE'
+export const DISCOGS_FETCH_COLLECTION_FOLDERS_SUCCESS = 'discogs/FETCH_COLLECTION_FOLDERS_SUCCESS'
 
 export const fetchCollectionFolders = username => dispatch => {
   dispatch({ type: DISCOGS_FETCH_COLLECTION_FOLDERS_REQUEST })
@@ -25,9 +25,9 @@ export const fetchCollectionFolders = username => dispatch => {
     .catch(error => console.error(error))
 }
 
-export const DISCOGS_FETCH_COLLECTION_ITEMS_REQUEST = 'DISCOGS/FETCH_COLLECTION_ITEMS_REQUEST'
-export const DISCOGS_FETCH_COLLECTION_ITEMS_FAILURE = 'DISCOGS/FETCH_COLLECTION_ITEMS_FAILURE'
-export const DISCOGS_FETCH_COLLECTION_ITEMS_SUCCESS = 'DISCOGS/FETCH_COLLECTION_ITEMS_SUCCESS'
+export const DISCOGS_FETCH_COLLECTION_ITEMS_REQUEST = 'discogs/FETCH_COLLECTION_ITEMS_REQUEST'
+export const DISCOGS_FETCH_COLLECTION_ITEMS_FAILURE = 'discogs/FETCH_COLLECTION_ITEMS_FAILURE'
+export const DISCOGS_FETCH_COLLECTION_ITEMS_SUCCESS = 'discogs/FETCH_COLLECTION_ITEMS_SUCCESS'
 
 export const fetchCollectionItems = (username, folderId) => dispatch => {
   dispatch({ type: DISCOGS_FETCH_COLLECTION_ITEMS_REQUEST })
@@ -36,9 +36,9 @@ export const fetchCollectionItems = (username, folderId) => dispatch => {
     .catch(error => console.error(error))
 }
 
-export const DISCOGS_FETCH_USER_COLLECTION_REQUEST = 'DISCOGS/FETCH_USER_COLLECTION_REQUEST'
-export const DISCOGS_FETCH_USER_COLLECTION_FAILURE = 'DISCOGS/FETCH_USER_COLLECTION_FAILURE'
-export const DISCOGS_FETCH_USER_COLLECTION_SUCCESS = 'DISCOGS/FETCH_USER_COLLECTION_SUCCESS'
+export const DISCOGS_FETCH_USER_COLLECTION_REQUEST = 'discogs/FETCH_USER_COLLECTION_REQUEST'
+export const DISCOGS_FETCH_USER_COLLECTION_FAILURE = 'discogs/FETCH_USER_COLLECTION_FAILURE'
+export const DISCOGS_FETCH_USER_COLLECTION_SUCCESS = 'discogs/FETCH_USER_COLLECTION_SUCCESS'
 
 export const fetchUserCollection = username => (dispatch, getState) => {
   dispatch({ type: DISCOGS_FETCH_USER_COLLECTION_REQUEST })
@@ -48,9 +48,9 @@ export const fetchUserCollection = username => (dispatch, getState) => {
     .catch(error => console.error(error))
 }
 
-export const DISCOGS_FETCH_RELEASE_REQUEST = 'DISCOGS/FETCH_RELEASE_REQUEST'
-export const DISCOGS_FETCH_RELEASE_FAILURE = 'DISCOGS/FETCH_RELEASE_FAILURE'
-export const DISCOGS_FETCH_RELEASE_SUCCESS = 'DISCOGS/FETCH_RELEASE_SUCCESS'
+export const DISCOGS_FETCH_RELEASE_REQUEST = 'discogs/FETCH_RELEASE_REQUEST'
+export const DISCOGS_FETCH_RELEASE_FAILURE = 'discogs/FETCH_RELEASE_FAILURE'
+export const DISCOGS_FETCH_RELEASE_SUCCESS = 'discogs/FETCH_RELEASE_SUCCESS'
 
 export const fetchRelease = releaseId => dispatch => {
   dispatch({ type: DISCOGS_FETCH_RELEASE_REQUEST })
