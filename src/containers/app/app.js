@@ -11,7 +11,7 @@ import ifVisible from 'ifvisible.js'
 @Component
 export default class App extends Vue {
     lastfmSession = store.getState().lastfm.session || null
-    discogsAuthenticated = store.getState().discogs.authenticated || false
+    discogsAuthenticated = false
     queue = store.getState().lastfm.queue || []
     recentTracks = store.getState().lastfm.recentTracks || null
     discogsUser = store.getState().discogs.user || null
@@ -34,28 +34,28 @@ export default class App extends Vue {
         App.getRecentTracks() 
         setInterval(() => ifVisible.now() && App.getRecentTracks(), 24000)    
         this.beforeDestroy = store.subscribe(() => {
-        const queueFromState = store.getState().lastfm.queue
-        if (queueFromState !== this.queue)
-            this.queue = queueFromState       
-        
-        this.recentTracks = store.getState().lastfm.recentTracks
-        const currentDiscogsUserState = store.getState().discogs.user
-        if (currentDiscogsUserState !== this.discogsUser) {
-            this.discogsUser = currentDiscogsUserState
-        }
-        if (store.getState().discogs.authenticated !== this.discogsAuthenticated) {
-            this.discogsAuthenticated = store.getState().discogs.authenticated
-        }
+            const queueFromState = store.getState().lastfm.queue
+            if (queueFromState !== this.queue)
+                this.queue = queueFromState       
+            
+            this.recentTracks = store.getState().lastfm.recentTracks
+            const currentDiscogsUserState = store.getState().discogs.user
+            if (currentDiscogsUserState !== this.discogsUser) {
+                this.discogsUser = currentDiscogsUserState
+            }
+            if (store.getState().discogs.authenticated !== this.discogsAuthenticated) {
+                this.discogsAuthenticated = store.getState().discogs.authenticated
+            }
 
-        const currentLastfmWebsession = store.getState().lastfm.session 
-        if (currentLastfmWebsession !== this.lastfmSession) {
-            this.lastfmSession = currentLastfmWebsession
-        }
-        
-        if ((!this.discogsAuthenticated || !currentLastfmWebsession) && router.currentRoute.name !== 'authenticate') {
-            router.push(views.login)
-        }
-    })
+            const currentLastfmWebsession = store.getState().lastfm.session 
+            if (currentLastfmWebsession !== this.lastfmSession) {
+                this.lastfmSession = currentLastfmWebsession
+            }
+            
+            if ((!this.discogsAuthenticated || !this.lastfmSession) && router.currentRoute.name !== 'authenticate') {
+                router.push(views.login)
+            }
+        })
     }
 
     get currentRouteName() {

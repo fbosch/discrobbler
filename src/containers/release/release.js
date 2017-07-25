@@ -4,7 +4,6 @@ import router from '../../router'
 import store from '../../store'
 import get from 'lodash.get'
 import trimEnd from 'lodash.trimend'
-import lastFm from '../../api/lastfm'
 
 import { removeBrackets, hmsToSeconds } from '../../utils'
 import * as discogsActions from '../../store/actions/discogs.actions'
@@ -17,10 +16,16 @@ import cassetteIcon from '../../static/cassette.svg'
 
 @Component
 export default class Release extends Vue {
-    releaseIsLoading = true
     release = null
-    releaseCoverImage = null
-    fallbackThumb = null
+    albumInfo = null
+
+    get releaseCoverImage() {
+        if (this.albumInfo) {
+            return this.albumInfo.image 
+        } else {
+            return this.fallbackThumb
+        }
+    }
 
     get releaseCoverImageSrcSet() {
         return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
@@ -30,8 +35,20 @@ export default class Release extends Vue {
         if (this.releaseCoverImage) {
             return this.releaseCoverImage[0]['#text']
         } else {
-            return this.getFallbackThumb()
+            return this.fallbackThumb
         }
+        return null
+    }
+
+    get fallbackThumb() {
+        const collection = get(store.getState(), 'discogs.collection', null)
+        if (collection) {
+            const item = collection.find(item => item.id === this.release.id)
+            if (item) {
+                return item.basic_information.thumb
+            }
+        } 
+        return null
     }
 
     get releaseFormatIcon() {
@@ -47,25 +64,20 @@ export default class Release extends Vue {
         }
     }
 
+    get artistName() {
+        if (this.release) {
+            return trimEnd(removeBrackets(this.release.artists[0].name))
+        } else {
+            return null
+        }
+    }
+
     created() {
-        console.log(pageActions.searchClear())
         store.dispatch(pageActions.searchClear())
         store.dispatch(discogsActions.fetchRelease(router.currentRoute.params.id))
-            .then(response => {
-                this.release = response.payload
-                this.releaseIsLoading = false                
-                const artistName = trimEnd(removeBrackets(this.release.artists[0].name))
-                // TODO: Refactor to use redux actions
-                lastFm.getAlbumInfo(artistName, this.release.title)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            this.fallbackThumb = this.getFallbackThumb()
-                        } else {
-                            this.releaseCoverImage = data.album.image
-                        }
-                    })
-            })
+            .then(response => { this.release = response.payload })
+            .then(() => store.dispatch(lastFmActions.getAlbumInfo(this.artistName, this.release.title)))
+            .then(response => { if(!response.payload.error) { this.albumInfo = response.payload.album }})
     }
 
     search(query) {
@@ -78,16 +90,6 @@ export default class Release extends Vue {
 
     imageLoaded(event) {
         if (!event.target.classList.contains('loaded')) event.target.classList.add('loaded')
-    }
-
-    getFallbackThumb() {
-        const collection = get(store.getState(), 'discogs.collection', null)
-        if (collection) {
-            const item = collection.find(item => item.id === this.release.id)
-            if (item) {
-                return item.basic_information.thumb
-            }
-        }
     }
 
     updated() {

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { sync } from 'vue-router-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import reducer from './reducers'
 import actions from './actions'
 import middleware from './middleware'

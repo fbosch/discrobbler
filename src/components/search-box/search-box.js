@@ -9,32 +9,38 @@ import isNil from 'lodash.isnil'
 
 @Component
 export default class SearchBox extends Vue {
-    searchQuery = store.getState().page.search || null
-
+    open = false
+    searchQuery = null
+    
     @Watch('searchQuery')
     onSearchChanges = debounce(newVal => {
-        if (router.currentRoute.name === 'dashboard') {
+        if (newVal !== null) {
             store.dispatch(search(newVal))
+            this.goToDashboard()
         }
     }, 350)
 
-    performQuery() {
-        if (router.currentRoute.name !== 'dashboard') {
+    goToDashboard() {
+        if (router.currentRoute.name !== 'dashboard' ) {
             router.push(views.dashboard)
         }
-        store.dispatch(search(this.searchQuery))
     }
 
-    mounted() {
-        this.beforeDestroy = store.subscribe(() => {
-            if(this.searchQuery !== store.getState().page.search) {
-                this.searchQuery = store.getState().page.search
-                console.log('searchQuery', this.searchQuery) 
-                if (!isNil(this.searchQuery)) {
-                    this.performQuery()
-                }
+    openIfClosedOrClear() {
+        if (!this.open) {
+            this.open = true
+        } else {
+            if (this.searchQuery !== null) {
+                this.searchQuery = null
+            } else {
+                this.open = false
             }
-        })
+        }
+        this.$refs.searchInput.focus()                        
+    }
+
+    closeSearchBox() {
+        this.open = false
     }
 
 }

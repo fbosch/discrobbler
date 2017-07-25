@@ -4,6 +4,15 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.avatar-background-blur {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    filter: blur(10px);
+    opacity: .2;
+}
+
 .main-content {
     margin: 0 auto;
     padding-bottom: 70px;
@@ -11,6 +20,10 @@ body {
 
 .clickable {
     cursor: pointer;
+}
+
+img:not([src]), img[src=""] {
+display: none;
 }
 
 .container {

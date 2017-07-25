@@ -44,7 +44,7 @@ export default class ScrobblerBar extends Vue {
             return this.mostRecentTrack
         } else if (this.mostRecentTrack.date) {
             const timeOfScrobble = moment(this.mostRecentTrack.date.uts, 'X')
-            if (moment() > timeOfScrobble.add({ minutes: 8 })) {
+            if (moment() < timeOfScrobble.add({ minutes: 8 })) {
                 return this.mostRecentTrack
             } else {
                 return null

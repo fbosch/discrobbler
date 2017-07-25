@@ -1,6 +1,25 @@
-<div class="search-box">
+<!-- <div class="search-box">
     <md-icon class="search-box__icon" @click.native="performQuery">
         search
     </md-icon>
     <input type="search" class="search-box__input" v-model="searchQuery" @keyup.enter="performQuery" placeholder="Search">
+</div> -->
+
+<div class="search-box" v-bind:class="{ 'is-open': open }">
+    <md-button class="md-icon-button search-box__icon" @click.native="openIfClosedOrClear">
+        <md-icon v-if="!open">
+            search
+        </md-icon>
+        <md-icon v-else>
+            close
+        </md-icon>
+    </md-button>
+    <md-whiteframe md-elevation="2" class="search-box__container">
+        <md-button class="md-icon-button search-box__icon"  @click.native="closeSearchBox">
+            <md-icon>
+                arrow_back
+            </md-icon>
+        </md-button>
+        <input type="text" class="search-box__input" v-model="searchQuery" ref="searchInput" @keyup.enter="goToDashboard" @keyup.esc="closeSearchBox" placeholder="search for albums & artists...">
+    </md-whiteframe>
 </div>

@@ -48,8 +48,10 @@ Vue.material.registerTheme('default', {
   background: 'white'
 })
 
+
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

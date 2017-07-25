@@ -1,8 +1,8 @@
-<div class="dashboard container">
+<div class="dashboard">
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="collectionIsLoading"></md-spinner>
         <div v-else>
-            <md-list class="album-list" v-if="filteredCollection.length > 0">
+            <md-list class="album-list md-transparent" v-if="filteredCollection.length > 0" >
                 <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item" tabindex="0">
                     <router-link :to="{name:'release', params: { id: item.id }}">
                         <md-avatar>

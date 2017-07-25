@@ -40,7 +40,6 @@
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
     "redux-vue-connect": "^0.7.8",
-    "revue": "^3.0.0",
     "vue": "^2.2.1",
     "vue-class-component": "^5.0.1",
     "vue-lazyload": "^1.0.3",

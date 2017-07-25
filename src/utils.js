@@ -8,14 +8,22 @@ export function removeBrackets (input) {
     .replace(/\(.*?\)/g, '')
 }
 
-export function handleResponse (response, success, error) {
+export function handleResponse (response) {
   if (response.status >= 400) {
-    store.dispatch({ type: error, payload: response })
-    return Promise.reject(new Error(response))
+    return new Error(response.message)
   } else {
-    return response.json().then(payload => store.dispatch({ type: success, payload}))
+    return response.json()
   }
 }
+
+export function handleSuccess (response, type) {
+  if (response.status >= 400) {
+    return promise.reject(new Error(response))
+  } else {
+    return response.json().then(payload => store.dispatch({ type, payload }))
+  }
+}
+
 
 export function hmsToSeconds (string) {
   const split = string.split(':')
