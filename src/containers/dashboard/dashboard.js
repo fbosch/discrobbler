@@ -9,6 +9,10 @@ import Fuse from 'fuse.js'
 @Component
 export default class Dashboard extends Vue {
 
+    collection = store.getState().discogs.collection || []
+    collectionIsLoading = !this.collection
+    searchState = store.getState().page.search || null
+
     static searchOptions = {
         shouldSort: true,
         tokenize: false, 
@@ -19,11 +23,6 @@ export default class Dashboard extends Vue {
     }
 
     static fetchCollection() { store.dispatch(discogsActions.fetchUserCollection(store.getState().discogs.user.username)) }
-
-    collection = store.getState().discogs.collection || []
-    filteredCollection = [...this.collection]
-    collectionIsLoading = !this.collection
-    searchState = store.getState().page.search || null
 
     mounted() {
         const state = store.getState()
@@ -41,27 +40,25 @@ export default class Dashboard extends Vue {
         } else {
             Dashboard.fetchCollection()
         }
-       const observe = () => {
+        this.beforeDestroy = store.subscribe(() => {
             const discogsCollection = store.getState().discogs.collection
             if (discogsCollection !== undefined || discogsCollection !== this.collection) {
                 this.collection = discogsCollection
             }
             this.collectionIsLoading = store.getState().discogs.collectionIsLoading
-            this.evaluateSearchQuery()
-        }
-        observe()
-        this.beforeDestroy = store.subscribe(observe)
+            const searchState = store.getState().page.search
+            if (searchState !== this.searchState) {
+                this.searchState = searchState
+            }
+        })
     }
 
-    evaluateSearchQuery() {
-        const searchState = store.getState().page.search
-        this.searchState = searchState
-        if (searchState && searchState.length) {
-            var fuse = new Fuse(this.collection, Dashboard.searchOptions)
-            this.filteredCollection = fuse.search(searchState)
+    get filteredCollection() {
+        if (this.searchState && this.searchState.length) {
+            const fuse = new Fuse(this.collection, Dashboard.searchOptions)
+            return fuse.search(this.searchState)
         } else {
-            this.filteredCollection = [...this.collection]
+            return [...this.collection]
         }
     }
-
 }

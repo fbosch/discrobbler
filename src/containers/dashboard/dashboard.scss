@@ -7,7 +7,9 @@
         height: 60px;
         width: 60px;
         min-width: 60px;
-        background-image: url('../../static/record.svg')
+        background-image: url('../../static/record.svg');
+        position: relative;
+        z-index: 1;
     }
 
     &__no-results {

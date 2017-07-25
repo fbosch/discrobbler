@@ -1,24 +1,27 @@
 <md-toolbar class="scrobbler-bar">
   <div class="md-toolbar-container">
-    <div class="scrobbler-bar__now-scrobbling" v-if="trackBeingScrobbled">
-      <md-avatar class="scrobbler-bar__now-scrobbling__icon">
-        <img :src="trackBeingScrobbled.image[0]['#text']" alt="People">
-      </md-avatar>
-      <md-card-header class="scrobbler-bar__now-scrobbling__info">
-        <div class="md-title scrobbler-bar__song-name">
-          {{ trackBeingScrobbled.name }}
-        </div>
-        <div class="md-subhead scrobbler-bar__album-artist">
-          {{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}
-        </div>
-      </md-card-header>
-    </div>
+    <transition name="fade">
+      <div class="scrobbler-bar__now-scrobbling" v-if="trackBeingScrobbled">
+        <md-avatar class="scrobbler-bar__now-scrobbling__icon">
+          <img :src="trackBeingScrobbled.image[2]['#text']" :alt="trackBeingScrobbled.album['#text']">
+          <md-spinner :md-size="60" :md-stroke="3" md-indeterminate class="md-accent" v-if="nowScrobbling"></md-spinner>
+        </md-avatar>
+        <md-card-header class="scrobbler-bar__now-scrobbling__info">
+          <div class="md-title scrobbler-bar__song-name">
+            {{ trackBeingScrobbled.name }}
+          </div>
+          <div class="md-subhead scrobbler-bar__album-artist">
+            {{ trackBeingScrobbled.album['#text'] }} - {{ trackBeingScrobbled.artist['#text'] }}
+          </div>
+        </md-card-header>
+      </div>
+    </transition>
     <div style="flex: 1"></div>
     <md-menu md-direction="top left" md-size="7" ref="queueTable" :md-align-trigger="true">
       <md-button md-menu-trigger class="md-icon-button">
-        <md-icon v-if="queue">
+        <md-icon>
           queue_music
-          <span v-if="queue.length >= 1" class="scrobbler-bar__queue-count">{{ queue.length }}</span>
+          <span v-if="queue && queue.length >= 1" class="scrobbler-bar__queue-count">{{ queue.length }}</span>
         </md-icon>
       </md-button>
       <md-menu-content>
@@ -31,5 +34,4 @@
       </md-icon>
     </md-button>
   </div>
-  <md-progress class="md-accent" md-indeterminate v-if="nowScrobbling"></md-progress>
 </md-toolbar>

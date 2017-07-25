@@ -31,8 +31,10 @@
     }
     &__now-scrobbling {
         &__icon {
+            height: 50px;
+            width: 50px;
             float: left;
-            margin: 0 20px 0 25px;
+            margin: 0 20px 0 20px;
             background-image: url('../../static/record.svg')
         }
         &__info {

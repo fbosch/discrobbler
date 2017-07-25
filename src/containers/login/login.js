@@ -26,7 +26,6 @@ export default class Login extends Vue {
         const lastfmToken = store.getState().lastfm.authenticationToken
         const lastfmSession = store.getState().lastfm.session
         if (lastfmToken && !lastfmSession) store.dispatch(lastFmActions.getSession(lastfmToken))
-
         let currentDiscogsUserValue = store.getState().discogs.user
         this.beforeDestroy = store.subscribe(() => {
             let previousUserValue = currentDiscogsUserValue
@@ -39,17 +38,18 @@ export default class Login extends Vue {
     }
 
     authorizeLastfm() {
-        lastfm.authenticateUser()
-    }
-
-    unauthorize() {
-        store.dispatch(discogsActions.clearState())
-        store.dispatch(lastFmActions.clearState())
-        localStorage.setItem('state', {})
+        store.dispatch(lastFmActions.authenticateUser())
     }
 
     authorizeDiscogs() {
         store.dispatch(discogsActions.fetchUser(this.discogsUsername))
     }
+
+    unauthorize() {
+        store.dispatch(discogsActions.clearState())
+        store.dispatch(lastFmActions.clearState())
+    }
+
+
 
 }

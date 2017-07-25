@@ -4,6 +4,12 @@ import isArray from 'lodash.isarray'
 import assign from 'lodash.assign'
 import moment from 'moment'
 
+export const LASTFM_AUTHENTICATE_USER = 'lastfm/AUTHENTICATE_USER' 
+export const authenticateUser = () => dispatch => {
+  dispatch({ type: LASTFM_AUTHENTICATE_USER })
+  api.authenticateUser()
+}
+
 export const LASTFM_CLEAR_AUTHENTICATION_TOKEN = 'lastfm/CLEAR_AUTHENTICATION_TOKEN'
 export const clearAuthenticationToken = () => ({ type: LASTFM_CLEAR_AUTHENTICATION_TOKEN })
 
