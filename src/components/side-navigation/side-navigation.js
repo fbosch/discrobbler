@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Watch } from 'vue-property-decorator'
 import * as pageActions from '../../store/actions/page.actions'
+import * as lastfmActions from '../../store/actions/lastfm.actions'
+import * as discogsActions from '../../store/actions/discogs.actions'
 import { routes } from '../../router'
 import store from '../../store'
 import get from 'lodash.get'
@@ -69,5 +71,10 @@ export default class SideNavigation extends Vue {
 
 	openLastfmProfile() {
 			window.open(`https://www.last.fm/user/${this.lastfmSession.name}`, '_blank').focus()
+	}
+
+	logout() {
+		store.dispatch(discogsActions.clearState())
+		store.dispatch(lastfmActions.clearState())
 	}
 }

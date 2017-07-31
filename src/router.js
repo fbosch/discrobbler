@@ -5,6 +5,9 @@ import reduce from 'lodash.reduce'
 import { isLoggedIn } from './utils'
 import store from './store'
 import * as pageActions from './store/actions/page.actions'
+import * as discogsActions from './store/actions/discogs.actions'
+import * as lastfmActions from './store/actions/lastfm.actions'
+
 
 Vue.use(VueRouter)
 
@@ -39,6 +42,16 @@ export const views = {
         path: '/release/:id',
         component: containers.Release,
         meta: { requiresAuth: true }        
+    },
+    logout: {
+        path: '/logout',
+        component: containers.Logout,
+        meta: { 
+            requiresAuth: true, 
+            showInSideNav: true,
+            icon: 'exit_to_app'
+        }
+
     }
 }
 
