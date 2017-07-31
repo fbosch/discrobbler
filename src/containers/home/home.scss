@@ -1,0 +1,12 @@
+.splash {
+	height: calc(100vh - 112px);
+	width: 100%;
+	background-color: #f44336;
+	&__logo {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+}

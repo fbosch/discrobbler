@@ -1,0 +1,64 @@
+<div class="side-navigation">
+	<md-sidenav class="md-left md-fixed" ref="sideNavigation" :md-swipeable="true" @open="open" @close="close">
+		<md-toolbar class="md-large md-account-header">
+			<img v-if="avatar" :src="avatar" alt="" class="avatar-background-blur">
+			<md-list class="md-transparent">
+				<md-list-item>
+					<h1 class="md-title">
+						Discrobbler
+					</h1>
+				</md-list-item>
+				<md-list-item class="md-avatar-list">
+					<router-link to="/login">
+						<md-avatar md-menu-trigger class="md-large">
+							<img :src="avatar" v-if="avatar">
+							<md-icon v-else class="md-accent">
+								account_circle
+							</md-icon>
+						</md-avatar>
+					</router-link>
+				</md-list-item>
+				<md-list-item v-if="discogsUser">
+					<div class="md-list-text-container">
+						<span>{{ discogsUser.name }}</span>
+						<span>{{ discogsUser.email }}</span>
+					</div>
+					<md-menu md-align-trigger>
+						<md-button class="md-icon-button md-list-action" md-menu-trigger>
+							<md-icon>arrow_drop_down</md-icon>
+						</md-button>
+						<md-menu-content>
+							<md-menu-item @click.native="openLastfmProfile">
+								<span>Last.fm Profile</span>
+								<md-icon>
+									<img src="../../static/lastfm-logo-dark.svg" alt="Last.fm">
+								</md-icon>
+							</md-menu-item>
+							<md-menu-item @click.native="openDiscogsProfile">
+								<span>Discogs Profile</span>
+								<md-icon>
+									<img src="../../static/record.svg" alt="Discogs">
+								</md-icon>
+							</md-menu-item>
+						</md-menu-content>
+					</md-menu>
+				</md-list-item>
+			</md-list>
+		</md-toolbar>
+		<md-list>
+			<md-list-item v-for="route in routes" :key="route.path" v-if="displayRouteInSideNav(route)">
+				<router-link :to="route.path" exact>
+					<md-icon v-if="route.meta && route.meta.icon">
+						{{ route.meta.icon }}
+					</md-icon>
+					<md-icon v-else>
+						{{ route.name }}
+					</md-icon>
+					<span class="side-navigation__route-name">
+							{{ route.name }}
+						</span>
+				</router-link>
+			</md-list-item>
+		</md-list>
+	</md-sidenav>
+</div>

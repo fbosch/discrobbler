@@ -1,4 +1,4 @@
-<div class="dashboard">
+<div class="collection">
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-warn" v-if="collectionIsLoading"></md-spinner>
         <div v-else>
@@ -18,9 +18,9 @@
                     </router-link>
                 </md-list-item>
             </md-list>
-            <div class="dashboard__no-results" v-else>
+            <div class="collection__no-results" v-else>
                 <md-layout md-align="center">
-                    <img src="../../static/vinyls.svg" alt="vinyls" class="dashboard__no-results-image">
+                    <img src="../../static/vinyls.svg" alt="vinyls" class="collection__no-results-image">
                 </md-layout>
                 <md-layout md-align="center">
                     <span class="md-title">

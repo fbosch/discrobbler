@@ -7,7 +7,7 @@ import moment from 'moment'
 import Fuse from 'fuse.js'
 
 @Component
-export default class Dashboard extends Vue {
+export default class Collection extends Vue {
 
     collection = store.getState().discogs.collection || []
     collectionIsLoading = !this.collection
@@ -31,13 +31,13 @@ export default class Dashboard extends Vue {
                 lastFetchUserId = state.discogs.lastCollectionFetchUserId
             if (lastFetchDate) {
                 if (lastFetchUserId !== state.discogs.user.id) {
-                    Dashboard.fetchCollection()
+                    Collection.fetchCollection()
                 } else if (moment() > moment(lastFetchDate).add({ days: 1 })) {
-                    Dashboard.fetchCollection()
+                    Collection.fetchCollection()
                 }
             }
         } else {
-            Dashboard.fetchCollection()
+            Collection.fetchCollection()
         }
         this.beforeDestroy = store.subscribe(() => {
             const discogsCollection = store.getState().discogs.collection
@@ -54,7 +54,7 @@ export default class Dashboard extends Vue {
 
     get filteredCollection() {
         if (this.searchState && this.searchState.length) {
-            const fuse = new Fuse(this.collection, Dashboard.searchOptions)
+            const fuse = new Fuse(this.collection, Collection.searchOptions)
             return fuse.search(this.searchState)
         } else {
             return [...this.collection]

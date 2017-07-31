@@ -65,6 +65,10 @@ display: none;
     opacity: 0;
 }
 
+.md-toolbar {
+    overflow: hidden;
+}
+
 .md-spinner {
     position: absolute;
     left: 50%;

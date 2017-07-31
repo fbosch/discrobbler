@@ -1,9 +1,11 @@
 import Login from './login/login.vue'
-import Dashboard from './dashboard/dashboard.vue'
+import Collection from './collection/collection.vue'
 import Release from './release/release.vue'
+import Home from './home/home.vue'
 
 export default {
     Login,
-    Dashboard,
-    Release
+    Collection,
+    Release,
+    Home
 }

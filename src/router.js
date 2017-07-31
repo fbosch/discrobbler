@@ -3,22 +3,37 @@ import VueRouter from 'vue-router'
 import containers from './containers'
 import reduce from 'lodash.reduce'
 import { isLoggedIn } from './utils'
+import store from './store'
+import * as pageActions from './store/actions/page.actions'
 
 Vue.use(VueRouter)
 
 export const views = {
+    home: {
+        path: '/',
+        component: containers.Home,
+        meta: { showInSideNav: true }
+    },
     login: {
         path: '/login',
-        component: containers.Login
+        component: containers.Login,
+        meta: { 
+            showInSideNav: true,
+            icon: 'settings'
+        }
     },
     authenticate: {
         path: '/authenticate/:auth',
-        component: containers.Login
+        component: containers.Login,
     },
-    dashboard: {
-        path: '/dashboard',
-        component: containers.Dashboard,
-        meta: { requiresAuth: true }
+    collection: {
+        path: '/collection',
+        component: containers.Collection,
+        meta: { 
+            requiresAuth: true,
+            showInSideNav: true,
+            icon: 'library_music'
+        }
     },
     release: {
         path: '/release/:id',
@@ -28,6 +43,7 @@ export const views = {
 }
 
 export const routes = reduce(views, (accum, val, key) => [...accum, { ...val, name: key }], [])
+
 const router = new VueRouter({
     mode: 'history',
     routes,
@@ -50,6 +66,7 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
+    requestAnimationFrame(store.dispatch(pageActions.closeSideNav()))
 })
 
 export default router

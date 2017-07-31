@@ -1,67 +1,12 @@
 <div id="app">
   <md-toolbar class="md-dense">
-    <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
+    <md-button class="md-icon-button" @click.native="toggleSideNav">
       <md-icon>menu</md-icon>
     </md-button>
-    <h1 class="md-title">Discrobbler</h1>
     <span style="flex:1"></span>
-    <search-box></search-box>
+    <search-box ref="sideNavigation"></search-box>
   </md-toolbar>
-  <md-sidenav class="md-left md-fixed" ref="leftSidenav" :md-swipeable="true">
-    <md-toolbar class="md-large md-account-header" v-if="discogsUser">
-      <img :src="avatar" alt="" class="avatar-background-blur">
-      <md-list class="md-transparent">
-        <md-list-item class="md-avatar-list">
-          <md-avatar md-menu-trigger class="md-large">
-            <img :src="avatar" v-if="avatar">
-            <md-icon v-else>
-              account_circle
-            </md-icon>
-          </md-avatar>
-        </md-list-item>
-        <md-list-item>
-          <div class="md-list-text-container">
-            <span>{{ discogsUser.name }}</span>
-            <span>{{ discogsUser.email }}</span>
-          </div>
-          <md-menu md-align-trigger>
-            <md-button class="md-icon-button md-list-action" md-menu-trigger>
-              <md-icon>arrow_drop_down</md-icon>
-            </md-button>
-            <md-menu-content>
-              <md-menu-item @click.native="openLastfmProfile">
-                <span>Last.fm Profile</span>
-                <md-icon>
-                  <img src="../../static/lastfm-logo-dark.svg" alt="Last.fm">
-                </md-icon>
-              </md-menu-item>
-              <md-menu-item @click.native="openDiscogsProfile">
-                <span>Discogs Profile</span>
-                <md-icon>
-                  <img src="../../static/record.svg" alt="Discogs">
-                </md-icon>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-        </md-list-item>
-      </md-list>
-    </md-toolbar>
-    <md-list>
-      <md-list-item>
-        <router-link to="/dashboard">
-          <md-icon>dashboard</md-icon> <span>Dashboard</span>
-        </router-link>
-      </md-list-item>
-      <md-list-item>
-        <router-link to="/login" tag="div">
-          <md-icon>
-            settings
-          </md-icon>
-          <span>Manage Authorization</span>
-        </router-link>
-      </md-list-item>
-    </md-list>
-  </md-sidenav>
+  <side-navigation></side-navigation>
   <div class="main-content">
     <transition name="fade">
       <router-view></router-view>

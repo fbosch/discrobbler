@@ -17,6 +17,7 @@ import apiKeys from './keys'
 import SearchBox from './components/search-box/search-box.vue'
 import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
 import ScrobblingQueue from './components/scrobbling-queue/scrobbling-queue.vue'
+import SideNavigation from './components/side-navigation/side-navigation.vue'
 
 // if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 //   runtime.register()
@@ -40,6 +41,7 @@ Vue.use(ProgressiveImage, { scale: true })
 Vue.component('search-box', SearchBox)
 Vue.component('scrobbler-bar', ScrobblerBar)
 Vue.component('scrobbling-queue', ScrobblingQueue)
+Vue.component('side-navigation', SideNavigation)
 
 Vue.material.registerTheme('default', {
   primary: 'black',
