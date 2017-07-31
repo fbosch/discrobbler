@@ -1,4 +1,4 @@
-# Discrobbler
+# Discrobbler ![icon](https://github.com/fBosch/discrobbler/blob/master/android-icon-36x36.png?raw=true) 
 ![build](https://travis-ci.org/fBosch/vue-discogs-scrobbler.svg?branch=master)
 > A Vue.js project for scrobbling your discogs collection to last.fm
 
