@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Watch } from 'vue-property-decorator'
-import { search } from '../../store/actions/page.actions'
+import * as pageActions from '../../store/actions/page.actions'
 import router, { views } from '../../router'
 import store from '../../store'
 import debounce from 'lodash.debounce'
@@ -15,7 +15,7 @@ export default class SearchBox extends Vue {
     @Watch('searchQuery')
     onSearchChanges = debounce(newVal => {
         if (newVal !== null) {
-            store.dispatch(search(newVal))
+            store.dispatch(pageActions.search(newVal))
             this.goToDashboard()
         }
     }, 350)

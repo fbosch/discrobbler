@@ -48,7 +48,6 @@ Vue.material.registerTheme('default', {
   background: 'white'
 })
 
-
 new Vue({
   el: '#app',
   router,

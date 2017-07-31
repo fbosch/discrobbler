@@ -23,13 +23,6 @@ export default class App extends Vue {
         }
     }
 
-    created() {
-        const initialDiscogsUserState = store.getState().discogs.user
-        if (initialDiscogsUserState && router.currentRoute.path === '/') {
-            router.push(views.dashboard)
-        }
-    }
-
     mounted() {
         App.getRecentTracks() 
         setInterval(() => ifVisible.now() && App.getRecentTracks(), 24000)    

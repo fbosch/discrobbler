@@ -1,4 +1,5 @@
 import store from './store'
+import get from 'lodash.get'
 
 export function removeBrackets (input) {
   return input
@@ -16,21 +17,4 @@ export function handleResponse (response) {
   }
 }
 
-export function handleSuccess (response, type) {
-  if (response.status >= 400) {
-    return promise.reject(new Error(response))
-  } else {
-    return response.json().then(payload => store.dispatch({ type, payload }))
-  }
-}
-
-
-export function hmsToSeconds (string) {
-  const split = string.split(':')
-  let seconds = 0, minutes = 1
-  while (split.length > 0) {
-     seconds += minutes * parseInt(split.pop(), 10);
-     minutes *= 60;
-  }
-  return seconds
-}
+export const isLoggedIn = () => get(store.getState(), 'discogs.authenticated', false) && !!get(store.getState(), 'lastfm.session.key', false)
