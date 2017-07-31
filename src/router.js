@@ -66,7 +66,7 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-    requestAnimationFrame(store.dispatch(pageActions.closeSideNav()))
+    requestAnimationFrame(() => store.dispatch(pageActions.closeSideNav()))
 })
 
 export default router
