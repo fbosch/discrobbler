@@ -8,12 +8,12 @@
   </md-toolbar>
   <side-navigation></side-navigation>
   <main class="main-content">
-    <router-view></router-view>
+      <router-view></router-view>
   </main>
-  <md-snackbar v-show="snackbarMessage" md-position="bottom center" :md-duration="snackbarDuration" ref="snackbar">
+  <md-snackbar md-position="top center" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
     <span>
-      {{ snackbarMessage }}
-    </span>
+        {{ snackbarMessage }}
+      </span>
   </md-snackbar>
   <scrobbler-bar v-if="lastfmSession" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar>
 </div>

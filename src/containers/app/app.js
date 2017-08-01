@@ -14,7 +14,7 @@ export default class App extends Vue {
     discogsAuthenticated = false
     queue = store.getState().lastfm.queue || []
     recentTracks = store.getState().lastfm.recentTracks || null
-    snackbarDuration = 4000
+    snackbarDuration = 2500
     snackbarMessage = null
 
     static getRecentTracks() {
@@ -25,22 +25,22 @@ export default class App extends Vue {
 
     @Watch('snackbarMessage') 
     onMessageChange(newVal) {
-        if(newVal !== null) {
-            this.$refs.snackbar.open()
-        } else {
-            this.$refs.snackbar.close()
+        if(this.$refs.snackbar) {
+            if(newVal !== null) {
+                this.$refs.snackbar.open()
+            } else {
+                this.$refs.snackbar.close()
+            }
         }
     }
 
     mounted() {
-        this.$refs.snackbar.close = () => store.dispatch(pageActions.clearMessage())
         App.getRecentTracks() 
         setInterval(() => ifVisible.now() && App.getRecentTracks(), 24000)    
         this.beforeDestroy = store.subscribe(() => {
             const queueFromState = store.getState().lastfm.queue
             if (queueFromState !== this.queue)
                 this.queue = queueFromState       
-            
             this.recentTracks = store.getState().lastfm.recentTracks
             const currentLastfmWebsession = store.getState().lastfm.session 
             if (currentLastfmWebsession !== this.lastfmSession) 
@@ -50,6 +50,10 @@ export default class App extends Vue {
                 this.snackbarMessage = store.getState().page.message
             
         })
+    }
+
+    onSnackbarClose() {
+        store.dispatch(pageActions.clearMessage())
     }
 
     toggleSideNav() {

@@ -43,7 +43,8 @@ export default class Login extends Vue {
 
     authorizeDiscogs() {
         store.dispatch(discogsActions.fetchUser(this.discogsUsername))
-        .then(() => router.push(views.collection))
+        .then(() => store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name)))
+        .then(() => router.push(views.home))
     }
 
     unauthorize() {
