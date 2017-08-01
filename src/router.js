@@ -23,7 +23,7 @@ export const views = {
             showInSideNav: true,
             icon: 'settings',
             get displayName() {
-                return isLoggedIn() ? 'Manage Account' : 'Login'
+                return isLoggedIn() ? 'Manage Account' : 'Login';
             }
         }
     },
@@ -73,7 +73,6 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-    console.log(to)
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!isLoggedIn()) {
             next(views.login)

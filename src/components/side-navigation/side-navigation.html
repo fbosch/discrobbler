@@ -1,22 +1,12 @@
 <div class="side-navigation">
 	<md-sidenav class="md-left md-fixed" ref="sideNavigation" :md-swipeable="true" @open="open" @close="close">
-		<md-toolbar class="md-large md-account-header">
-			<img v-if="avatar" :src="avatar" alt="" class="avatar-background-blur">
+		<md-toolbar class="md-account-header" :class="{ 'md-large': discogsUser }" >
+			<h1 class="md-title">Discrobbler</h1>			
 			<md-list class="md-transparent">
-				<md-list-item>
-					<h1 class="md-title">
-						Discrobbler
-					</h1>
-				</md-list-item>
 				<md-list-item class="md-avatar-list">
-					<router-link to="/login">
 						<md-avatar md-menu-trigger class="md-large">
 							<img :src="avatar" v-if="avatar">
-							<md-icon v-else class="md-accent">
-								account_circle
-							</md-icon>
 						</md-avatar>
-					</router-link>
 				</md-list-item>
 				<md-list-item v-if="discogsUser">
 					<div class="md-list-text-container">
@@ -25,7 +15,7 @@
 					</div>
 					<md-menu md-align-trigger>
 						<md-button class="md-icon-button md-list-action" md-menu-trigger>
-							<md-icon>arrow_drop_down</md-icon>
+							<md-icon class="md-warn">arrow_drop_down</md-icon>
 						</md-button>
 						<md-menu-content>
 							<md-menu-item @click.native="openLastfmProfile">

@@ -7,10 +7,13 @@
     <search-box ref="sideNavigation"></search-box>
   </md-toolbar>
   <side-navigation></side-navigation>
-  <div class="main-content">
-    <transition name="fade">
-      <router-view></router-view>
-    </transition>
-  </div>
+  <main class="main-content">
+    <router-view></router-view>
+  </main>
+  <md-snackbar v-show="snackbarMessage" md-position="bottom center" :md-duration="snackbarDuration" ref="snackbar">
+    <span>
+      {{ snackbarMessage }}
+    </span>
+  </md-snackbar>
   <scrobbler-bar v-if="lastfmSession" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar>
 </div>

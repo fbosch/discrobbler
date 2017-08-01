@@ -2805,6 +2805,10 @@ lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
+lodash.invert@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/lodash.invert/-/lodash.invert-4.3.0.tgz#8ffe20d4b616f56bea8f1aa0c6ebd80dcf742aee"
+
 lodash.isarray@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-4.0.0.tgz#2aca496b28c4ca6d726715313590c02e6ea34403"
@@ -3705,6 +3709,10 @@ prepend-http@^1.0.0, prepend-http@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
+present@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/present/-/present-1.0.0.tgz#6d2f865be7a96885118f4660e83e2161fb71cf2b"
+
 preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
@@ -3913,6 +3921,12 @@ redux-logger@^3.0.1:
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
   dependencies:
     deep-diff "^0.3.5"
+
+redux-perf-middleware@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/redux-perf-middleware/-/redux-perf-middleware-1.2.2.tgz#099b4ca38d1f0a3beb77b66617d196ed0ef2f514"
+  dependencies:
+    present "^1.0.0"
 
 redux-thunk@^2.2.0:
   version "2.2.0"
@@ -4802,13 +4816,19 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.3.tgz#22787de4e37ebd9339b74223bc467d1adee30545"
 
+vue-viewports@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vue-viewports/-/vue-viewports-2.2.0.tgz#3656ffc498ee35aa8eea9f74df2527428d1af144"
+  dependencies:
+    vue "^2.0.1"
+
 vue@^1.0.26:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/vue/-/vue-1.0.28.tgz#ed2ff07b200bde15c87a90ef8727ceea7d38567d"
   dependencies:
     envify "^3.4.0"
 
-vue@^2.2.1, vue@^2.3.3:
+vue@^2.0.1, vue@^2.2.1, vue@^2.3.3:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.2.tgz#a9855261f191c978cc0dc1150531b8d08149b58c"
 

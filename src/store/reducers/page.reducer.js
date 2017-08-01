@@ -34,6 +34,18 @@ export default (state = {
                 ...state,
                 search: null
             }
+        
+        case actions.PAGE_SHOW_MESSAGE:
+            return {
+                ...state,
+                message: action.payload
+            }
+        
+        case actions.PAGE_CLEAR_MESSAGE:
+            return {
+                ...state,
+                message: null
+            }
 
         default: return state
     }

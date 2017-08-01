@@ -8,9 +8,11 @@ import lastfm from '../../api/lastfm'
 import * as discogsActions from '../../store/actions/discogs.actions'
 import * as lastFmActions from '../../store/actions/lastfm.actions'
 import queryString from 'query-string'
+import viewports from '../../viewports'
 
 @Component
 export default class Login extends Vue {
+    discogsUser = get(store.getState(),'discogs.user', null)
     discogsUsername = get(store.getState(),'discogs.user.username', null)
     lastfmSession = store.getState().lastfm.session || null
 
@@ -29,6 +31,10 @@ export default class Login extends Vue {
         this.beforeDestroy = store.subscribe(() => {
             this.lastfmSession = store.getState().lastfm.session
         })
+    }
+
+    get isMobile() {
+        return this.$currentViewport._windowWidth <= viewports.mobile
     }
 
     authorizeLastfm() {

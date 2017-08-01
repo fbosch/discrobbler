@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import store from '../../store'
 import router, { views } from '../../router'
+import { Watch } from 'vue-property-decorator'
 import Component from 'vue-class-component'
 import get from 'lodash.get'
 import * as lastFmActions from '../../store/actions/lastfm.actions'
@@ -13,7 +14,8 @@ export default class App extends Vue {
     discogsAuthenticated = false
     queue = store.getState().lastfm.queue || []
     recentTracks = store.getState().lastfm.recentTracks || null
-
+    snackbarDuration = 4000
+    snackbarMessage = null
 
     static getRecentTracks() {
         if (get(store.getState(), 'lastfm.session.name', false)) {
@@ -21,7 +23,17 @@ export default class App extends Vue {
         }
     }
 
+    @Watch('snackbarMessage') 
+    onMessageChange(newVal) {
+        if(newVal !== null) {
+            this.$refs.snackbar.open()
+        } else {
+            this.$refs.snackbar.close()
+        }
+    }
+
     mounted() {
+        this.$refs.snackbar.close = () => store.dispatch(pageActions.clearMessage())
         App.getRecentTracks() 
         setInterval(() => ifVisible.now() && App.getRecentTracks(), 24000)    
         this.beforeDestroy = store.subscribe(() => {
@@ -30,19 +42,18 @@ export default class App extends Vue {
                 this.queue = queueFromState       
             
             this.recentTracks = store.getState().lastfm.recentTracks
-
             const currentLastfmWebsession = store.getState().lastfm.session 
-            if (currentLastfmWebsession !== this.lastfmSession) {
+            if (currentLastfmWebsession !== this.lastfmSession) 
                 this.lastfmSession = currentLastfmWebsession
-            }
+            
+            if (this.snackbarMessage !== store.getState().page.message) 
+                this.snackbarMessage = store.getState().page.message
+            
         })
     }
 
     toggleSideNav() {
         store.dispatch(pageActions.toggleSideNav())
 	}
-			
-
-
 
 }

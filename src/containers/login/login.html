@@ -1,9 +1,14 @@
-<div id="login" class="container">
-    <md-layout md-align="center">
-        <span class="md-headline">Authorization</span>
-    </md-layout>
-    <md-layout md-align="center">
-        <md-stepper md-vertical @completed="authorizeDiscogs">
+<section id="login" class="login">
+    <md-toolbar class="md-accent md-large">
+        <md-avatar class="md-large" v-if="discogsUser">
+            <img :src="discogsUser.avatar_url" alt="discogsUser.name">
+        </md-avatar>
+        <md-icon class="md-size-3x" v-else>
+            perm_identity
+        </md-icon>
+    </md-toolbar>
+    <md-layout md-align="center" class="login__stepper container">
+        <md-stepper md-elevation="1" :md-vertical="isMobile" @completed="authorizeDiscogs">
             <md-step md-label="Last.fm" :md-continue="!!lastfmSession">
                 <md-button class="md-raised md-default" @click.native="authorizeLastfm" v-if="!lastfmSession">
                     Connect to Last.fm
@@ -28,4 +33,4 @@
             </md-step>
         </md-stepper>
     </md-layout>
-</div>
+</section>

@@ -18,3 +18,9 @@ export const closeSideNav = () => ({ type: PAGE_CLOSE_SIDENAV })
 
 export const PAGE_TOGGLE_SIDENAV = 'page/TOGGLE_SIDENAV'
 export const toggleSideNav = () => ({ type: PAGE_TOGGLE_SIDENAV })
+
+export const PAGE_SHOW_MESSAGE = 'page/SHOW_MESSAGE'
+export const showMessage = payload => ({ type: PAGE_SHOW_MESSAGE, payload})
+
+export const PAGE_CLEAR_MESSAGE = 'page/CLEAR_MESSAGE'
+export const clearMessage = () => ({ type: PAGE_CLEAR_MESSAGE })
