@@ -4,10 +4,9 @@ import containers from './containers'
 import reduce from 'lodash.reduce'
 import { isLoggedIn } from './utils'
 import store from './store'
+import get from 'lodash.get'
 import * as pageActions from './store/actions/page.actions'
-import * as discogsActions from './store/actions/discogs.actions'
-import * as lastfmActions from './store/actions/lastfm.actions'
-
+import * as routeActions from './store/actions/route.actions'
 
 Vue.use(VueRouter)
 
@@ -22,7 +21,10 @@ export const views = {
         component: containers.Login,
         meta: { 
             showInSideNav: true,
-            icon: 'settings'
+            icon: 'settings',
+            get displayName() {
+                return isLoggedIn() ? 'Manage Account' : 'Login'
+            }
         }
     },
     authenticate: {
@@ -69,7 +71,9 @@ const router = new VueRouter({
     }
 })
 
+
 router.beforeEach((to, from, next) => {
+    console.log(to)
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!isLoggedIn()) {
             next(views.login)
@@ -81,5 +85,16 @@ router.beforeEach((to, from, next) => {
     }
     requestAnimationFrame(() => store.dispatch(pageActions.closeSideNav()))
 })
+
+router.afterEach((to, from) => store.dispatch(routeActions.changeCurrentLocation(to)))
+
+router.onReady(() => store.subscribe(() => {
+    const routeFromState = get(store.getState(), 'route.currentRoute', null)
+    if (routeFromState) {
+        if (routeFromState.name !== router.currentRoute.name) {
+            router.push(routeFromState)
+        }
+    } 
+}))
 
 export default router

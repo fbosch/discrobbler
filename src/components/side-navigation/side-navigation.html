@@ -4,9 +4,9 @@
 			<img v-if="avatar" :src="avatar" alt="" class="avatar-background-blur">
 			<md-list class="md-transparent">
 				<md-list-item>
-						<h1 class="md-title">
-							Discrobbler
-						</h1>
+					<h1 class="md-title">
+						Discrobbler
+					</h1>
 				</md-list-item>
 				<md-list-item class="md-avatar-list">
 					<router-link to="/login">
@@ -54,9 +54,12 @@
 					<md-icon v-else>
 						{{ route.name }}
 					</md-icon>
-					<span class="side-navigation__route-name">
-							{{ route.name }}
-						</span>
+					<span class="side-navigation__route-name" v-if="route.meta && route.meta.displayName">
+						{{ route.meta.displayName }}
+					</span>
+					<span class="side-navigation__route-name" v-else>
+						{{ route.name }}
+					</span>
 				</router-link>
 			</md-list-item>
 			<md-divider></md-divider>
