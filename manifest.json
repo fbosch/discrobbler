@@ -1,7 +1,7 @@
 {
   "name": "Discrobbler",
   "short_name": "Discrobbler",  
-  "start_url": "/",
+  "start_url": ".",
   "theme_color": "#000000",
   "background_color": "#f44336",
   "orientation": "portrait",
