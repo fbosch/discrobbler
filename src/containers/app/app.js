@@ -35,19 +35,26 @@ export default class App extends Vue {
     }
 
     mounted() {
+        const getLastFmSession = () => get(store.getState(), 'lastfm.session', null)
+        const getRecentTracks = () => get(store.getState(), 'lastfm.recentTracks', null)
+        const getQueue = () => get(store.getState(), 'lastfm.queue', [])
+        const getMessage = () => get(store.getState(), 'page.message', null)
+
         App.getRecentTracks() 
         setInterval(() => ifVisible.now() && App.getRecentTracks(), 24000)    
         this.beforeDestroy = store.subscribe(() => {
-            const queueFromState = store.getState().lastfm.queue
+            const queueFromState = getQueue()
             if (queueFromState !== this.queue)
-                this.queue = queueFromState       
-            this.recentTracks = store.getState().lastfm.recentTracks
-            const currentLastfmWebsession = store.getState().lastfm.session 
+                this.queue = queueFromState   
+
+            this.recentTracks = getRecentTracks()
+
+            const currentLastfmWebsession = getLastFmSession()
             if (currentLastfmWebsession !== this.lastfmSession) 
                 this.lastfmSession = currentLastfmWebsession
             
-            if (this.snackbarMessage !== store.getState().page.message) 
-                this.snackbarMessage = store.getState().page.message
+            if (this.snackbarMessage !== getMessage()) 
+                this.snackbarMessage = getMessage()
             
         })
     }

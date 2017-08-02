@@ -1,4 +1,4 @@
-import * as actions from '../actions/route.actions'
+import * as actions from '../actions/router.actions'
 
 export default (state = {}, action) => {
     switch (action.type) {

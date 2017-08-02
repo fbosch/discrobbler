@@ -6,7 +6,7 @@ import { isLoggedIn } from './utils'
 import store from './store'
 import get from 'lodash.get'
 import * as pageActions from './store/actions/page.actions'
-import * as routeActions from './store/actions/route.actions'
+import * as routerActions from './store/actions/router.actions'
 
 Vue.use(VueRouter)
 
@@ -85,9 +85,9 @@ router.beforeEach((to, from, next) => {
     requestAnimationFrame(() => store.dispatch(pageActions.closeSideNav()))
 })
 
+router.afterEach((to, from) => store.dispatch(routerActions.changeCurrentLocation(to)))
 
 router.onReady(() => {
-    router.afterEach((to, from) => store.dispatch(routeActions.changeCurrentLocation(to)))    
     store.subscribe(() => {
         const routeFromState = get(store.getState(), 'route.currentRoute', null)
         if (routeFromState && routeFromState.name !== router.currentRoute.name) {
