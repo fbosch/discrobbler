@@ -2,6 +2,7 @@ import './polyfills'
 import apiKeys from './keys'
 import viewports from './viewports'
 import invert from 'lodash.invert'
+import WebFont from 'webfontloader'
 
 import 'firebase/database'
 import 'firebase/auth'
@@ -21,6 +22,8 @@ import SearchBox from './components/search-box/search-box.vue'
 import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
 import ScrobblingQueue from './components/scrobbling-queue/scrobbling-queue.vue'
 import SideNavigation from './components/side-navigation/side-navigation.vue'
+
+WebFont.load({ google: {families: ['Roboto:300,400,500,700,900', 'Material Icons']} })
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => navigator.serviceWorker.register('dist/service-worker.js'))
