@@ -1,8 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
 var BabiliPlugin = require('babili-webpack-plugin')
-var OptimizeJsPlugin = require("optimize-js-plugin");
+var OptimizeJsPlugin = require('optimize-js-plugin')
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+var ManifestPlugin = require('webpack-manifest-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -62,7 +64,10 @@ module.exports.plugins = (module.exports.plugins || []).concat([
       LASTFM_SECRET: JSON.stringify(process.env.LASTFM_SECRET),
       FIREBASE_WEB_API_KEY: JSON.stringify(process.env.FIREBASE_WEB_API_KEY)
     }
-  })
+  }),
+  new CopyWebpackPlugin([
+    { from: 'src/static' }
+  ])
 ])
 
 if (process.env.NODE_ENV === 'production') {
@@ -71,7 +76,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new BabiliPlugin(),
     new OptimizeJsPlugin({
-        sourceMap: false
+      sourceMap: false
     }),
     new SWPrecacheWebpackPlugin(
       {
@@ -80,6 +85,7 @@ if (process.env.NODE_ENV === 'production') {
         maximumFileSizeToCacheInBytes: 4194304,
         minify: true,
         staticFileGlobs: [
+          '/',
           'index.html',
           './dist/build.js',
           './dist/record.svg',
