@@ -10,7 +10,7 @@
   <main class="main-content">
     <router-view></router-view>
   </main>
-  <md-snackbar md-position="top center" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
+  <md-snackbar md-position="bottom center" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
     <span>
         {{ snackbarMessage }}
       </span>
