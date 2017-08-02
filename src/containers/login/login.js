@@ -7,6 +7,7 @@ import keys from '../../keys'
 import lastfm from '../../api/lastfm'
 import * as discogsActions from '../../store/actions/discogs.actions'
 import * as lastFmActions from '../../store/actions/lastfm.actions'
+import * as pageActions from '../../store/actions/page.actions'
 import queryString from 'query-string'
 import viewports from '../../viewports'
 
@@ -38,6 +39,7 @@ export default class Login extends Vue {
     }
 
     authorizeLastfm() {
+        store.dispatch(pageActions.clearMessage())
         store.dispatch(lastFmActions.authenticateUser())
     }
 

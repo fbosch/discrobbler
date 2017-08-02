@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>Discrobbler</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="apple-touch-icon" sizes="57x57" href="dist/apple-icon-57x57.png">
@@ -32,6 +32,12 @@
   <meta name="keywords" content="lastfm,discogs,scrobbler,music,material-design,webapp">
   <meta name="author" content="Frederik Boldsen Bosch">
   <style>
+    body {
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
     .showbox {
       position: absolute;
       top: 50%;
@@ -151,6 +157,12 @@
       90% {
         stroke: #ffa700;
       }
+    }
+
+    .static-header {
+      height: 48px;
+      width: 100%;
+      background: #000;
     }
   </style>
 </head>

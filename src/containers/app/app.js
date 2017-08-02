@@ -14,7 +14,7 @@ export default class App extends Vue {
     discogsAuthenticated = false
     queue = store.getState().lastfm.queue || []
     recentTracks = store.getState().lastfm.recentTracks || null
-    snackbarDuration = 2500
+    snackbarDuration = 1200
     snackbarMessage = null
 
     static getRecentTracks() {

@@ -1,9 +1,10 @@
 {
   "name": "Discrobbler",
+  "short_name": "Discrobbler",  
   "start_url": "/",
-  "short_name": "Discrobbler",
   "theme_color": "#000000",
   "background_color": "#f44336",
+  "orientation": "portrait",
   "display": "standalone",
   "icons": [
     {
@@ -41,6 +42,11 @@
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0"
+    },
+    {
+      "src": "dist/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
