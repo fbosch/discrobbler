@@ -18,7 +18,7 @@ export default class Login extends Vue {
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
-        if (router.currentRoute.path === views.authenticate.path && parsedQueryString.token !== null) {
+        if (router.currentRoute.name === 'authenticate' && parsedQueryString.token !== null) {
             switch (router.currentRoute.params.auth) {
                 case 'lastfm':
                     store.dispatch(lastFmActions.setAuthenticationToken(parsedQueryString.token))
@@ -34,7 +34,7 @@ export default class Login extends Vue {
     }
 
     get isMobile() {
-        // return this.$currentViewport._windowWidth <= viewports.mobile
+        return this.$currentViewport._windowWidth <= viewports.mobile
     }
 
     authorizeLastfm() {

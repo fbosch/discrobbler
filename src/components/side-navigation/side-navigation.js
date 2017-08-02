@@ -16,7 +16,6 @@ export default class SideNavigation extends Vue {
 	routes = routes
 
 	mounted() {
-		console.log(this.routes)
 		this.beforeDestroy = store.subscribe(() => {
 			this.discogsUser = SideNavigation.getDiscogsUserState()
 			this.opened = SideNavigation.getSideNavState()

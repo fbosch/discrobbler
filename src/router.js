@@ -85,15 +85,16 @@ router.beforeEach((to, from, next) => {
     requestAnimationFrame(() => store.dispatch(pageActions.closeSideNav()))
 })
 
-router.afterEach((to, from) => store.dispatch(routeActions.changeCurrentLocation(to)))
 
-router.onReady(() => store.subscribe(() => {
-    const routeFromState = get(store.getState(), 'route.currentRoute', null)
-    if (routeFromState) {
-        if (routeFromState.name !== router.currentRoute.name) {
+router.onReady(() => {
+    router.afterEach((to, from) => store.dispatch(routeActions.changeCurrentLocation(to)))    
+    store.subscribe(() => {
+        const routeFromState = get(store.getState(), 'route.currentRoute', null)
+        if (routeFromState && routeFromState.name !== router.currentRoute.name) {
             router.push(routeFromState)
         }
-    } 
-}))
+    })
+})
+
 
 export default router

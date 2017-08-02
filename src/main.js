@@ -22,10 +22,8 @@ import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
 import ScrobblingQueue from './components/scrobbling-queue/scrobbling-queue.vue'
 import SideNavigation from './components/side-navigation/side-navigation.vue'
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('dist/service-worker.js')
-    .then(registration => console.log('ServiceWorker registration successful with scope: ', registration.scope))
-    .catch(error => console.log('ServiceWorker registration failed: ', error)))
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('dist/service-worker.js'))
 }
 
 var config = {

@@ -4,16 +4,18 @@
       <md-icon>menu</md-icon>
     </md-button>
     <span style="flex:1"></span>
-    <search-box ref="sideNavigation"></search-box>
+     <search-box ref="sideNavigation"></search-box> 
   </md-toolbar>
-  <side-navigation></side-navigation>
+   <side-navigation></side-navigation> 
   <main class="main-content">
-      <router-view></router-view>
+      <router-view></router-view>  
   </main>
-  <md-snackbar md-position="top center" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
-    <span>
+   <transition name="fade">
+    <md-snackbar v-if="snackbarMessage" md-position="top center" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
+      <span>
         {{ snackbarMessage }}
       </span>
-  </md-snackbar>
-  <scrobbler-bar v-if="lastfmSession" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar>
+    </md-snackbar>
+  </transition> 
+   <scrobbler-bar v-if="lastfmSession" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar> 
 </div>
