@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var BabiliPlugin = require('babili-webpack-plugin')
+var OptimizeJsPlugin = require("optimize-js-plugin");
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 module.exports = {
@@ -69,6 +70,9 @@ if (process.env.NODE_ENV === 'production') {
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new BabiliPlugin(),
+    new OptimizeJsPlugin({
+        sourceMap: false
+    }),
     new SWPrecacheWebpackPlugin(
       {
         cacheId: 'discogs-scrobbler-v0.0.3',
