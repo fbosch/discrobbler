@@ -13,9 +13,21 @@ import viewports from '../../viewports'
 
 @Component
 export default class Login extends Vue {
-    discogsUser = get(store.getState(),'discogs.user', null)
-    discogsUsername = get(store.getState(),'discogs.user.username', null)
-    lastfmSession = store.getState().lastfm.session || null
+    discogsUser = Login.getDiscogsUser()
+    discogsUsername = Login.getDiscogsUsername()
+    lastfmSession = Login.getLastfmSession()
+
+    static getLastfmSession = () => get(store.getState(), 'lastfm.session', null)
+    static getDiscogsUser = () => get(store.getState(),'discogs.user', null)
+    static getDiscogsUsername = () => get(store.getState(),'discogs.user.username', null)
+
+    created() {
+        if (router.currentRoute.name === 'logout') {
+            this.unauthorize()
+            store.dispatch(pageActions.showMessage("You've been successfully logged out"))                        
+            requestAnimationFrame(() => router.push(views.login))   
+        }
+    }
 
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
@@ -30,7 +42,9 @@ export default class Login extends Vue {
         const lastfmSession = store.getState().lastfm.session
         if (lastfmToken && !lastfmSession) store.dispatch(lastFmActions.getSession(lastfmToken))
         this.beforeDestroy = store.subscribe(() => {
-            this.lastfmSession = store.getState().lastfm.session
+            this.lastfmSession = Login.getLastfmSession()
+            this.discogsUser = Login.getDiscogsUser()
+            this.discogsUsername = Login.getDiscogsUsername()
         })
     }
 

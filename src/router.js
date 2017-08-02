@@ -8,7 +8,6 @@ import get from 'lodash.get'
 import * as pageActions from './store/actions/page.actions'
 import * as routerActions from './store/actions/router.actions'
 
-Vue.use(VueRouter)
 
 export const views = {
     home: {
@@ -21,10 +20,8 @@ export const views = {
         component: containers.Login,
         meta: { 
             showInSideNav: true,
-            icon: 'settings',
-            get displayName() {
-                return isLoggedIn() ? 'Manage Account' : 'Login';
-            }
+            hideWhenAuth: true,
+            icon: 'lock'
         }
     },
     authenticate: {
@@ -47,7 +44,7 @@ export const views = {
     },
     logout: {
         path: '/logout',
-        component: containers.Logout,
+        component: containers.Login,
         meta: { 
             requiresAuth: true, 
             showInSideNav: true,

@@ -46,6 +46,8 @@ export default class SideNavigation extends Vue {
 		if (route.meta) {
 			if (route.meta.requiresAuth && route.meta.showInSideNav) {
 				return isLoggedIn() && route.meta.showInSideNav
+			} else if (route.meta.hideWhenAuth) {
+				return !isLoggedIn()
 			}
 			return route.meta.showInSideNav
 		}

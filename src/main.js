@@ -14,16 +14,16 @@ import router from './router'
 import store from './store'
 import VueMaterial from 'vue-material'
 import VueViewports from 'vue-viewports'
-import { reduxStorePlugin } from 'redux-vue-connect'
 import lazyload from 'vue-lazyload'
 import ProgressiveImage from 'progressive-image/dist/vue'
+import VueRouter from 'vue-router'
 
 import SearchBox from './components/search-box/search-box.vue'
 import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
 import ScrobblingQueue from './components/scrobbling-queue/scrobbling-queue.vue'
 import SideNavigation from './components/side-navigation/side-navigation.vue'
 
-WebFont.load({ google: {families: ['Roboto:300,400,500,700,900', 'Material Icons']} })
+WebFont.load({ google: {families: ['Roboto:300,400', 'Material Icons']} })
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => navigator.serviceWorker.register('dist/service-worker.js'))
@@ -39,7 +39,7 @@ var config = {
 }
 firebase.initializeApp(config)
 
-Vue.use(reduxStorePlugin)
+Vue.use(VueRouter)
 Vue.use(VueMaterial)
 Vue.use(lazyload)
 Vue.use(ProgressiveImage, { scale: true })
