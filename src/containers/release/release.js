@@ -17,13 +17,14 @@ import cassetteIcon from '../../static/cassette.svg'
 
 @Component
 export default class Release extends Vue {
-    
-    beforeRouteEnter(to, from, next) {
-        store.dispatch(discogsActions.fetchRelease(to.params.id)).then(() => next())
-    }
-
     release = store.getState().latestRelease || null
-    albumInfo = null
+    albumInfo = store.getState().lastfm.recentAlbumInfo || null
+
+    beforeRouteEnter(to, from, next) {
+        store.dispatch(discogsActions.fetchRelease(to.params.id))
+            .then(response => store.dispatch(lastFmActions.getAlbumInfo(response.payload.artists[0].name, response.payload.title)))
+            .then(next)
+    }
 
     get releaseCoverImage() {
         if (this.albumInfo) {
@@ -79,11 +80,10 @@ export default class Release extends Vue {
     }
 
     mounted() {
-        this.release = store.getState().discogs.latestRelease
-        if (!this.albumInfo && this.release) {
-            store.dispatch(lastFmActions.getAlbumInfo(this.artistName, this.release.title))
-                .then(response => {if(!response.payload.error) { this.albumInfo = response.payload.album }})
-        }  
+        store.subscribe(() => {
+            this.release = store.getState().discogs.latestRelease
+            this.albumInfo = store.getState().lastfm.recentAlbumInfo
+        })
     }
 
     search(query) {

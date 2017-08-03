@@ -7,7 +7,7 @@ import filter from 'lodash.filter'
 
 export default (state = { queue: [] }, action) => {
     switch (action.type) {
-
+        
         case actions.LASTFM_SET_AUTHENTICATION_TOKEN:
             return {
                 ...state,
@@ -24,6 +24,12 @@ export default (state = { queue: [] }, action) => {
             return {
                 ...state,
                 recentTracks: action.payload.recenttracks
+            }
+
+        case actions.LASTFM_FETCH_ALBUM_INFO_SUCCESS:
+            return {
+                ...state,
+                recentAlbumInfo: action.payload.album
             }
 
         case actions.LASTFM_CLEAR_QUEUE: 
