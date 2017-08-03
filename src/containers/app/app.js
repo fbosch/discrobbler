@@ -60,7 +60,7 @@ export default class App extends Vue {
     }
 
     onSnackbarClose() {
-        store.dispatch(pageActions.clearMessage())
+        setTimeout(() => store.dispatch(pageActions.clearMessage()), 100)
     }
 
     toggleSideNav() {

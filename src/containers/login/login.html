@@ -1,11 +1,13 @@
 <section id="login" class="login">
     <md-toolbar class="md-accent md-large">
-        <md-avatar class="md-large" v-if="discogsUser">
-            <img :src="discogsUser.avatar_url" alt="discogsUser.name">
-        </md-avatar>
-        <md-icon class="md-size-3x" v-else>
-            lock_outline
-        </md-icon>
+        <transition name="fade">
+            <md-icon class="md-size-3x" v-if="discogsUser">
+                lock_open
+            </md-icon>
+            <md-icon class="md-size-3x" v-else>
+                lock_outline
+            </md-icon>
+        </transition>
     </md-toolbar>
     <md-layout md-align="center" class="login__stepper container">
         <md-stepper md-elevation="1" :md-vertical="isMobile" @completed="authorizeDiscogs">

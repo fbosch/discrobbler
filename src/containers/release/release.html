@@ -1,8 +1,8 @@
 <section id="release">
     <transition name="fade">
-        <md-spinner :md-size="70" :md-stroke="1.5" md-indeterminate class="md-accent" v-if="!release"></md-spinner>
-        <div class="release-item" v-else>
-            <md-card>
+        <!-- <md-spinner :md-size="70" :md-stroke="1.5" md-indeterminate class="md-accent" v-if="!release"></md-spinner> -->
+        <div class="release-item" >
+            <md-card v-if="release">
                 <md-card-media-cover md-solid>
                     <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
                         <img v-if="releaseCoverImage" :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet"
@@ -38,7 +38,7 @@
                     </md-card-area>
                 </md-card-media-cover>
             </md-card>
-            <div class="release-item__content container">
+            <div class="release-item__content container" v-if="release">
                 <md-card>
                     <md-card-content>
                         <md-list>

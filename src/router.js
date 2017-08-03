@@ -31,6 +31,7 @@ export const views = {
     collection: {
         path: '/collection',
         component: containers.Collection,
+        beforeEnter: containers.Collection.prototype.constructor.options.methods.beforeRouteEnter,
         meta: { 
             requiresAuth: true,
             showInSideNav: true,
@@ -40,11 +41,12 @@ export const views = {
     release: {
         path: '/release/:id',
         component: containers.Release,
+        beforeEnter: containers.Release.prototype.constructor.options.methods.beforeRouteEnter,
         meta: { requiresAuth: true }        
     },
     logout: {
         path: '/logout',
-        component: containers.Login,
+        component: containers.Logout,
         meta: { 
             requiresAuth: true, 
             showInSideNav: true,
@@ -82,9 +84,9 @@ router.beforeEach((to, from, next) => {
     requestAnimationFrame(() => store.dispatch(pageActions.closeSideNav()))
 })
 
-router.afterEach((to, from) => store.dispatch(routerActions.changeCurrentLocation(to)))
 
 router.onReady(() => {
+    router.afterEach((to, from) => store.dispatch(routerActions.changeCurrentLocation(to)))    
     store.subscribe(() => {
         const routeFromState = get(store.getState(), 'route.currentRoute', null)
         if (routeFromState && routeFromState.name !== router.currentRoute.name) {

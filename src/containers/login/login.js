@@ -21,14 +21,6 @@ export default class Login extends Vue {
     static getDiscogsUser = () => get(store.getState(),'discogs.user', null)
     static getDiscogsUsername = () => get(store.getState(),'discogs.user.username', null)
 
-    created() {
-        if (router.currentRoute.name === 'logout') {
-            this.unauthorize()
-            store.dispatch(pageActions.showMessage("You've been successfully logged out"))                        
-            requestAnimationFrame(() => router.push(views.login))   
-        }
-    }
-
     mounted() {
         const parsedQueryString = queryString.parse(location.search)
         if (router.currentRoute.name === 'authenticate' && parsedQueryString.token !== null) {
@@ -44,7 +36,6 @@ export default class Login extends Vue {
         this.beforeDestroy = store.subscribe(() => {
             this.lastfmSession = Login.getLastfmSession()
             this.discogsUser = Login.getDiscogsUser()
-            this.discogsUsername = Login.getDiscogsUsername()
         })
     }
 
@@ -58,11 +49,17 @@ export default class Login extends Vue {
     }
 
     authorizeDiscogs() {
-        store.dispatch(discogsActions.fetchUser(this.discogsUsername))
-        .then(() => {
-            store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name))
-            router.push(views.home)
-        })
+        if (this.discogsUsername || this.discogsUsername !== '') {
+            store.dispatch(discogsActions.fetchUser(this.discogsUsername))
+                .then(response => {
+                    if(response.error) {
+                        store.dispatch(pageActions.showMessage('An error occured when retrieving the given discogs user: '+ this.discogsUsername  ))
+                    } else {
+                        store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name))
+                        setTimeout(() => router.push(views.home), 1000)
+                    }
+                })
+        }
     }
 
     unauthorize() {

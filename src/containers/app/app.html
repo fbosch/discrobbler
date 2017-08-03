@@ -10,10 +10,14 @@
   <main class="main-content">
     <router-view></router-view>
   </main>
-  <md-snackbar md-position="bottom center" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
+  <md-snackbar md-position="bottom right" @close="onSnackbarClose" :md-duration="snackbarDuration" ref="snackbar">
     <span>
         {{ snackbarMessage }}
-      </span>
+    </span>
+    <span style="flex: 1"></span>
+    <md-icon>
+      info
+    </md-icon>
   </md-snackbar>
   <scrobbler-bar v-if="lastfmSession" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar>
 </div>

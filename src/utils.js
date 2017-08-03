@@ -10,10 +10,10 @@ export function removeBrackets (input) {
 }
 
 export function handleResponse (response) {
-  if (response.status >= 400) {
-    return new Error(response.message)
-  } else {
+  if (response.ok) {
     return response.json()
+  } else {
+    return Promise.reject(new Error(response.message))
   }
 }
 

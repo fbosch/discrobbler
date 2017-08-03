@@ -1,7 +1,6 @@
 @import '~vue-material/dist/vue-material.css';
 html {
   background: #000;
-
   &:not(.wf-active) * {
     font-family: sans-serif !important;
   }
@@ -10,7 +9,9 @@ html {
       color: transparent;
     }
   }
-
+  .material-icons img {
+    vertical-align: unset;
+  }
 }
 
 body {
@@ -55,12 +56,12 @@ img[src=""] {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .1s linear;
+  transition: opacity .3s ease-in-out;
 }
 
 .fade-enter-active,
 {
-  transition-delay: .0s;
+  // transition-delay: .1s;
 }
 
 .fade-enter,

@@ -17,7 +17,12 @@ import cassetteIcon from '../../static/cassette.svg'
 
 @Component
 export default class Release extends Vue {
-    release = null
+    
+    beforeRouteEnter(to, from, next) {
+        store.dispatch(discogsActions.fetchRelease(to.params.id)).then(() => next())
+    }
+
+    release = store.getState().latestRelease || null
     albumInfo = null
 
     get releaseCoverImage() {
@@ -43,7 +48,7 @@ export default class Release extends Vue {
 
     get fallbackThumb() {
         const collection = get(store.getState(), 'discogs.collection', null)
-        if (collection) {
+        if (collection && this.release) {
             const item = collection.find(item => item.id === this.release.id)
             if (item) {
                 return item.basic_information.thumb
@@ -73,12 +78,12 @@ export default class Release extends Vue {
         }
     }
 
-    created() {
-        store.dispatch(pageActions.searchClear())
-        store.dispatch(discogsActions.fetchRelease(router.currentRoute.params.id))
-            .then(response => { this.release = response.payload })
-            .then(() => store.dispatch(lastFmActions.getAlbumInfo(this.artistName, this.release.title)))
-            .then(response => { if(!response.payload.error) { this.albumInfo = response.payload.album }})
+    mounted() {
+        this.release = store.getState().discogs.latestRelease
+        if (!this.albumInfo && this.release) {
+            store.dispatch(lastFmActions.getAlbumInfo(this.artistName, this.release.title))
+                .then(response => {if(!response.payload.error) { this.albumInfo = response.payload.album }})
+        }  
     }
 
     search(query) {

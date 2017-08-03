@@ -39,6 +39,17 @@ export default (state = {}, action) => {
                 lastCollectionFetchUserId: {...state}.user.id
             }
         
+        case actions.DISCOGS_FETCH_RELEASE_SUCCESS: 
+            return {
+                ...state,
+                latestRelease: action.payload,
+                fetchedReleases: state.fetchedReleases ? 
+                    state.fetchedReleases.filter(r => r.id === action.payload.id).length ?
+                    state.fetchedReleases || [] :
+                    [action.payload].concat(state.fetchedReleases) :
+                    state.fetchedReleases || []
+            }
+        
         case actions.DISCOGS_CLEAR_STATE: 
             return { }
 

@@ -47,7 +47,7 @@ export const DISCOGS_FETCH_USER_COLLECTION_FAILURE = 'discogs/FETCH_USER_COLLECT
 export const fetchUserCollection = username => (dispatch, getState) => {
   dispatch({ type: DISCOGS_FETCH_USER_COLLECTION_REQUEST, payload: username })
   return dispatch(fetchCollectionFolders(username))
-    .then(response => response.payload.folders.map(folder => dispatch(fetchCollectionItems(username, folder.id))))
+    .then(response => Promise.all(response.payload.folders.map(folder => dispatch(fetchCollectionItems(username, folder.id)))))
     .then(payload => dispatch({ type: DISCOGS_FETCH_USER_COLLECTION_SUCCESS, payload}))
     .catch(error => dispatch({ type: DISCOGS_FETCH_USER_COLLECTION_FAILURE, error}))
 }
@@ -56,10 +56,13 @@ export const DISCOGS_FETCH_RELEASE_REQUEST = 'discogs/FETCH_RELEASE_REQUEST'
 export const DISCOGS_FETCH_RELEASE_SUCCESS = 'discogs/FETCH_RELEASE_SUCCESS'
 export const DISCOGS_FETCH_RELEASE_FAILURE = 'discogs/FETCH_RELEASE_FAILURE'
 
-export const fetchRelease = releaseId => dispatch => {
+export const fetchRelease = releaseId => (dispatch, getState) => {
   dispatch({ type: DISCOGS_FETCH_RELEASE_REQUEST, payload: releaseId })
+  if (getState().fetchedReleases && getState().fetchedReleases.filter(r => r.id === releaseId).length) {
+      return Promise.resolve(dispatch({ type: DISCOGS_FETCH_RELEASE_SUCCESS, payload: getState().fetchedReleases.find(r => r.id === releaseId)}))
+  }
   return api.getRelease(releaseId)
-  .then(handleResponse)
-  .then(payload => dispatch({ type: DISCOGS_FETCH_RELEASE_SUCCESS, payload }))
-  .catch(error => dispatch({ type: DISCOGS_FETCH_RELEASE_FAILURE, error}))
+    .then(handleResponse)
+    .then(payload => dispatch({ type: DISCOGS_FETCH_RELEASE_SUCCESS, payload}))
+    .catch(error => dispatch({ type: DISCOGS_FETCH_RELEASE_FAILURE, error}))
 }
