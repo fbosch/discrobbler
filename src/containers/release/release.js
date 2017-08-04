@@ -5,6 +5,7 @@ import store from '../../store'
 import get from 'lodash.get'
 import trimEnd from 'lodash.trimend'
 import hmsToSeconds from 'hms-to-seconds'
+import Vibrant from 'node-vibrant'
 
 import { removeBrackets } from '../../utils'
 import * as discogsActions from '../../store/actions/discogs.actions'
@@ -17,13 +18,13 @@ import cassetteIcon from '../../static/cassette.svg'
 
 @Component
 export default class Release extends Vue {
-    release = store.getState().latestRelease || null
-    albumInfo = store.getState().lastfm.recentAlbumInfo || null
+    release = store.getState().discogs.latestRelease
+    albumInfo = store.getState().lastfm.recentAlbumInfo
 
     beforeRouteEnter(to, from, next) {
         store.dispatch(discogsActions.fetchRelease(to.params.id))
             .then(response => store.dispatch(lastFmActions.getAlbumInfo(response.payload.artists[0].name, response.payload.title)))
-            .then(next)
+            .then(() => next())
     }
 
     get releaseCoverImage() {
@@ -80,7 +81,7 @@ export default class Release extends Vue {
     }
 
     mounted() {
-        store.subscribe(() => {
+        this.beforeDestroy = store.subscribe(() => {
             this.release = store.getState().discogs.latestRelease
             this.albumInfo = store.getState().lastfm.recentAlbumInfo
         })

@@ -9,5 +9,9 @@ export default {
     },
     firebase: {
         key: process.env.FIREBASE_WEB_API_KEY
+    },
+    cloudinary: {
+        key: process.env.CLOUDINARY_KEY,
+        secret: process.env.CLOUDINARY_SECRET
     }
 }

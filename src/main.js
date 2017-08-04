@@ -7,6 +7,7 @@ import WebFont from 'webfontloader'
 import 'firebase/database'
 import 'firebase/auth'
 import firebase from 'firebase/app'
+import { Cloudinary } from 'cloudinary-core'
 
 import Vue from 'vue'
 import App from './containers/app/app.vue'
@@ -29,15 +30,21 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => navigator.serviceWorker.register('dist/service-worker.js'))
 }
 
-var config = {
+firebase.initializeApp({
   apiKey: apiKeys.firebase.key,
   authDomain: 'discrobbler.firebaseapp.com',
   databaseURL: 'https://discrobbler.firebaseio.com',
   projectId: 'discrobbler',
   storageBucket: 'discrobbler.appspot.com',
   messagingSenderId: '659399864999'
-}
-firebase.initializeApp(config)
+})
+
+const cloudinary = new Cloudinary({
+  cloud_name: 'discrobbler',
+  api_key: apiKeys.cloudinary.key,
+  api_secret: apiKeys.cloudinary.secret
+})
+cloudinary.init()
 
 Vue.use(VueRouter)
 Vue.use(VueMaterial)
