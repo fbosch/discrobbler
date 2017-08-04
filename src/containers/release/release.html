@@ -5,8 +5,8 @@
             <md-card v-if="release">
                 <md-card-media-cover md-solid>
                     <md-card-media md-ratio="1:1" class="release-item__cover" :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
-                        <img v-if="releaseCoverImage" :src="releaseCoverImage[2]['#text']" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet"
-                            :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }">
+                        <img v-if="releaseCoverImage" :src="lowestQualityCover" @load="imageLoaded" :data-srcset="releaseCoverImageSrcSet"
+                            :style="{ backgroundImage: 'url(' + lowestQualityCover + ')' }" ref="albumCover">
                     </md-card-media>
                     <md-card-area>
                         <div class="container">

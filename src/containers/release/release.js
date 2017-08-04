@@ -18,13 +18,15 @@ import cassetteIcon from '../../static/cassette.svg'
 
 @Component
 export default class Release extends Vue {
-    release = store.getState().discogs.latestRelease
-    albumInfo = store.getState().lastfm.recentAlbumInfo
+    release = null
+    albumInfo = null
 
     beforeRouteEnter(to, from, next) {
         store.dispatch(discogsActions.fetchRelease(to.params.id))
-            .then(response => store.dispatch(lastFmActions.getAlbumInfo(response.payload.artists[0].name, response.payload.title)))
-            .then(() => next())
+            .then(response => {
+                store.dispatch(lastFmActions.getAlbumInfo(response.payload.artists[0].name, response.payload.title))
+                next()
+            })
     }
 
     get releaseCoverImage() {
@@ -36,10 +38,15 @@ export default class Release extends Vue {
     }
 
     get releaseCoverImageSrcSet() {
-        return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
+        if (this.releaseCoverImage) {
+            return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
+        }
+        return null
     }
 
     get lowestQualityCover() {
+            return this.fallbackThumb
+        
         if (this.releaseCoverImage) {
             return this.releaseCoverImage[0]['#text']
         } else {
@@ -53,8 +60,11 @@ export default class Release extends Vue {
         if (collection && this.release) {
             const item = collection.find(item => item.id === this.release.id)
             if (item) {
+                console.log('item', item)
+                console.log(item.basic_information.cover_image)
                 return item.basic_information.thumb
             }
+            return null
         } 
         return null
     }
@@ -103,8 +113,9 @@ export default class Release extends Vue {
         if (!this.release) {
             scroll(0, 0)
         }
-        const image = this.$el.querySelector('img[data-srcset]')
+        const image = this.$refs.albumCover
         if (image) {
+            if (image.crossOrigin !== 'Anonymous') image.crossOrigin = 'Anonymous'
             image.setAttribute('srcset', image.getAttribute('data-srcset'))
             image.removeAttribute('data-srcset')
         }
