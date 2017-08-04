@@ -31,7 +31,7 @@ export const views = {
     collection: {
         path: '/collection',
         component: containers.Collection,
-        beforeEnter: containers.Collection.prototype.constructor.options.methods.beforeRouteEnter,
+        // beforeEnter: containers.Collection.prototype.constructor.options.methods.beforeRouteEnter,
         meta: { 
             requiresAuth: true,
             showInSideNav: true,
@@ -41,7 +41,7 @@ export const views = {
     release: {
         path: '/release/:id',
         component: containers.Release,
-        beforeEnter: containers.Release.prototype.constructor.options.methods.beforeRouteEnter,
+        // beforeEnter: containers.Release.prototype.constructor.options.methods.beforeRouteEnter,
         meta: { requiresAuth: true }        
     },
     logout: {

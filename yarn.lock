@@ -2319,6 +2319,10 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
+get-average-color@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/get-average-color/-/get-average-color-0.0.6.tgz#10b50f9984e0db6f2397dd0d186cca48d0fd1ae3"
+
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
@@ -5260,6 +5264,10 @@ vue-hot-reload-api@^2.0.11:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
 
+vue-infinite-scroll@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-infinite-scroll/-/vue-infinite-scroll-2.0.1.tgz#f418bd5cdca5e16837ce3b78333832288729e660"
+
 vue-lazyload@^1.0.3:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/vue-lazyload/-/vue-lazyload-1.0.6.tgz#7d5494fc35c35fc84dcc271165b827e309b4e793"
@@ -5286,6 +5294,12 @@ vue-material@^0.7.1:
   resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-0.7.4.tgz#51ac621a3fceeba3ea49ffe0858c0b45785efe10"
   dependencies:
     vue "^2.3.3"
+
+vue-media-queries@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/vue-media-queries/-/vue-media-queries-0.0.3.tgz#b2be4bf19d69283b6e8adaf27b29a32f03db88ac"
+  dependencies:
+    lodash.throttle "^4.1.1"
 
 vue-property-decorator@^5.0.1:
   version "5.2.1"

@@ -56,7 +56,7 @@ export default class Login extends Vue {
                         store.dispatch(pageActions.showMessage('An error occured when retrieving the given discogs user: '+ this.discogsUsername  ))
                     } else {
                         store.dispatch(lastFmActions.getRecentTracks(store.getState().lastfm.session.name))
-                        setTimeout(() => router.push(views.home), 1000)
+                        router.push(views.home)
                     }
                 })
         }

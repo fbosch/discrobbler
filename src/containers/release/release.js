@@ -5,7 +5,6 @@ import store from '../../store'
 import get from 'lodash.get'
 import trimEnd from 'lodash.trimend'
 import hmsToSeconds from 'hms-to-seconds'
-import Vibrant from 'node-vibrant'
 
 import { removeBrackets } from '../../utils'
 import * as discogsActions from '../../store/actions/discogs.actions'
@@ -41,12 +40,10 @@ export default class Release extends Vue {
         if (this.releaseCoverImage) {
             return `${this.releaseCoverImage[0]['#text']} 50w, ${this.releaseCoverImage[1]['#text']} 100w, ${this.releaseCoverImage[2]['#text']} 300w, ${this.releaseCoverImage[3]['#text']} 450w, ${this.releaseCoverImage[4]['#text']} 500w`
         }
-        return null
+        return nulls
     }
 
     get lowestQualityCover() {
-            return this.fallbackThumb
-        
         if (this.releaseCoverImage) {
             return this.releaseCoverImage[0]['#text']
         } else {

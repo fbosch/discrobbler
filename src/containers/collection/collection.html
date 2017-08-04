@@ -1,9 +1,9 @@
-<section id="collection" class="collection">
+<section class="collection">
     <transition name="fade">
         <md-spinner :md-size="120" :md-stroke="1.5" md-indeterminate class="md-accent" v-if="collectionIsLoading"></md-spinner>
         <div v-else>
              <md-list class="album-list md-transparent" v-if="filteredCollection.length > 0" >
-                <md-list-item v-for="item in filteredCollection" :key="item.id" v-if="item" class="md-triple-line album-item" tabindex="0">
+                <md-list-item v-for="item in filteredCollection" :key="item.id" v-lazy="item" class="md-triple-line album-item" tabindex="0">
                     <router-link :to="{name:'release', params: { id: item.id }}">
                         <md-avatar>
                             <img v-lazy="item.basic_information.thumb" v-if="item.basic_information.thumb">
