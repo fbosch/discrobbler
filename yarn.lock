@@ -5347,6 +5347,10 @@ vue-viewports@^2.2.0:
   dependencies:
     vue "^2.0.1"
 
+vue2-filters@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/vue2-filters/-/vue2-filters-0.1.9.tgz#3fc9e78e5744efff03223cff0e395907bb6b41ed"
+
 vue@^1.0.26:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/vue/-/vue-1.0.28.tgz#ed2ff07b200bde15c87a90ef8727ceea7d38567d"

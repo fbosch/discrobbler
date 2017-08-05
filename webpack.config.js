@@ -57,6 +57,7 @@ module.exports = {
 module.exports.plugins = (module.exports.plugins || []).concat([
   new webpack.DefinePlugin({
     'process.env': {
+      VERSION: JSON.stringify(process.env.npm_package_version),
       NODE_ENV: '"' + process.env.NODE_ENV + '"',
       DISCOGS_KEY: JSON.stringify(process.env.DISCOGS_KEY),
       DISCOGS_SECRET: JSON.stringify(process.env.DISCOGS_SECRET),

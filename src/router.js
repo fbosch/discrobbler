@@ -8,18 +8,28 @@ import get from 'lodash.get'
 import * as pageActions from './store/actions/page.actions'
 import * as routerActions from './store/actions/router.actions'
 
+export function getRouteIcon(route) {
+    if (route.meta && route.meta.icon) {
+        return route.meta.icon
+    }
+    return route.name
+}
 
 export const views = {
     home: {
         path: '/',
         component: containers.Home,
-        meta: { showInSideNav: true }
+        meta: { 
+            showInSideNav: true, 
+            showInBottomBar: true 
+        }
     },
     login: {
         path: '/login',
         component: containers.Login,
         meta: { 
             showInSideNav: true,
+            showInBottomBar: false,
             hideWhenAuth: true,
             icon: 'lock'
         }
@@ -35,6 +45,7 @@ export const views = {
         meta: { 
             requiresAuth: true,
             showInSideNav: true,
+            showInBottomBar: true,
             icon: 'library_music'
         }
     },
