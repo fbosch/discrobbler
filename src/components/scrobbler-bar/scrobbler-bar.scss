@@ -1,9 +1,8 @@
 .scrobbler-bar {
-    position: fixed;
-    bottom: 0px;
+    background-color: #222 !important;    
     width: 100%;
     padding: 0;
-    z-index: 99;
+
     &__song-name,
     &__album-artist {
         overflow: hidden;

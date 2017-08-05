@@ -8,43 +8,43 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "dist/android-icon-36x36.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_96/v1501939308/logo.png",
       "sizes": "36x36",
       "type": "image\/png",
       "density": "0.75"
     },
     {
-      "src": "dist/android-icon-48x48.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_48/v1501939308/logo.png",
       "sizes": "48x48",
       "type": "image\/png",
       "density": "1.0"
     },
     {
-      "src": "dist/android-icon-72x72.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_72/v1501939308/logo.png",
       "sizes": "72x72",
       "type": "image/png",
       "density": "1.5"
     },
     {
-      "src": "dist/android-icon-96x96.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_96/v1501939308/logo.png",
       "sizes": "96x96",
       "type": "image/png",
       "density": "2.0"
     },
     {
-      "src": "dist/android-icon-144x144.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_144/v1501939308/logo.png",
       "sizes": "144x144",
       "type": "image/png",
       "density": "3.0"
     },
     {
-      "src": "dist/android-icon-192x192.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_192/v1501939308/logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0"
     },
     {
-      "src": "dist/android-icon-512x512.png",
+      "src": "https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_512/v1501939308/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

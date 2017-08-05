@@ -3,17 +3,24 @@ import Component from 'vue-class-component'
 import { Watch } from 'vue-property-decorator'
 import router, { routes, getRouteIcon } from '../../router'
 import { isLoggedIn } from '../../utils'
+import store from '../../store'
 
 @Component
 export default class BottomNavigation extends Vue {
   routes = routes
   getRouteIcon = getRouteIcon
+  isLoggedIn = isLoggedIn()
 
   get bottomBarItems() {
     if (this.$refs.bottomBar) {
       return this.$refs.bottomBar.$children
     }
     return null
+  }
+
+  mounted() {
+    this.changeActiveRouteItem(router.currentRoute)
+    this.beforeDestroy = store.subscribe(() => { this.isLoggedIn = isLoggedIn() })
   }
 
 	displayRouteInBottomBar(route) {
@@ -35,7 +42,7 @@ export default class BottomNavigation extends Vue {
   }
   
   @Watch('$route')
-  onRouteChange(route) {
+  changeActiveRouteItem(route) {
     const itemToActivate = this.bottomBarItems.find(item => item.$attrs.route === route.path)
     if (itemToActivate) itemToActivate.setActive(true)
   }

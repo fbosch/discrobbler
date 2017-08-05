@@ -9,7 +9,7 @@
             </md-icon>
         </transition>
     </md-toolbar>
-    <md-layout md-align="center" class="login__stepper container">
+    <md-layout md-align="center" class="login__stepper small-container">
         <md-stepper md-elevation="1" :md-vertical="isMobile" @completed="authorizeDiscogs">
             <md-step md-label="Last.fm" :md-continue="!!lastfmSession">
                 <md-button class="md-raised md-default" @click.native="authorizeLastfm" v-if="!lastfmSession">

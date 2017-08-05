@@ -1,4 +1,4 @@
-<md-toolbar class="scrobbler-bar">
+<md-toolbar class="scrobbler-bar md-dense">
   <div class="md-toolbar-container">
     <transition name="fade">
       <div class="scrobbler-bar__now-scrobbling" v-if="trackBeingScrobbled">
@@ -17,7 +17,7 @@
       </div>
     </transition>
     <div style="flex: 1"></div>
-    <md-menu md-direction="top left" md-size="7" ref="queueTable" :md-align-trigger="true">
+    <!-- <md-menu md-direction="top left" md-size="7" ref="queueTable" :md-align-trigger="true">
       <md-button md-menu-trigger class="md-icon-button">
         <md-icon>
           queue_music
@@ -32,6 +32,6 @@
       <md-icon>
         more_vert
       </md-icon>
-    </md-button>
+    </md-button> -->
   </div>
 </md-toolbar>

@@ -14,14 +14,6 @@ html {
   }
 }
 
-
-.bottom-navigation {
-  position: fixed;
-  bottom: 0;
-  z-index: 99;
-}
-
-
 body {
   background: #f5f5f5;
 }
@@ -40,9 +32,16 @@ img[src=""] {
   display: none;
 }
 
+.small-container, .container {
+  margin: 0 auto;
+}
+
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+}
+
+.small-container {
+  max-width: 700px;  
 }
 
 .equalizer-icon {
@@ -65,11 +64,6 @@ img[src=""] {
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity .3s ease-in-out;
-}
-
-.fade-enter-active,
-{
-  // transition-delay: .1s;
 }
 
 .fade-enter,

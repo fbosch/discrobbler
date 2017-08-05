@@ -1,13 +1,13 @@
-  <md-bottom-bar class="bottom-navigation md-shift" @change="bottomBarActiveChanged" ref="bottomBar">
-    <!-- <scrobbler-bar v-if="lastfmSession" :queue="queue" :recentTracks="recentTracks"></scrobbler-bar> -->
+<div class="bottom-navigation">
+  <scrobbler-bar v-if="isLoggedIn"></scrobbler-bar>
+  <md-bottom-bar class="md-shift" @change="bottomBarActiveChanged" ref="bottomBar">
     <md-bottom-bar-item v-for="route in routes" :key="route.path" v-if="displayRouteInBottomBar(route)" :md-icon="getRouteIcon(route)" :route="route.path">
-      <!-- <router-link :to="route.path" exact tag="span"> -->
-        <span v-if="route.meta && route.meta.displayName">
-            {{ route.meta.displayName | capitalize }}
-        </span>
-        <span v-else>
-            {{ route.name | capitalize }}
-        </span>
-      <!-- </router-link> -->
+      <span v-if="route.meta && route.meta.displayName">
+          {{ route.meta.displayName | capitalize }}
+      </span>
+      <span v-else>
+          {{ route.name | capitalize }}
+      </span>
     </md-bottom-bar-item>
   </md-bottom-bar>
+</div>

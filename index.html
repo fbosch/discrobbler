@@ -6,22 +6,22 @@
   <title>Discrobbler</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <link rel="apple-touch-icon" sizes="57x57" href="dist/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="dist/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="dist/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="dist/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="dist/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="dist/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="dist/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="dist/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="dist/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="dist/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_57/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_60/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_72/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_76/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_114/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_120/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_144/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_152/v1501939308/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_180/v1501939308/logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_192/v1501939308/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_32/v1501939308/logo.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_96/v1501939308/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_16/v1501939308/logo.png">
   <link rel="manifest" href="manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="dist/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="https://res.cloudinary.com/discrobbler/image/upload/c_scale,w_144/v1501939308/logo.png">
   <meta name="theme-color" content="#ffffff">
   <meta name="msapplication-navbutton-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -161,6 +161,15 @@
       height: 48px;
       width: 100%;
       background: #000;
+      position: relative;
+    }
+
+    .small-logo {
+      height: 21px !important;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
   </style>
 </head>
@@ -168,6 +177,7 @@
 <body>
   <div id="app">
     <div class="static-header">
+      <img class="small-logo" src="https://res.cloudinary.com/discrobbler/image/upload/q_100/v1501939195/small-logo.svg" alt="">
     </div>
     <div class="showbox">
       <div class="loader">

@@ -15,7 +15,7 @@ export default class Home extends Vue {
 	mounted() {
 		setTimeout(() => this.getSplashImage(), 0)
 	}
-
+	
 	@Watch('$mq.resize')
 	getSplashImage() {
 		console.log(this.$currentViewport)
