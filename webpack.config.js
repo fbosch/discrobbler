@@ -6,7 +6,7 @@ var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 var ManifestPlugin = require('webpack-manifest-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -85,7 +85,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new LodashModuleReplacementPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new BabiliPlugin(),
