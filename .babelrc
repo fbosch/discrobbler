@@ -1,9 +1,5 @@
 {
-  "presets": ["es2015"],
-  "plugins": [
-    "transform-decorators-legacy",
-    "transform-object-rest-spread",
-    "transform-class-properties"
-  ],
-  "comments": false
+	"presets": [ "es2015" ],
+	"plugins": [ "transform-decorators-legacy", "transform-object-rest-spread", "transform-class-properties" ],
+	"comments": false
 }

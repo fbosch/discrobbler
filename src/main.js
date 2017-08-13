@@ -4,7 +4,7 @@ import viewports from './viewports'
 import invert from 'lodash.invert'
 
 import Vue from 'vue'
-import App from './containers/app/app.vue'
+import App from './containers/app.vue'
 import router from './router'
 import store from './store'
 import VueMaterial from 'vue-material'
@@ -15,11 +15,11 @@ import VueRouter from 'vue-router'
 import { MediaQueries } from 'vue-media-queries'
 import Vue2Filters from 'vue2-filters'
 
-import SearchBox from './components/search-box/search-box.vue'
-import ScrobblerBar from './components/scrobbler-bar/scrobbler-bar.vue'
-import ScrobblingQueue from './components/scrobbling-queue/scrobbling-queue.vue'
-import SideNavigation from './components/side-navigation/side-navigation.vue'
-import BottomNavigation from './components/bottom-navigation/bottom-navigation.vue'
+import SearchBox from './components/search-box.vue'
+import ScrobblerBar from './components/scrobbler-bar.vue'
+import ScrobblingQueue from './components/scrobbling-queue.vue'
+import SideNavigation from './components/side-navigation.vue'
+import BottomNavigation from './components/bottom-navigation.vue'
 
 const mediaQueries = new MediaQueries()
 Vue.use(mediaQueries)

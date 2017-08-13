@@ -1,6 +1,6 @@
 import apiKeys from './keys'
-import 'firebase/database'
-import 'firebase/auth'
+// import 'firebase/database'
+// import 'firebase/auth'
 import './cloudinary'
 import firebase from 'firebase/app'
 import WebFont from 'webfontloader'
